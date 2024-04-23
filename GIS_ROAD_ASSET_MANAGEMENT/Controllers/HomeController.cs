@@ -31,11 +31,7 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
 
             return View();
         }
-        public ActionResult Dashboard(Usermodel user)
-        {
-            List<Usermodel> users =context.getUser(user);
+       
 
-            return View(users);
-        }
     }
 }

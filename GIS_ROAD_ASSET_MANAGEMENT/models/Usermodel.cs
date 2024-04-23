@@ -23,6 +23,17 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
         public bool is_active { get; set; }
 
         public int ward_id { get; set; }
+        public string RoleName { get; set; }
+        public string WardName { get; set; }
+
+        public string companyName { get; set; }
+
+        public string proofOfIdentity { get; set; }
+
+        public bool is_approved { get; set; }
+
+        public bool is_user { get; set; }
+
 
         //ContractorModel contractor { get; set; }
         //RoleModel role { get; set; }

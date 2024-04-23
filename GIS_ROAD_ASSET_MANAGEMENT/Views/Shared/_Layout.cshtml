@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,28 +9,26 @@
     <meta content="" name="description">
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link href="~/Content/lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet" />
     <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 
     @* Bootstrap 5.2.3*@
-    <link href="~/Content/bootstrap-version.css" rel="stylesheet" />
-
+@*    <link href="~/Content/bootstrap-version.css" rel="stylesheet" />
+*@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Icon Font Stylesheet -->
-    <link href="~/Content/fontAwesome/all.css" rel="stylesheet" />
+    @*    <link href="~/Content/fontAwesome/all.css" rel="stylesheet" />*@
     <link href="~/Content/bootstrap-icons.css" rel="stylesheet" />
-
 
     <!-- Libraries Stylesheet -->
     @*<link href="/lib/animate/animate.css" rel="stylesheet">*@
     <link href="~/Content/lib/animate/animate.css" rel="stylesheet">
     <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +37,8 @@
     <link href="~/Content/css/style.css" rel="stylesheet">
 
     <script src="~/Scripts/popper.min.js"></script>
-  <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
     <style>
         body {
             padding: 0 !important;
@@ -67,22 +62,23 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form role="form" name="myForm" id="myForm" method="post">
+                        <form role="form" name="LoginForm" id="LoginForm" method="post">
                             <div class="form-group mb-3">
-                                <label for="usrname2"><i class="fa-solid fa-user "></i>&nbsp; Username</label>
-                                <input type="text" name="usrname" class="form-control" id="usrname2" placeholder="Enter email">
-                                <small id="checkname" class="error-message text-danger"></small>
+                                <label for="Lusername"><i class="fa-solid fa-user "></i>&nbsp; Username</label>
+                                <input type="text" name="Lusername" class="form-control" id="Lusername" placeholder="Enter email">
+                                <small id="LemailError" class="error-message text-danger"></small>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="psw2"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                <input type="password" name="psw" class="form-control" id="psw2" placeholder="Enter password">
-                                <small id="checkpsw" class="error-message text-danger"></small>
+                                <label for="Lpassword"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                <input type="password" name="Lpassword" class="form-control" id="Lpassword" placeholder="Enter password">
+                                <small id="LpwdError" class="error-message text-danger"></small>
                             </div>
                             <div class="checkbox mb-2">
                                 <label><input type="checkbox" value="" checked>Remember me</label>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                            <button type="submit" id="Loginbtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
                         </form>
+                        <div id="errorMessage" class="text-danger"></div> <!-- This is where the error message will be displayed -->
                     </div>
                     <div class="modal-footer" style="justify-content: flex-start;">
                         <p>Not a member? <a id="signup_link" href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-dismiss="modal">Sign Up</a></p>|
@@ -92,200 +88,193 @@
             </div>
         </div>
         <!--- login modal end-->
-        <!-- signup Modal -->
-
+        <!-- signup Modal open -->
         <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title"> Sign up </h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="radio-container">
-                                <input type="radio" name="content" value="option1" checked> As Citizen
-                                &nbsp;&nbsp;
-                                <input type="radio" name="content" value="option2"> As Contractor
-                            </div>
-                            <br />
-                            <div id="contentOption1" class="content">
-                                <!-- Content for Option 1 -->
-                                <form role="form" name="myForm1" id="myForm1" method="post" onsubmit="validation1();">
-                                    <div class="form-group mb-3">
-                                        <label for="usrname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                        <input type="text" class="form-control" id="usrname" placeholder="Enter name">
-                                        <span id="usrnameError" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group  mb-3">
-                                        <label for="Email"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                        <input type="text" class="form-control" id="Email" placeholder="Enter email">
-                                        <span id="emailError" class="error-message text-danger"></span>
-                                    </div>
-                                    <!-- Add more form fields as needed -->
-                                    <div class="form-group  mb-3">
-                                        <label for="contact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                        <input type="number" class="form-control" id="contact" placeholder="Enter contact no">
-                                        <span id="numberError" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="ward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                        <div class="select">
-                                            <select id="ward" class="form-control" name="wardname">
-                                                <option value="1" selected>Iskon</option>
-                                                <option value="2">Sabarmati</option>
-                                                <option value="3">Satelaite</option>
-                                                <option value="4">Paldi</option>
-                                                <option value="5">Sarkhej</option>
-                                            </select>
-                                            <span class="focus"></span>
-                                        </div>
-
-                                        <span id="wardError" class="error-message text-danger"></span>
-
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="psw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                        <input type="password" class="form-control" id="psw" placeholder="Enter password">
-                                        <span id="pswError" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="cnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
-                                        <input type="password" class="form-control" id="cnf-psw" placeholder="Enter Confirm password">
-                                        <span id="psw1Error" class="error-message text-danger"></span>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
-                                </form>
-                            </div>
-                            <div id="contentOption2" class="content" style="display:none;">
-                                <!-- Content for Option 2 -->
-                                <form role="form" name="myForm2" id="myForm2" method="post" onsubmit=" validation2();">
-                                    <div class="form-group mb-3">
-                                        <label for="name"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Enter name">
-                                        <span id="usrnameError1" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="Email1"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                        <input type="text" class="form-control" id="Email1" placeholder="Enter email">
-                                        <span id="emailError1" class="error-message text-danger"></span>
-                                    </div>
-                                    <!-- Add more form fields as needed -->
-                                    <div class="form-group mb-3">
-                                        <label for="contact1"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                        <input type="number" class="form-control" id="contact1" placeholder="Enter contact no">
-                                        <span id="numberError1" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="Company1"><i class="fa-solid fa-building"></i>&nbsp; Company</label>
-                                        <input type="text" class="form-control" id="Company1" placeholder="Enter company name">
-                                        <span id="companyError1" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="ward1"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                        <div class="select">
-                                            <select id="ward1" class="form-control" name="wardname">
-                                                <option value="1" selected>Iskon</option>
-                                                <option value="2">Sabarmati</option>
-                                                <option value="3">Satelaite</option>
-                                                <option value="4">Paldi</option>
-                                                <option value="5">Sarkhej</option>
-                                            </select>
-                                            <span class="focus"></span>
-                                        </div>
-                                        <span id="ward1Error" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="identity1"><i class="fa-solid fa-file"></i>&nbsp; Proof of identity</label>
-                                        <input type="file" class="form-control" id="identity1">
-                                        <span id="proofError1" class="error-message text-danger"></span>
-                                    </div>
-
-                                    <div class="form-group mb-3">
-                                        <label for="psw1"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                        <input type="password" class="form-control" id="psw1" placeholder="Enter password">
-                                        <span id="pswError1" class="error-message text-danger"></span>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="cnf-psw1"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
-                                        <input type="password" class="form-control" id="cnf-psw1" placeholder="Enter Confirm password">
-                                        <span id="psw1Error1" class="error-message text-danger"></span>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer" style=" justify-content: flex-start; ">
-                            <p>Already have an account ? <a id="log_link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-dismiss="modal">Log In</a></p>
-                        </div>
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"> Sign up </h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                     </div>
-                </div>
-            </div>
-            <!--- signup modal end-->
-            @RenderBody()
-        </div>
-        <footer>
-            <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
-                <div class="container py-5">
-                    <div class="row g-5">
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="footer-item d-flex flex-column">
-                                <h4 class="text-white mb-4"></h4>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorem impedit eos autem dolores laudantium quia, qui similique
-                                </p>
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-share fa-2x text-white me-2"></i>
-                                    <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                    <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <div class="modal-body">
+                        <div class="radio-container">
+                            <input type="radio" name="content" value="Citizen" checked> As Citizen
+                            &nbsp;&nbsp;
+                            <input type="radio" name="content" value="Contractor"> As Contractor
+                        </div>
+                        <br />
+                        <div id="contentCitizen" class="content">
+                            <!-- Content for Citizen -->
+                            <form role="form" name="CitizenForm" id="CitizenForm" method="post">
+                                <div class="form-group mb-3">
+                                    <label for="Cname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                    <input type="text" class="form-control" id="Cname" placeholder="Enter name">
+                                    <span id="CnameError" class="error-message text-danger"></span>
                                 </div>
+                                <div class="form-group  mb-3">
+                                    <label for="CEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                    <input type="text" class="form-control" id="CEmail" placeholder="Enter email">
+                                    <span id="CemailError" class="error-message text-danger"></span>
+                                </div>
+                                <!-- Add more form fields as needed -->
+                                <div class="form-group  mb-3">
+                                    <label for="Ccontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                    <input type="number" class="form-control" id="Ccontact" placeholder="Enter contact no">
+                                    <span id="CnumberError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Cward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                    <div class="select">
+                                        <select id="Cward" class="form-control" name="wardname">
+                                            <option value="1" selected>Iskon</option>
+                                            <option value="2">Sabarmati</option>
+                                            <option value="3">Satelaite</option>
+                                            <option value="4">Paldi</option>
+                                            <option value="5">Sarkhej</option>
+                                        </select>
+                                        <span class="focus"></span>
+                                    </div>
+
+                                    <span id="CwardError" class="error-message text-danger"></span>
+
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Cpsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                    <input type="password" class="form-control" id="Cpsw" placeholder="Enter password">
+                                    <span id="CpswError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Ccnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
+                                    <input type="password" class="form-control" id="Ccnf-psw" placeholder="Enter Confirm password">
+                                    <span id="CCnf-pswError" class="error-message text-danger"></span>
+                                </div>
+                                <button type="submit" id="CitizenSignupBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
+                            </form>
+                        </div>
+                        <div id="contentContractor" class="content" style="display:none;">
+                            <!-- Content for Contractor -->
+                            <form role="form" name="ContractorForm" id="ContractorForm" method="post">
+                                <div class="form-group mb-3">
+                                    <label for="Con_name"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                    <input type="text" class="form-control" id="Con_name" placeholder="Enter name">
+                                    <span id="Con_usrnameError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Con_Email"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                    <input type="text" class="form-control" id="Con_Email" placeholder="Enter email">
+                                    <span id="Con_emailError" class="error-message text-danger"></span>
+                                </div>
+                                <!-- Add more form fields as needed -->
+                                <div class="form-group mb-3">
+                                    <label for="Con_contact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                    <input type="number" class="form-control" id="Con_contact" placeholder="Enter contact no">
+                                    <span id="Con_numberError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Con_Company"><i class="fa-solid fa-building"></i>&nbsp; Company</label>
+                                    <input type="text" class="form-control" id="Con_Company" placeholder="Enter company name">
+                                    <span id="Con_companyError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Con_ward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                    <div class="select">
+                                        <select id="Con_ward" class="form-control" name="wardname">
+                                            <option value="1" selected>Iskon</option>
+                                            <option value="2">Sabarmati</option>
+                                            <option value="3">Satelaite</option>
+                                            <option value="4">Paldi</option>
+                                            <option value="5">Sarkhej</option>
+                                        </select>
+                                        <span class="focus"></span>
+                                    </div>
+                                    <span id="Con_wardError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Con_identity"><i class="fa-solid fa-file"></i>&nbsp; Proof of identity</label>
+                                    <input type="file" class="form-control" id="Con_identity">
+                                    <span id="Con_proofError" class="error-message text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="Con_psw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                    <input type="password" class="form-control" id="Con_psw" placeholder="Enter password">
+                                    <span id="Con_pswError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Con_cnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
+                                    <input type="password" class="form-control" id="Con_cnf-psw" placeholder="Enter Confirm password">
+                                    <span id="Con_conf-pswError" class="error-message text-danger"></span>
+                                </div>
+                                <button type="submit" id="ContractorSignupBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style=" justify-content: flex-start; ">
+                        <p>Already have an account ? <a id="log_link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-dismiss="modal">Log In</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- signup modal end-->
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item d-flex flex-column">
+                            <h4 class="text-white mb-4"></h4>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorem impedit eos autem dolores laudantium quia, qui similique
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-share fa-2x text-white me-2"></i>
+                                <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn-square btn btn-primary text-white rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="footer-item d-flex flex-column">
-                                <h4 class="mb-4 text-white">Quick Links</h4>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> About Us</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Contact Us</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Terms & Conditions</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Our Blog & News</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Our Team</a>
-                            </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item d-flex flex-column">
+                            <h4 class="mb-4 text-white">Quick Links</h4>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> About Us</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Contact Us</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Terms & Conditions</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Our Blog & News</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Our Team</a>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="footer-item d-flex flex-column">
-                                <h4 class="mb-4 text-white">Our Services</h4>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> All Services</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Physiotherapy</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Diagnostics</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Manual Therapy</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Massage Therapy</a>
-                                <a href=""><i class="fas fa-angle-right me-2"></i> Rehabilitation</a>
-                            </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item d-flex flex-column">
+                            <h4 class="mb-4 text-white">Our Services</h4>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> All Services</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Physiotherapy</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Diagnostics</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Manual Therapy</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Massage Therapy</a>
+                            <a href=""><i class="fas fa-angle-right me-2"></i> Rehabilitation</a>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-3">
-                            <div class="footer-item d-flex flex-column">
-                                <h4 class="mb-4 text-white">Contact Info</h4>
-                                <a href=""><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
-                                <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a>
-                                <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a>
-                                <a href=""><i class="fas fa-phone me-2"></i> +012 345 67890</a>
-                                <a href="" class="mb-3"><i class="fas fa-print me-2"></i> +012 345 67890</a>
-                            </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item d-flex flex-column">
+                            <h4 class="mb-4 text-white">Contact Info</h4>
+                            <a href=""><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                            <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                            <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                            <a href=""><i class="fas fa-phone me-2"></i> +012 345 67890</a>
+                            <a href="" class="mb-3"><i class="fas fa-print me-2"></i> +012 345 67890</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
-
-
-
-        <script src="~/Content/js/loginmodal.js"></script>
-        <script src="~/Content/js/signupmodal.js"></script>
-
-
-
+        </div>
+    </footer>
+        <script src="~/Content/js/loginValidate.js"></script>
+    <script src="~/Content/js/SignupValidation.js"></script>
 </body>
 </html>

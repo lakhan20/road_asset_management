@@ -1,0 +1,346 @@
+﻿@model IEnumerable<GIS_ROAD_ASSET_MANAGEMENT.Models.Usermodel>
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.0/css/searchPanes.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.0/css/select.bootstrap5.css">
+    <style>
+        .container {
+            width: 100%;
+            max-width: none;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        /* Style for the buttons */
+        .btn-custom {
+            background-color: #393939;
+            color: #fff; /* Text color */
+            /* Border color */
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Contractor Management</a>
+            <div class="d-flex">
+                <button class="btn btn-custom mx-2">
+                    <i class="fas fa-file-csv"></i> Export to CSV
+                </button>
+                <button class="btn btn-custom mx-2">
+                    <i class="fas fa-file-pdf"></i> Export to PDF
+                </button>
+            </div>
+        </div>
+
+    </nav>
+
+    <form>
+        <div class="modal fade" id="exampleModal1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <!-- Modal 1 content -->
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <!-- Added modal-lg class for large size -->
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #282828 ">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color: #fff">Project Details</h1>
+                        <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="projecttitle" class="form-label">Project Title</label>
+                                <input type="text" class="form-control" id="projecttitle">
+                            </div>
+                            <div class="col">
+                                <label for="workorderno" class="form-label">Work Order Number</label>
+                                <input type="text" class="form-control" id="workorderno">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="startdate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startdate">
+                            </div>
+                            <div class="col">
+                                <label for="enddate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="enddate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-custom" id="right1" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="background-color: #282828; border-color: black;">
+                            <i class="arrow right"></i>
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <!-- Modal 2 content -->
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <!-- Added modal-lg class for large size -->
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #282828 ">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color: #fff">Project Details</h1>
+                        <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="let" class="form-label">Latitude</label>
+                                <input type="text" class="form-control" id="let">
+                            </div>
+                            <div class="col">
+                                <label for="long" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" id="long">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="projecttype" class="form-label">Project Type</label>
+                                <select class="form-select" id="projecttype">
+                                    <option selected>Choose Projcet Type...</option>
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                    <option value="4">Forth</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="budget" class="form-label">Budget</label>
+                                <input type="text" class="form-control" id="budget">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-custom" id="right1" data-bs-toggle="modal" data-bs-target="#exampleModal1" style="background-color: #282828; border-color: black;">
+                            <i class="arrow left"></i>
+                        </button>
+
+                        <div class="ms-auto">
+                            <button type="button" class="btn btn-custom" id="right1" data-bs-toggle="modal" data-bs-target="#exampleModal3" style="background-color: #282828; border-color: black; ">
+                                <i class="arrow right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal3" aria-hidden="true" tabindex="-1">
+            <!-- Modal 3 content -->
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <!-- Added modal-lg class for large size -->
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #282828 ">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color: #fff">Project Details</h1>
+                        <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="contractoremail" class="form-label">Contractor</label>
+                                <select class="form-select" id="contractoremail">
+                                    <option selected>Choose Contractor...</option>
+                                    <option value="1">First@gmail.com</option>
+                                    <option value="2">Second@gmail.com</option>
+                                    <option value="3">Third@gmail.com</option>
+                                    <option value="4">Forth@gmail.com</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="ward" class="form-label">Ward</label>
+                                <select class="form-select" id="ward">
+                                    <option selected>Choose Ward...</option>
+                                    <option value="1">Ward1</option>
+                                    <option value="2">Ward2</option>
+                                    <option value="3">Ward3</option>
+                                    <option value="4">Ward4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="approvalletter" class="form-label">Approval Letter</label>
+                                <input type="text" class="form-control" id="approvalletter">
+                            </div>
+                            <div class="col">
+                                <label for="tenderdoc" class="form-label">Tender Document</label>
+                                <input type="text" class="form-control" id="tenderdoc">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-custom" id="left3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="background-color: #282828; border-color: black; ">
+                            <i class="arrow left"></i>
+                        </button>
+
+
+                        <div class="ms-auto">
+                            <button type="submit" style="background-color: #282828; border-color: black;" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="container">
+        <div class="table-responsive mt-4">
+            <table id="example" class="table table-striped nowrap" style="width:100%">
+                <!-- Table content -->
+                <thead>
+                    <tr>
+                        <th>User Id</th>
+                        <th>Role Name</th>
+                        <th>Name</th>
+                        <th>Email Id</th>
+                        <th>Contact No</th>
+                        <th>Ward Name</th>
+                        <th>Company Name</th>
+                        <th>Proof Identity</th>
+                        <th>Created at</th>
+                        <th>Update at</th>
+                        <th>Verified</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.contact_no)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WardName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.companyName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.proofOfIdentity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.created_at)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.updated_at)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.is_approved)
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn btn-primary" id="approvedBtn" onclick="approvedContractor(this);">
+                                    Approved
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+    @* user end*@
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script> <!-- Corrected -->
+    <script>
+        // JavaScript code
+        // Initialize DataTable
+        $(document).ready(function () {
+            new DataTable('#example', {
+                searchPanes: true,
+                dom: 'Plfrtip',
+                language: {
+                    searchPanes: {
+                        emptyPanes: ''
+                    }
+                }
+            });
+
+
+           
+        });
+
+        function approvedContractor(btn) {
+            let id = $(btn).closest('tr').find('td:eq(0)').text();
+            alert(id);
+
+            $.ajax({
+                url: '/Admin/getUserById/' + id, // URL to your controller action
+                type: 'POST',
+                
+
+                success: function (response) {
+                    if (response) {
+                        console.log("signup success");
+                    } else
+                    {
+                        console.log("Authentication failed");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("error");
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <!-- OpenLayers CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.1.0/ol.css">
+
+    <style>
+        /* Set height for map container */
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <!-- OpenLayers JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
+
+    <!-- Your custom JavaScript -->
+    <script>
+        // JavaScript code for creating the map
+        const layers = [
+            new ol.layer.Tile({
+                source: new ol.source.OSM(),
+            }),
+        ];
+        const map = new ol.Map({
+            layers: layers,
+            target: 'map',
+            view: new ol.View({
+                center: ol.proj.fromLonLat([72.5714, 23.0225]),
+                zoom: 12, // Increased zoom level
+            }),
+        });
+    </script>
+</body>
+</html>
+    
