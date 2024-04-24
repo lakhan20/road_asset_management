@@ -14,7 +14,16 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
         {
             return View();
         }
+        public PartialViewResult Navbar()
+        {
 
+            WardModel ward = new WardModel();
+            List<WardModel> wards = context.getWardName();
+
+            // Pass the wards data to the partial view
+            return PartialView("_Navbar", wards);
+
+        }
         public ActionResult About()
         {
 

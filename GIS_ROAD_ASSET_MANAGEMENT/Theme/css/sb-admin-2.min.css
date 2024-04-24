@@ -10648,7 +10648,7 @@ a:focus {
 
 @media (min-width:768px) {
     .sidebar {
-        width: 14rem !important
+        width: 20rem !important
     }
 
         .sidebar .nav-item .collapse {
@@ -10688,7 +10688,7 @@ a:focus {
             }
 
             .sidebar .nav-item .nav-link span {
-                font-size: .85rem;
+                font-size: 1.05rem;
                 display: inline
             }
 

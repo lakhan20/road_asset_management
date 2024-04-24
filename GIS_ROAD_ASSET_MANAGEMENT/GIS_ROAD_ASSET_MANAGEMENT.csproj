@@ -264,9 +264,9 @@
     <Content Include="Content\img\team-4.jpg" />
     <Content Include="Content\img\testimonial-img.jpg" />
     <Content Include="Content\img\video-img.jpg" />
-    <Content Include="Content\js\loginValidate.js" />
+    <Content Include="Content\js\loginValidation.js" />
     <Content Include="Content\js\main.js" />
-    <Content Include="Content\js\SignupValidation.js" />
+    <Content Include="Content\js\SignupValidation1.js" />
     <Content Include="Content\js\site.js" />
     <Content Include="Content\lib\animate\animate.css" />
     <Content Include="Content\lib\animate\animate.min.css" />
@@ -499,8 +499,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Theme\css\sb-admin-2.css" />
-    <Content Include="Theme\css\sb-admin-2.min.css" />
     <Content Include="Theme\img\undraw_posting_photo.svg" />
     <Content Include="Theme\img\undraw_profile.svg" />
     <Content Include="Theme\img\undraw_profile_1.svg" />
@@ -2383,10 +2381,13 @@
     <Content Include="Views\Admin\suggestionView.cshtml" />
     <Content Include="Views\Admin\ContractorView.cshtml" />
     <Content Include="Views\Admin\UserView.cshtml" />
+    <Content Include="Views\Home\_Navbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\.vs\GIS\v17\" />
+    <Folder Include="meeet\" />
+    <Folder Include="Theme\css\" />
     <Folder Include="Views\SignUp\" />
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,7 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 {
     public class MyDbContext
     {
-        string cs = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=admin123;";
+        string cs = "Server=10.195.202.141;Port=5432;Database=postgres;User Id=postgres;Password=Admin123;";
         NpgsqlConnection conn = null;
 
         public List<Usermodel> getUser()
@@ -183,6 +183,20 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
             cmd.Parameters.AddWithValue("@p_contact",user.contact_no);
             cmd.Parameters.AddWithValue("@p_ward_id",user.ward_id);
             cmd.Parameters.AddWithValue("@p_role_id",user.role_id);
+
+            int count = cmd.ExecuteNonQuery();
+            if (count > 0) { return true; }
+            else { return false; }
+        }
+        public bool disableUser(int id)
+        {
+            conn = new NpgsqlConnection(cs);
+            conn.Open();
+            string update = $"select deactivate_user({id});";
+            NpgsqlCommand cmd = new NpgsqlCommand(update, conn);
+
+            // Pass the form field values as parameters to the stored procedure
+
 
             int count = cmd.ExecuteNonQuery();
             if (count > 0) { return true; }

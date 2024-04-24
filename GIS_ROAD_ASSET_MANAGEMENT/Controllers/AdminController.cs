@@ -89,7 +89,13 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             return Json(new { Success = true });
         }
 
-
+        [HttpPost]
+        public JsonResult disableUser(int id)
+        {
+            MyDbContext context = new MyDbContext();
+            context.disableUser(id);
+            return Json(new { Success = true });
+        }
 
 
     }

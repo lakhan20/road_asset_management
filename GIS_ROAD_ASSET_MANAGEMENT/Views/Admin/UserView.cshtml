@@ -235,7 +235,7 @@
 
                                     <select name="Eward" id="Eward" class="form-control">
                                         @foreach (var item in Model.wardmoel)
-                                        {
+                                        {   
                                             <option value="@item.ward_id"> @item.ward_name</option>
                                         }
                                     </select>
@@ -321,14 +321,19 @@
                                 @Html.DisplayFor(modelItem => item.is_active)
                             </td>
                             <td>
-                                <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn" onclick="editDetails(this);">
+                                <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails('@item.id');">
                                     Edit
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary" id="disableBtn_@item.id" onclick="changeStatus('@item.id', 'disable');">
+                                    Disable
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary d-none" id="activeBtn_@item.id" onclick="changeStatus('@item.id', 'enable');">
+                                    Enable
                                 </button>
                             </td>
                         </tr>
+                 
                     }
-
-
 
                 </tbody>
             </table>
@@ -349,7 +354,21 @@
         $(document).ready(function () {
 
 
+            $('#WardOfficerModal').on('hidden.bs.modal', function () {
+                // Clear all input fields inside the form
+                $('#WardOfficerForm').find('input').val('');
+                // Clear the error messages
+                $('.error-message').text('');
+                // Optionally, clear other types of fields like select, textarea, etc.
+            });
 
+            $('#AdminModal').on('hidden.bs.modal', function () {
+                // Clear all input fields inside the form
+                $('#AdminForm').find('input').val('');
+                // Clear the error messages
+                $('.error-message').text('');
+                // Optionally, clear other types of fields like select, textarea, etc.
+            });
 
             new DataTable('#example', {
                 searchPanes: true,
@@ -392,14 +411,12 @@
                     data: formData,
                     success: function (response) {
                         // Handle success response
-                        if (response.Success)
-                        {
+                        if (response.Success) {
                             alert('User details updated successfully!');
                             location.reload();
                             $('#EditModal').modal('hide');
                         }
-                        else
-                        {
+                        else {
                             alert('Failed to update user details.');
                         }
                     },
@@ -409,6 +426,19 @@
                     }
                 });
             });
+
+            $('[id^="disableBtn_"]').each(function () {
+                let userId = $(this).attr('id').split('_')[1];
+                let userStatus = localStorage.getItem(`userStatus_${userId}`);
+                if (userStatus === 'disabled') {
+                    $(this).addClass('d-none');
+                    $(`#activeBtn_${userId}`).removeClass('d-none');
+                } else {
+                    $(this).removeClass('d-none');
+                    $(`#activeBtn_${userId}`).addClass('d-none');
+                }
+            });
+
         });
 
         function editDetails(btn) {
@@ -443,6 +473,70 @@
 
 
 
+
+
+        }
+
+        function changeStatus(id, action) {
+            var ok = confirm("Are you sure you want to change the user status?");
+            if (ok) {
+                if (action === 'disable') {
+                    // Disable user
+                    $(`#disableBtn_${id}`).addClass('d-none');
+                    $(`#activeBtn_${id}`).removeClass('d-none');
+                    $.ajax({
+                        url: '/Admin/disableUser', // Replace 'ControllerName' with the actual name of your controller
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { id: id },
+                        success: function (response) {
+                            // Handle success response
+                            if (response.Success) {
+                                
+                                location.reload();
+
+                            } else {
+                                alert('Failed to update user details.');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alert('An error occurred while updating user details.');
+                        }
+                    });
+                    // Store status in localStorage for this user
+                    localStorage.setItem(`userStatus_${id}`, 'disabled');
+                } else {
+                    // Enable user
+                    $(`#disableBtn_${id}`).removeClass('d-none');
+                    $(`#activeBtn_${id}`).addClass('d-none');
+
+                    $.ajax({
+                        url: '/Admin/disableUser', // Replace 'ControllerName' with the actual name of your controller
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { id: id },
+                        success: function (response) {
+                            // Handle success response
+                            if (response.Success) {
+
+                                location.reload();
+
+                            } else {
+                                alert('Failed to update user details.');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alert('An error occurred while updating user details.');
+                        }
+                    });
+
+
+                    // Store status in localStorage for this user
+                    localStorage.setItem(`userStatus_${id}`, 'enabled');
+                }
+            }
         }
 
     </script>

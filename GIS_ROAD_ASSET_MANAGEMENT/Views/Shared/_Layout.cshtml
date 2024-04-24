@@ -1,4 +1,4 @@
-﻿
+﻿@model GIS_ROAD_ASSET_MANAGEMENT.Models.Temp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +9,14 @@
     <meta content="" name="description">
 
 
-    
+
     <link href="~/Content/lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet" />
     <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 
     @* Bootstrap 5.2.3*@
-@*    <link href="~/Content/bootstrap-version.css" rel="stylesheet" />
-*@
+    @*    <link href="~/Content/bootstrap-version.css" rel="stylesheet" />
+    *@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,173 +49,7 @@
 <body>
 
     <div>
-        <!-- Login Modal -->
-        @*  <div class="modal fade" id="loginModal" role="dialog">*@
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            @* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">*@
 
-            <div class="modal-dialog">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Login</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form" name="LoginForm" id="LoginForm" method="post">
-                            <div class="form-group mb-3">
-                                <label for="Lusername"><i class="fa-solid fa-user "></i>&nbsp; Username</label>
-                                <input type="text" name="Lusername" class="form-control" id="Lusername" placeholder="Enter email">
-                                <small id="LemailError" class="error-message text-danger"></small>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Lpassword"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                <input type="password" name="Lpassword" class="form-control" id="Lpassword" placeholder="Enter password">
-                                <small id="LpwdError" class="error-message text-danger"></small>
-                            </div>
-                            <div class="checkbox mb-2">
-                                <label><input type="checkbox" value="" checked>Remember me</label>
-                            </div>
-                            <button type="submit" id="Loginbtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-                        </form>
-                        <div id="errorMessage" class="text-danger"></div> <!-- This is where the error message will be displayed -->
-                    </div>
-                    <div class="modal-footer" style="justify-content: flex-start;">
-                        <p>Not a member? <a id="signup_link" href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-dismiss="modal">Sign Up</a></p>|
-                        <p> <a href="#">Forgot Password?</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--- login modal end-->
-        <!-- signup Modal open -->
-        <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title"> Sign up </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="radio-container">
-                            <input type="radio" name="content" value="Citizen" checked> As Citizen
-                            &nbsp;&nbsp;
-                            <input type="radio" name="content" value="Contractor"> As Contractor
-                        </div>
-                        <br />
-                        <div id="contentCitizen" class="content">
-                            <!-- Content for Citizen -->
-                            <form role="form" name="CitizenForm" id="CitizenForm" method="post">
-                                <div class="form-group mb-3">
-                                    <label for="Cname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                    <input type="text" class="form-control" id="Cname" placeholder="Enter name">
-                                    <span id="CnameError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group  mb-3">
-                                    <label for="CEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                    <input type="text" class="form-control" id="CEmail" placeholder="Enter email">
-                                    <span id="CemailError" class="error-message text-danger"></span>
-                                </div>
-                                <!-- Add more form fields as needed -->
-                                <div class="form-group  mb-3">
-                                    <label for="Ccontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                    <input type="number" class="form-control" id="Ccontact" placeholder="Enter contact no">
-                                    <span id="CnumberError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Cward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                    <div class="select">
-                                        <select id="Cward" class="form-control" name="wardname">
-                                            <option value="1" selected>Iskon</option>
-                                            <option value="2">Sabarmati</option>
-                                            <option value="3">Satelaite</option>
-                                            <option value="4">Paldi</option>
-                                            <option value="5">Sarkhej</option>
-                                        </select>
-                                        <span class="focus"></span>
-                                    </div>
-
-                                    <span id="CwardError" class="error-message text-danger"></span>
-
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Cpsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                    <input type="password" class="form-control" id="Cpsw" placeholder="Enter password">
-                                    <span id="CpswError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Ccnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
-                                    <input type="password" class="form-control" id="Ccnf-psw" placeholder="Enter Confirm password">
-                                    <span id="CCnf-pswError" class="error-message text-danger"></span>
-                                </div>
-                                <button type="submit" id="CitizenSignupBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
-                            </form>
-                        </div>
-                        <div id="contentContractor" class="content" style="display:none;">
-                            <!-- Content for Contractor -->
-                            <form role="form" name="ContractorForm" id="ContractorForm" method="post">
-                                <div class="form-group mb-3">
-                                    <label for="Con_name"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                    <input type="text" class="form-control" id="Con_name" placeholder="Enter name">
-                                    <span id="Con_usrnameError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Con_Email"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                    <input type="text" class="form-control" id="Con_Email" placeholder="Enter email">
-                                    <span id="Con_emailError" class="error-message text-danger"></span>
-                                </div>
-                                <!-- Add more form fields as needed -->
-                                <div class="form-group mb-3">
-                                    <label for="Con_contact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                    <input type="number" class="form-control" id="Con_contact" placeholder="Enter contact no">
-                                    <span id="Con_numberError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Con_Company"><i class="fa-solid fa-building"></i>&nbsp; Company</label>
-                                    <input type="text" class="form-control" id="Con_Company" placeholder="Enter company name">
-                                    <span id="Con_companyError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Con_ward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                    <div class="select">
-                                        <select id="Con_ward" class="form-control" name="wardname">
-                                            <option value="1" selected>Iskon</option>
-                                            <option value="2">Sabarmati</option>
-                                            <option value="3">Satelaite</option>
-                                            <option value="4">Paldi</option>
-                                            <option value="5">Sarkhej</option>
-                                        </select>
-                                        <span class="focus"></span>
-                                    </div>
-                                    <span id="Con_wardError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Con_identity"><i class="fa-solid fa-file"></i>&nbsp; Proof of identity</label>
-                                    <input type="file" class="form-control" id="Con_identity">
-                                    <span id="Con_proofError" class="error-message text-danger"></span>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="Con_psw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                    <input type="password" class="form-control" id="Con_psw" placeholder="Enter password">
-                                    <span id="Con_pswError" class="error-message text-danger"></span>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="Con_cnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
-                                    <input type="password" class="form-control" id="Con_cnf-psw" placeholder="Enter Confirm password">
-                                    <span id="Con_conf-pswError" class="error-message text-danger"></span>
-                                </div>
-                                <button type="submit" id="ContractorSignupBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style=" justify-content: flex-start; ">
-                        <p>Already have an account ? <a id="log_link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-dismiss="modal">Log In</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--- signup modal end-->
         @RenderBody()
     </div>
@@ -274,7 +108,29 @@
             </div>
         </div>
     </footer>
-        <script src="~/Content/js/loginValidate.js"></script>
+    <script src="~/Content/js/loginValidate.js"></script>
     <script src="~/Content/js/SignupValidation.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Clear form fields when the modal is closed
+            $('#loginModal').on('hidden.bs.modal', function () {
+                // Clear all input fields inside the form
+                $('#LoginForm').find('input').val('');
+                // Clear the error messages
+                $('.error-message').text('');
+                // Optionally, clear other types of fields like select, textarea, etc.
+            });
+            $('#signupModal').on('hidden.bs.modal', function () {
+                // Clear all input fields inside the form
+                $('#CitizenForm').find('input').val('');
+                $('#ContractorForm').find('input').val('');
+
+                // Clear the error messages
+                $('.error-message').text('');
+                // Optionally, clear other types of fields like select, textarea, etc.
+            });
+
+        });
+    </script>
 </body>
 </html>

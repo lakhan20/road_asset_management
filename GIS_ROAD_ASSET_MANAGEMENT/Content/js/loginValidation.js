@@ -100,6 +100,3 @@ $(document).ready(function () {
         }
     });
 });
-
-
-
