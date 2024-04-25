@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GIS_ROAD_ASSET_MANAGEMENT.Filters;
 using GIS_ROAD_ASSET_MANAGEMENT.Models;
 
 namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
 {
+    [UserAuthentication]
     public class AdminController : Controller
     {
         Temp temp = new Temp();
         public ActionResult HomeView()
         {
-            var userId = SessionHelper.Get<int>("user_id");
-            ViewBag.UserId = userId;
-            return View();
+                var userId = SessionHelper.Get<int>("user_id");
+                ViewBag.UserId = userId;
+                return View();
+           
+           
         }
         public ActionResult DashboardView()
         {
