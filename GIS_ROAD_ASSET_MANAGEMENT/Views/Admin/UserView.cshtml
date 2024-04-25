@@ -1,0 +1,543 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@{
+    ViewBag.Title = "Select Ward";
+}
+
+
+@model GIS_ROAD_ASSET_MANAGEMENT.Models.Temp
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.0/css/searchPanes.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.0/css/select.bootstrap5.css">
+
+    <style>
+        .container {
+            width: 100%;
+            max-width: none;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        /* Style for the buttons */
+        .btn-custom {
+            background-color: #393939;
+            color: #fff; /* Text color */
+            /* Border color */
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Contractor Management</a>
+            <div class="d-flex">
+                <button class="btn btn-custom" id="openFirstModal"><i class="fas fa-folder-plus"></i>Add WardOfficer</button>
+                <button class="btn btn-custom mx-2" id="openFirstModal1"><i class="fas fa-folder-plus"></i>Add Admin</button>
+                @*<button class="btn btn-custom mx-2">
+                        <i class="fas fa-file-csv"></i> Export to CSV
+                    </button>
+                    <button class="btn btn-custom mx-2">
+                        <i class="fas fa-file-pdf"></i> Export to PDF
+                    </button>*@
+            </div>
+        </div>
+
+    </nav>
+
+
+    @*add ward officer modal start*@
+
+    <div class="modal fade" id="WardOfficerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"> Sign up </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <br />
+                    <div id="contentWardOfficer" class="content">
+                        <!-- Content for Citizen -->
+                        <form role="form" name="WardOfficerForm" id="WardOfficerForm" method="post">
+                            <div class="form-group mb-3">
+                                <label for="Wname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                <input type="text" class="form-control" id="Wname" placeholder="Enter name">
+                                <span id="WnameError" class="error-message text-danger"></span>
+                            </div>
+                            <div class="form-group  mb-3">
+                                <label for="WEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                <input type="text" class="form-control" id="WEmail" placeholder="Enter email">
+                                <span id="WemailError" class="error-message text-danger"></span>
+                            </div>
+                            <!-- Add more form fields as needed -->
+                            <div class="form-group  mb-3">
+                                <label for="Wcontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                <input type="number" class="form-control" id="Wcontact" placeholder="Enter contact no">
+                                <span id="WnumberError" class="error-message text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Wward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                <div class="select">
+                                    <select name="Wward" id="Wward" class="form-control">
+                                        @foreach (var item in Model.wardmoel)
+                                        {
+                                            <option value="@item.ward_id"> @item.ward_name</option>
+                                        }
+                                    </select>
+                                    <span class="focus"></span>
+                                </div>
+                                <span id="WwardError" class="error-message text-danger"></span>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Wpsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                <input type="password" class="form-control" id="Wpsw" placeholder="Enter password">
+                                <span id="WpswError" class="error-message text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Wcnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
+                                <input type="password" class="form-control" id="Wcnf-psw" placeholder="Enter Confirm password">
+                                <span id="WCnf-pswError" class="error-message text-danger"></span>
+                            </div>
+                            <button type="submit" id="WardOfficerBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> ADD</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*add ward officer modal end*@
+
+    @*add admin modal start*@
+
+    <div class="modal fade" id="AdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"> Sign up </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <br />
+                    <div id="contentAdmin" class="content">
+                        <!-- Content for Citizen -->
+                        <form role="form" name="AdminForm" id="AdminForm" method="post">
+                            <div class="form-group mb-3">
+                                <label for="Aname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                <input type="text" class="form-control" id="Aname" placeholder="Enter name">
+                                <span id="AnameError" class="error-message text-danger"></span>
+                            </div>
+                            <div class="form-group  mb-3">
+                                <label for="AEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                <input type="text" class="form-control" id="AEmail" placeholder="Enter email">
+                                <span id="AemailError" class="error-message text-danger"></span>
+                            </div>
+                            <!-- Add more form fields as needed -->
+                            <div class="form-group  mb-3">
+                                <label for="Acontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                <input type="number" class="form-control" id="Acontact" placeholder="Enter contact no">
+                                <span id="AnumberError" class="error-message text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Award"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                <div class="select">
+                                    <select name="Award" id="Award" class="form-control">
+                                        @foreach (var item in Model.wardmoel)
+                                        {
+                                            <option value="@item.ward_id"> @item.ward_name</option>
+                                        }
+                                    </select>
+                                    <span class="focus"></span>
+                                </div>
+
+                                <span id="AwardError" class="error-message text-danger"></span>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Apsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                <input type="password" class="form-control" id="Apsw" placeholder="Enter password">
+                                <span id="ApswError" class="error-message text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Acnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
+                                <input type="password" class="form-control" id="Acnf-psw" placeholder="Enter Confirm password">
+                                <span id="ACnf-pswError" class="error-message text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> ADD</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*add admin modal end*@
+
+    @*change Role Modal*@
+
+    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"> Edit Details </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <br />
+                    <div id="contentAdmin" class="content">
+                        <!-- Content for Citizen -->
+                        <form role="form" name="EditForm" id="EditForm" method="post">
+                            <div class="form-group mb-3">
+                                <label for="Eid"><i class="fa-solid fa-user "></i>&nbsp; Id</label>
+                                <input type="text" class="form-control" id="Eid" placeholder="Id" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Ename"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                <input type="text" class="form-control" id="Ename" placeholder="Enter name">
+                            </div>
+                            <div class="form-group  mb-3">
+                                <label for="EEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                <input type="text" class="form-control" id="EEmail" placeholder="Enter email">
+                            </div>
+                            <!-- Add more form fields as needed -->
+                            <div class="form-group  mb-3">
+                                <label for="Econtact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                <input type="number" class="form-control" id="Econtact" placeholder="Enter contact no">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Eward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                <div class="select">
+                                    @*@Html.DropDownList("SelectedWard", ViewBag.WardSelectList as IEnumerable<SelectListItem>, "Select Ward", new { @class = "form-control" }) *@
+
+                                    <select name="Eward" id="Eward" class="form-control">
+                                        @foreach (var item in Model.wardmoel)
+                                        {
+                                            <option value="@item.ward_id"> @item.ward_name</option>
+                                        }
+                                    </select>
+
+                                    <span class="focus"></span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Erole"> <i class="fa-solid fa-building"></i>&nbsp; Role Type</label>
+                                <div class="select">
+                                    @*@Html.DropDownList("SelectedWard", ViewBag.WardSelectList as IEnumerable<SelectListItem>, "Select Ward", new { @class = "form-control" }) *@
+
+                                    <select name="Erole" id="Erole" class="form-control">
+                                        @foreach (var item in Model.rolemodel)
+                                        {
+                                            <option value="@item.role_id"> @item.role_name</option>
+                                        }
+                                    </select>
+
+                                    <span class="focus"></span>
+                                </div>
+                            </div>
+                            <button type="submit" id="saveBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span>Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*change role modal end*@
+
+
+    <div class="container">
+        <div class="table-responsive mt-4">
+            <table id="example" class="table table-striped nowrap" style="width:100%">
+                <!-- Table content -->
+                <thead>
+                    <tr>
+                        <th>User Id</th>
+                        <th>Role Name</th>
+                        <th>Name</th>
+                        <th>Email Id</th>
+                        <th>Contact No</th>
+                        <th>Ward Name</th>
+                        <th>Created at</th>
+                        <th>Update at</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model.usermodel)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.contact_no)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WardName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.created_at)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.updated_at)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.is_active)
+                            </td>
+                            <td>
+      
+                                <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails(this);">
+                                    Edit
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary" id="disableBtn_@item.id" onclick="changeStatus('@item.id', 'disable');">
+                                    Disable
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary d-none" id="activeBtn_@item.id" onclick="changeStatus('@item.id', 'enable');">
+                                    Enable
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+    @* user end*@
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script> <!-- Corrected -->
+    <script>
+        // JavaScript code
+        // Initialize DataTable
+        $(document).ready(function () {
+
+            $('#WardOfficerModal').on('hidden.bs.modal', function () {
+                // Clear all input fields inside the form
+                $('#WardOfficerForm').find('input').val('');
+                // Clear the error messages
+                $('.error-message').text('');
+                // Optionally, clear other types of fields like select, textarea, etc.
+            });
+
+            $('#AdminModal').on('hidden.bs.modal', function () {
+                // Clear all input fields inside the form
+                $('#AdminForm').find('input').val('');
+                // Clear the error messages
+                $('.error-message').text('');
+                // Optionally, clear other types of fields like select, textarea, etc.
+            });
+
+
+            new DataTable('#example', {
+                searchPanes: true,
+                dom: 'Plfrtip',
+                language: {
+                    searchPanes: {
+                        emptyPanes: ''
+                    }
+                }
+            });
+
+
+            // Event handler for opening the first modal
+            $('#editBtn').click(() => {
+                $('#EditModal').modal('show');
+            });
+
+            $('#openFirstModal').click(() => {
+                $('#WardOfficerModal').modal('show');
+            });
+
+            $('#openFirstModal1').click(() => {
+                $('#AdminModal').modal('show');
+            });
+            $('#saveBtn').click(() => {
+                var formData = {
+                    id: $('#Eid').val(),
+                    name: $('#Ename').val(),
+                    email_id: $('#EEmail').val(),
+                    contact_no: $('#Econtact').val(),
+                    ward_id: $('#Eward').val(),
+                    role_id: $('#Erole').val()
+                };
+
+                // Make AJAX request
+                $.ajax({
+                    url: '/Admin/updateUser', // Replace 'ControllerName' with the actual name of your controller
+                    type: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    success: function (response) {
+                        // Handle success response
+                        if (response.Success)
+                        {
+                            alert('User details updated successfully!');
+                            location.reload();
+                            $('#EditModal').modal('hide');
+                        }
+                        else
+                        {
+                            alert('Failed to update user details.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert('An error occurred while updating user details.');
+                    }
+                });
+            });
+
+            $('[id^="disableBtn_"]').each(function () {
+                let userId = $(this).attr('id').split('_')[1];
+                let userStatus = localStorage.getItem(`userStatus_${userId}`);
+                if (userStatus === 'disabled') {
+                    $(this).addClass('d-none');
+                    $(`#activeBtn_${userId}`).removeClass('d-none');
+                } else {
+                    $(this).removeClass('d-none');
+                    $(`#activeBtn_${userId}`).addClass('d-none');
+                }
+            });
+
+        });
+
+        function editDetails(btn) {
+            let id = $(btn).closest('tr').find('td:eq(0)').text().trim();
+            let roleName = $(btn).closest('tr').find('td:eq(1)').text().trim();
+            let name = $(btn).closest('tr').find('td:eq(2)').text().trim();
+            let emailId = $(btn).closest('tr').find('td:eq(3)').text().trim();
+            let ContactNo = $(btn).closest('tr').find('td:eq(4)').text().trim();
+
+            $('#Eid').val(id);
+            $('#Ename').val(name);
+            $('#EEmail').val(emailId);
+            $('#Econtact').val(ContactNo);
+
+            let WardName = $(btn).closest('tr').find('td:eq(5)').text().trim();
+
+            // Find the corresponding option in the dropdown list and set it as selected
+            $('#Eward').find('option').each(function () {
+                if ($(this).text().trim() === WardName) {
+                    $(this).prop('selected', true);
+                }
+            });
+
+            // Find the corresponding option in the dropdown list and set it as selected
+            $('#Erole').find('option').each(function () {
+                if ($(this).text().trim() === roleName) {
+                    $(this).prop('selected', true);
+                }
+            });
+        }
+
+        function changeStatus(id, action) {
+            var ok = confirm("Are you sure you want to change the user status?");
+            if (ok) {
+                if (action === 'disable') {
+                    // Disable user
+                    $(`#disableBtn_${id}`).addClass('d-none');
+                    $(`#activeBtn_${id}`).removeClass('d-none');
+                    $.ajax({
+                        url: '/Admin/disableUser', // Replace 'ControllerName' with the actual name of your controller
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { id: id },
+                        success: function (response) {
+                            // Handle success response
+                            if (response.Success) {
+
+                                location.reload();
+
+                            } else {
+                                alert('Failed to update user details.');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alert('An error occurred while updating user details.');
+                        }
+                    });
+                    // Store status in localStorage for this user
+                    localStorage.setItem(`userStatus_${id}`, 'disabled');
+                } else {
+                    // Enable user
+                    $(`#disableBtn_${id}`).removeClass('d-none');
+                    $(`#activeBtn_${id}`).addClass('d-none');
+
+                    $.ajax({
+                        url: '/Admin/disableUser', // Replace 'ControllerName' with the actual name of your controller
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { id: id },
+                        success: function (response) {
+                            // Handle success response
+                            if (response.Success) {
+
+                                location.reload();
+
+                            } else {
+                                alert('Failed to update user details.');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alert('An error occurred while updating user details.');
+                        }
+                    });
+
+
+                    // Store status in localStorage for this user
+                    localStorage.setItem(`userStatus_${id}`, 'enabled');
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+

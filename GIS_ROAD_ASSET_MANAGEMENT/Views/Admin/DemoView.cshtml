@@ -1,0 +1,114 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .error12 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <button data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="far fa-edit"></i></button>
+    <form>
+        <div class="modal fade" id="exampleModal1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <!-- Modal 1 content -->
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <!-- Added modal-lg class for large size -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Update Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="milestonename" class="form-label">Milestone Name <span class="error1">*</span> </label>
+                                <input type="text" class="form-control" id="milestonename" required>
+                                <span class="error1 checkFirstName"></span>
+                            </div>
+                            <div class="col">
+                                <label for="desc" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="desc">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="image">
+                            </div>
+                            <div class="col">
+                                <label for="doc" class="form-label">Document</label>
+                                <input type="file" class="form-control" id="doc">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="startdate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startdate">
+                            </div>
+                            <div class="col">
+                                <label for="enddate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="enddate">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="remarks" class="form-label">Remarks</label>
+                                <input type="text" class="form-control" id="remarks">
+                            </div>
+                            <div class="col">
+                                <label for="status" class="form-label">Milestone Status</label>
+                                <select class="form-select" id="status">
+                                    <option selected>Select Milestone Status...</option>
+                                    <option value="1">In-progress</option>
+                                    <option value="2">Pending</option>
+                                    <option value="3">Completed</option>
+                                    <option value="4">Not-Yet-Started</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="right1">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#right1").click(function () {
+                var fname = $("#milestonename").val();
+                if (!validate(fname)) {
+                    return false; // Prevent form submission if validation fails
+                }
+                $('#exampleModal1').modal('hide');
+            });
+
+            function validate(milestonename) {
+                if (milestonename.trim() === "") {
+                    $(".checkFirstName").html("Required");
+                    return false;
+                }
+                return true;
+            }
+        });
+    </script>
+</body>
+</html>

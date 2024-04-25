@@ -1,0 +1,438 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.0/css/searchPanes.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.0/css/select.bootstrap5.css">
+    <style>
+        .container {
+            width: 100%;
+            max-width: none;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <div class="modal fade" id="exampleModal1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <!-- Modal 1 content -->
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <!-- Added modal-lg class for large size -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Update Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="milestonename" class="form-label">Milestone Name</label>
+                                <input type="text" class="form-control" id="milestonename">
+                            </div>
+                            <div class="col">
+                                <label for="desc" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="desc">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="image">
+                            </div>
+                            <div class="col">
+                                <label for="doc" class="form-label">Document</label>
+                                <input type="file" class="form-control" id="doc">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="startdate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startdate">
+                            </div>
+                            <div class="col">
+                                <label for="enddate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="enddate">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="remarks" class="form-label">Remarks</label>
+                                <input type="text" class="form-control" id="remarks">
+                            </div>
+                            <div class="col">
+                                <label for="status" class="form-label">Milestone Status</label>
+                                <select class="form-select" id="status">
+                                    <option selected>Select Milestone Status...</option>
+                                    <option value="1">In-progress</option>
+                                    <option value="2">Pending</option>
+                                    <option value="3">Completed</option>
+                                    <option value="4">Not-Yet-Started</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" style="background-color: #282828; border-color: black;" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        <div class="table-responsive mt-4">
+            <table id="example" class="table table-striped nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Project Title</th>
+                        <th>Milestone Name</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Document</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>P1</td>
+                        <td>Project Planning</td>
+                        <td>Planning phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-01</td>
+                        <td>2024-01-15</td>
+                        <td>Initial planning</td>
+                        <td>Complete</td>
+                        <td>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>P1</td>
+                        <td>Design</td>
+                        <td>Designing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-16</td>
+                        <td>2024-01-31</td>
+                        <td>Designing the project</td>
+                        <td>In Progress</td>
+                        <td>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>P1</td>
+                        <td>Development</td>
+                        <td>Development phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-02-01</td>
+                        <td>2024-02-28</td>
+                        <td>Coding and implementation</td>
+                        <td>Not Started</td>
+                        <td>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>P1</td>
+                        <td>Testing</td>
+                        <td>Testing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-01</td>
+                        <td>2024-03-15</td>
+                        <td>Testing the project</td>
+                        <td>Not Started</td>
+                        <td>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>P1</td>
+                        <td>Deployment</td>
+                        <td>Deployment phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-16</td>
+                        <td>2024-03-31</td>
+                        <td>Deploying the project</td>
+                        <td>Not Started</td>
+                        <td>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>P1</td>
+                        <td>Project Planning</td>
+                        <td>Planning phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-01</td>
+                        <td>2024-01-15</td>
+                        <td>Initial planning</td>
+                        <td>Complete</td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>P1</td>
+                        <td>Design</td>
+                        <td>Designing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-16</td>
+                        <td>2024-01-31</td>
+                        <td>Designing the project</td>
+                        <td>In Progress</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>P1</td>
+                        <td>Development</td>
+                        <td>Development phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-02-01</td>
+                        <td>2024-02-28</td>
+                        <td>Coding and implementation</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>P1</td>
+                        <td>Testing</td>
+                        <td>Testing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-01</td>
+                        <td>2024-03-15</td>
+                        <td>Testing the project</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>P1</td>
+                        <td>Deployment</td>
+                        <td>Deployment phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-16</td>
+                        <td>2024-03-31</td>
+                        <td>Deploying the project</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>P1</td>
+                        <td>Project Planning</td>
+                        <td>Planning phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-01</td>
+                        <td>2024-01-15</td>
+                        <td>Initial planning</td>
+                        <td>Complete</td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>P1</td>
+                        <td>Design</td>
+                        <td>Designing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-16</td>
+                        <td>2024-01-31</td>
+                        <td>Designing the project</td>
+                        <td>In Progress</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>P1</td>
+                        <td>Development</td>
+                        <td>Development phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-02-01</td>
+                        <td>2024-02-28</td>
+                        <td>Coding and implementation</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>P1</td>
+                        <td>Testing</td>
+                        <td>Testing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-01</td>
+                        <td>2024-03-15</td>
+                        <td>Testing the project</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>P1</td>
+                        <td>Deployment</td>
+                        <td>Deployment phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-16</td>
+                        <td>2024-03-31</td>
+                        <td>Deploying the project</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>P1</td>
+                        <td>Project Planning</td>
+                        <td>Planning phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-01</td>
+                        <td>2024-01-15</td>
+                        <td>Initial planning</td>
+                        <td>Complete</td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>P1</td>
+                        <td>Design</td>
+                        <td>Designing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-01-16</td>
+                        <td>2024-01-31</td>
+                        <td>Designing the project</td>
+                        <td>In Progress</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>P1</td>
+                        <td>Development</td>
+                        <td>Development phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-02-01</td>
+                        <td>2024-02-28</td>
+                        <td>Coding and implementation</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>P1</td>
+                        <td>Testing</td>
+                        <td>Testing phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-01</td>
+                        <td>2024-03-15</td>
+                        <td>Testing the project</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>P1</td>
+                        <td>Deployment</td>
+                        <td>Deployment phase for the project</td>
+                        <td><img src="placeholder.jpg" alt="Image"></td>
+                        <td><a href="document.pdf" target="_blank">Document</a></td>
+                        <td>2024-03-16</td>
+                        <td>2024-03-31</td>
+                        <td>Deploying the project</td>
+                        <td>Not Started</td>
+                        <td><button><i class="far fa-edit"></i></button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Project Title</th>
+                        <th>Milestone Name</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Document</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </tfoot>
+
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        // Initialize DataTable
+        $(document).ready(function () {
+            new DataTable('#example', {
+                searchPanes: true,
+                dom: 'Plfrtip',
+                language: {
+                    searchPanes: {
+                        emptyPanes: ''
+                    }
+                }
+            });
+        });</script>
+
+</body>
+</html>
+
