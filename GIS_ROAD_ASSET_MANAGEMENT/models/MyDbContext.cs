@@ -12,7 +12,7 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 {
     public class MyDbContext
     {
-        string cs = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=admin123;";
+        string cs = "Server=10.195.202.141;Port=5432;Database=postgres;User Id=postgres;Password=Admin123;";
         NpgsqlConnection conn = null;
 
         public List<Usermodel> getUser()

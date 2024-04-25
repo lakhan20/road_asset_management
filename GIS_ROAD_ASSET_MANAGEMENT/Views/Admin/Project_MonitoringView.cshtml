@@ -102,7 +102,7 @@
                     }
 
                     #addProjectForm .form-header .stepIndicator.active::before {
-                        background-color: ##28a745;
+                        background-color: #28a745;
                         border: 3px solid #858796;
                     }
 
@@ -205,10 +205,10 @@
                 <a class="navbar-brand" href="#">Project Monitoring</a>
                 <div class="d-flex">
                     <button class="btn btn-custom" id="mg" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-folder-plus"></i>   Add Project</button>
-                    <button class="btn btn-custom mx-2">
+                    <button class="btn btn-custom mx-2" id="getCSV">
                         <i class="fas fa-file-csv"></i> Export to CSV
                     </button>
-                    <button class="btn btn-custom mx-2">
+                    <button class="btn btn-custom mx-2" id="getPDF">
                         <i class="fas fa-file-pdf"></i> Export to PDF
                     </button>
                 </div>
@@ -403,7 +403,7 @@
         <!-- Button trigger modal -->
         <div class="container">
             <div class="table-responsive mt-4">
-                <table id="example" class="table table-striped nowrap" style="width:100%">
+                <table id="table_d" class="table table-striped nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Sr.no</th>
@@ -506,7 +506,7 @@
         @*for users*@
         <div class="container">
             <div class="table-responsive mt-4">
-                <table id="example" class="table table-striped nowrap" style="width:100%">
+                <table id="table_d" class="table table-striped nowrap" style="width:100%">
                     <!-- Table content -->
                     <thead>
                         <tr>
@@ -1016,6 +1016,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
     <!-- Corrected -->
     <!-- OpenLayers JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
@@ -1023,7 +1025,7 @@
         // JavaScript code
         // Initialize DataTable
         $(document).ready(function () {
-            new DataTable('#example', {
+            new DataTable('#table_d', {
                 searchPanes: true,
                 dom: 'Plfrtip',
                 language: {
@@ -1128,6 +1130,77 @@
                     alert("project added successfully...!!");
                 }
             });
+        });
+
+        document.getElementById("getCSV").addEventListener("click", function () {
+            // Get the table
+            var table = document.getElementById("table_d");
+            // Prepare the CSV data
+            var csv = "";
+            for (var i = 0; i < table.rows.length - 1; i++) {
+                var rowData = [];
+                var cells = table.rows[i].cells;
+                for (var j = 0; j < cells.length - 1; j++) { // Exclude the last cell
+                    if (j != 6 && j != 7) {
+                        rowData.push(cells[j].innerText);
+                    }
+                }
+                csv += rowData.join(",") + "\n";
+            }
+
+            // Create a Blob object from the CSV string
+            var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+            // Create a download link
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "table_data.csv";
+
+            // Append the link to the body and trigger the click event
+            document.body.appendChild(link);
+            link.click();
+
+            // Cleanup
+            document.body.removeChild(link);
+        });
+        document.getElementById("getPDF").addEventListener("click", function () {
+            // Get the table
+            var table = document.getElementById("table_d");
+
+            // Initialize jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Prepare the data
+            var data = [];
+            for (var i = 1; i < table.rows.length - 1; i++) {
+                var rowData = [];
+                var cells = table.rows[i].cells;
+                for (var j = 0; j < cells.length - 1; j++) { // Exclude the last cell
+                    if (j != 6 && j != 7) {
+                        rowData.push(cells[j].innerText);
+                    }
+                }
+                data.push(rowData);
+            }
+
+            //Set the table columns
+            var columns = [];
+            var headerCells = table.rows[0].cells;
+            for (var i = 0; i < headerCells.length - 1; i++) { // Exclude the last header
+                if (i != 6 && i != 7) {
+                    columns.push(headerCells[i].innerText);
+                }
+            }
+
+            // Add the table to the PDF
+            doc.autoTable({
+                head: [columns],
+                body: data
+            });
+
+            // Save the PDF
+            doc.save('table_data.pdf');
         });
     </script>
 </body>
