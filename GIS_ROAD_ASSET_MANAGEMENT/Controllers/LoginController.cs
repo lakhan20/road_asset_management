@@ -82,7 +82,7 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                                             EmailId = emailId,
                                             RoleId = roleId,
                                         };
-
+                                        SessionHelper.Set("user_id", userId);
                                         // Set success message in TempData
                                         TempData["SuccessMessage"] = "Login successful! Welcome to the dashboard.";
                                         return Json(new { Success = true, Data = responseData1 });
@@ -101,8 +101,8 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                         EmailId = emailId,
                         RoleId = roleId,
                     };
-
-                    // Set success message in TempData
+                    SessionHelper.Set("user_id", userId);
+                        // Set success message in TempData
                     TempData["SuccessMessage"] = "Login successful! Welcome to the dashboard.";
 
                     // Return JSON data containing the authentication status and additional data
@@ -116,6 +116,14 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
 
                 
             }
+        }
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            Console.WriteLine("Session Clearing...");
+            Session.Clear();
+            Console.WriteLine("Session Clear...");
+                return Json(new { Success = true });
         }
     }
     

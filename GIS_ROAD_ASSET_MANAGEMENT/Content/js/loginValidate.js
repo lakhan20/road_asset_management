@@ -78,7 +78,7 @@ $(document).ready(function () {
 
             //Send AJAX request to the controller
             $.ajax({
-                url: '/Login/Login', // URL to your controller action
+                url: 'Login/Login', // URL to your controller action
                 type: 'POST',
                 data: formData,
                 success: function (response) {
@@ -98,5 +98,28 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    //for logout
+
+    $('#Logoutbtn').click(function () {
+        console.log("logout.............");
+        $.ajax({
+            url: '/Login/Logout', // URL to your controller action
+            type: 'POST',
+            success: function (response) {
+                if (response.Success) {
+                    console.log("logout");
+                    window.location.replace = "/home/index";
+                } else {
+
+                    $('#errorMessage').text(response.message);
+                    console.log("not logout")
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("error");
+            }
+        });
     });
 });

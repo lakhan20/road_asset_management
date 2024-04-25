@@ -12,10 +12,13 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
         Temp temp = new Temp();
         public ActionResult HomeView()
         {
+            var userId = SessionHelper.Get<int>("user_id");
+            ViewBag.UserId = userId;
             return View();
         }
         public ActionResult DashboardView()
         {
+           
             return View();
         }
 

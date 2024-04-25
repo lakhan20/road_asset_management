@@ -180,6 +180,7 @@
     <Compile Include="Models\DatabaseConnectionManager.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\Temp.cs" />
     <Compile Include="Models\Usermodel.cs" />
     <Compile Include="Models\WardModel.cs" />
@@ -264,7 +265,7 @@
     <Content Include="Content\img\team-4.jpg" />
     <Content Include="Content\img\testimonial-img.jpg" />
     <Content Include="Content\img\video-img.jpg" />
-    <Content Include="Content\js\loginValidation.js" />
+    <Content Include="Content\js\loginValidate.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\SignupValidation1.js" />
     <Content Include="Content\js\site.js" />

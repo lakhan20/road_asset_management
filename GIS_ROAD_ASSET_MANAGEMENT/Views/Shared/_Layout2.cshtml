@@ -41,6 +41,7 @@
                 <a class="nav-link" href="/Admin/HomeView">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Home</span>
+                    <h3>Useid:@ViewBag.UserId</h3>
                 </a>
             </li>
             <!-- Divider -->
@@ -375,7 +376,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button id="Logoutbtn" class="btn btn-danger" type="button" data-dismiss="modal">logout</button>
                 </div>
             </div>
         </div>
@@ -393,5 +394,26 @@
     <!-- Page level custom scripts -->
     <script src="~/Theme/js/demo/chart-area-demo.js"></script>
     <script src="~/Theme/js/demo/chart-pie-demo.js"></script>
+    <script>
+        $('#Logoutbtn').click(function () {
+            console.log("logout.............");
+            $.ajax({
+                url: '/Login/Logout', // URL to your controller action
+                type: 'POST',
+                success: function (response) {
+                    if (response.Success) {
+                        console.log("logout");
+                        window.location.href = "/Home/Index";
+                    } else {
+                        $('#errorMessage').text(response.message);
+                        console.log("not logout")
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("error");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
