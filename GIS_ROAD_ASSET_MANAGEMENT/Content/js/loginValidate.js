@@ -66,7 +66,7 @@ $(document).ready(function () {
 });
 
 
-$('#Logoutbtn11').click(function () {
+$('#Logoutbtn11').submit(function () {
     console.log("logout.............");
     $.ajax({
         url: '/Login/Logout', // URL to your controller action
