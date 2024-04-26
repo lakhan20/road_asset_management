@@ -38,6 +38,35 @@
             color: #fff; /* Text color */
             /* Border color */
         }
+
+        .form-footer {
+            overflow: auto;
+            gap: 20px;
+        }
+
+        .form-footer button {
+            background-color: #000;
+            border: 1px solid #000 !important;
+            color: #ffffff;
+            border: none;
+            padding: 13px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            flex: 1;
+            margin-top: 5px;
+        }
+
+        .form-footer button:hover {
+            opacity: 0.8;
+        }
+
+        .modal-header {
+            background-color: #282828
+        }
+        .modal-title {
+            color: #fff
+        }
     </style>
 </head>
 <body>
@@ -52,219 +81,227 @@
             <div class="d-flex">
                 <button class="btn btn-custom" id="openFirstModal"><i class="fas fa-folder-plus"></i>Add WardOfficer</button>
                 <button class="btn btn-custom mx-2" id="openFirstModal1"><i class="fas fa-folder-plus"></i>Add Admin</button>
-                @*<button class="btn btn-custom mx-2">
-                        <i class="fas fa-file-csv"></i> Export to CSV
-                    </button>
-                    <button class="btn btn-custom mx-2">
-                        <i class="fas fa-file-pdf"></i> Export to PDF
-                    </button>*@
             </div>
         </div>
 
     </nav>
 
-
     @*add ward officer modal start*@
 
-    <div class="modal fade" id="WardOfficerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"> Sign up </h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                </div>
-                <div class="modal-body">
-
-                    <br />
-                    <div id="contentWardOfficer" class="content">
-                        <!-- Content for Citizen -->
-                        <form role="form" name="WardOfficerForm" id="WardOfficerForm" method="post">
-                            <div class="form-group mb-3">
-                                <label for="Wname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                <input type="text" class="form-control" id="Wname" placeholder="Enter name">
-                                <span id="WnameError" class="error-message text-danger"></span>
-                            </div>
-                            <div class="form-group  mb-3">
-                                <label for="WEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                <input type="text" class="form-control" id="WEmail" placeholder="Enter email">
-                                <span id="WemailError" class="error-message text-danger"></span>
-                            </div>
-                            <!-- Add more form fields as needed -->
-                            <div class="form-group  mb-3">
-                                <label for="Wcontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                <input type="number" class="form-control" id="Wcontact" placeholder="Enter contact no">
-                                <span id="WnumberError" class="error-message text-danger"></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Wward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                <div class="select">
-                                    <select name="Wward" id="Wward" class="form-control">
-                                        @foreach (var item in Model.wardmoel)
-                                        {
-                                            <option value="@item.ward_id"> @item.ward_name</option>
-                                        }
-                                    </select>
-                                    <span class="focus"></span>
+    <form role="form" name="WardOfficerForm" id="WardOfficerForm" method="post">
+        <div class="modal fade" id="WardOfficerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5"> Sign up </h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contentWardOfficer">
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="Wname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                    <input type="text" class="form-control" id="Wname" placeholder="Enter name">
+                                    <span id="WnameError" class="error-message text-danger"></span>
                                 </div>
-                                <span id="WwardError" class="error-message text-danger"></span>
+                                <div class="form-group col">
+                                    <label for="Wward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                    <div class="select">
+                                        <select name="Wward" id="Wward" class="form-control">
+                                            @foreach (var item in Model.wardmoel)
+                                            {
+                                                <option value="@item.ward_id"> @item.ward_name</option>
+                                            }
+                                        </select>
+                                        <span class="focus"></span>
+                                    </div>
+                                    <span id="WwardError" class="error-message text-danger"></span>
 
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="Wpsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                <input type="password" class="form-control" id="Wpsw" placeholder="Enter password">
-                                <span id="WpswError" class="error-message text-danger"></span>
+                            <div class="row mb-3">
+                                <div class="form-group  col">
+                                    <label for="WEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                    <input type="text" class="form-control" id="WEmail" placeholder="Enter email">
+                                    <span id="WemailError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group  col">
+                                    <label for="Wcontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                    <input type="number" class="form-control" id="Wcontact" placeholder="Enter contact no">
+                                    <span id="WnumberError" class="error-message text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="Wcnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
-                                <input type="password" class="form-control" id="Wcnf-psw" placeholder="Enter Confirm password">
-                                <span id="WCnf-pswError" class="error-message text-danger"></span>
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="Wpsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                    <input type="password" class="form-control" id="Wpsw" placeholder="Enter password">
+                                    <span id="WpswError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="Wcnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
+                                    <input type="password" class="form-control" id="Wcnf-psw" placeholder="Enter Confirm password">
+                                    <span id="WCnf-pswError" class="error-message text-danger"></span>
+                                </div>
                             </div>
-                            <button type="submit" id="WardOfficerBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> ADD</button>
-                        </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer form-footer d-flex">
+
+                        <button type="submit" id="WardOfficerBtn"><span class="glyphicon glyphicon-off"></span>ADD</button>
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     @*add ward officer modal end*@
 
     @*add admin modal start*@
 
-    <div class="modal fade" id="AdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"> Sign up </h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                </div>
-                <div class="modal-body">
-
-                    <br />
-                    <div id="contentAdmin" class="content">
-                        <!-- Content for Citizen -->
-                        <form role="form" name="AdminForm" id="AdminForm" method="post">
-                            <div class="form-group mb-3">
-                                <label for="Aname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                <input type="text" class="form-control" id="Aname" placeholder="Enter name">
-                                <span id="AnameError" class="error-message text-danger"></span>
-                            </div>
-                            <div class="form-group  mb-3">
-                                <label for="AEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                <input type="text" class="form-control" id="AEmail" placeholder="Enter email">
-                                <span id="AemailError" class="error-message text-danger"></span>
-                            </div>
-                            <!-- Add more form fields as needed -->
-                            <div class="form-group  mb-3">
-                                <label for="Acontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                <input type="number" class="form-control" id="Acontact" placeholder="Enter contact no">
-                                <span id="AnumberError" class="error-message text-danger"></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Award"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                <div class="select">
-                                    <select name="Award" id="Award" class="form-control">
-                                        @foreach (var item in Model.wardmoel)
-                                        {
-                                            <option value="@item.ward_id"> @item.ward_name</option>
-                                        }
-                                    </select>
-                                    <span class="focus"></span>
+    <form role="form" name="AdminForm" id="AdminForm" method="post">
+        <div class="modal fade" id="AdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5"> Sign up </h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contentAdmin">
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="Aname"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                    <input type="text" class="form-control" id="Aname" placeholder="Enter name">
+                                    <span id="AnameError" class="error-message text-danger"></span>
                                 </div>
+                                <div class="form-group col">
+                                    <label for="Award"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                    <div class="select">
+                                        <select name="Award" id="Award" class="form-control">
+                                            @foreach (var item in Model.wardmoel)
+                                            {
+                                                <option value="@item.ward_id"> @item.ward_name</option>
+                                            }
+                                        </select>
+                                        <span class="focus"></span>
+                                    </div>
 
-                                <span id="AwardError" class="error-message text-danger"></span>
+                                    <span id="AwardError" class="error-message text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-group  col">
+                                    <label for="AEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                    <input type="text" class="form-control" id="AEmail" placeholder="Enter email">
+                                    <span id="AemailError" class="error-message text-danger"></span>
+                                </div>
+                                <!-- Add more form fields as needed -->
+                                <div class="form-group  col">
+                                    <label for="Acontact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                    <input type="number" class="form-control" id="Acontact" placeholder="Enter contact no">
+                                    <span id="AnumberError" class="error-message text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="Apsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
+                                    <input type="password" class="form-control" id="Apsw" placeholder="Enter password">
+                                    <span id="ApswError" class="error-message text-danger"></span>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="Acnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
+                                    <input type="password" class="form-control" id="Acnf-psw" placeholder="Enter Confirm password">
+                                    <span id="ACnf-pswError" class="error-message text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer form-footer d-flex">
 
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Apsw"><i class="fa-solid fa-lock"></i>&nbsp; Password</label>
-                                <input type="password" class="form-control" id="Apsw" placeholder="Enter password">
-                                <span id="ApswError" class="error-message text-danger"></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Acnf-psw"><i class="fa-solid fa-lock"></i>&nbsp; Confirm Password</label>
-                                <input type="password" class="form-control" id="Acnf-psw" placeholder="Enter Confirm password">
-                                <span id="ACnf-pswError" class="error-message text-danger"></span>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> ADD</button>
-                        </form>
+                        <button type="submit"><span class="glyphicon glyphicon-off"></span>ADD</button>
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     @*add admin modal end*@
 
     @*change Role Modal*@
 
-    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"> Edit Details </h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                </div>
-                <div class="modal-body">
-
-                    <br />
-                    <div id="contentAdmin" class="content">
-                        <!-- Content for Citizen -->
-                        <form role="form" name="EditForm" id="EditForm" method="post">
-                            <div class="form-group mb-3">
-                                <label for="Eid"><i class="fa-solid fa-user "></i>&nbsp; Id</label>
-                                <input type="text" class="form-control" id="Eid" placeholder="Id" disabled>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Ename"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
-                                <input type="text" class="form-control" id="Ename" placeholder="Enter name">
-                            </div>
-                            <div class="form-group  mb-3">
-                                <label for="EEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
-                                <input type="text" class="form-control" id="EEmail" placeholder="Enter email">
-                            </div>
-                            <!-- Add more form fields as needed -->
-                            <div class="form-group  mb-3">
-                                <label for="Econtact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
-                                <input type="number" class="form-control" id="Econtact" placeholder="Enter contact no">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="Eward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
-                                <div class="select">
-                                    @*@Html.DropDownList("SelectedWard", ViewBag.WardSelectList as IEnumerable<SelectListItem>, "Select Ward", new { @class = "form-control" }) *@
-
-                                    <select name="Eward" id="Eward" class="form-control">
-                                        @foreach (var item in Model.wardmoel)
-                                        {
-                                            <option value="@item.ward_id"> @item.ward_name</option>
-                                        }
-                                    </select>
-
-                                    <span class="focus"></span>
+    <form role="form" name="EditForm" id="EditForm" method="post">
+        <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5"> Edit Details </h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contentAdmin">
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="Eid"><i class="fa-solid fa-user "></i>&nbsp; Id</label>
+                                    <input type="text" class="form-control" id="Eid" placeholder="Id" disabled>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="Ename"><i class="fa-solid fa-user "></i>&nbsp; Name</label>
+                                    <input type="text" class="form-control" id="Ename" placeholder="Enter name">
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="Erole"> <i class="fa-solid fa-building"></i>&nbsp; Role Type</label>
-                                <div class="select">
-                                    @*@Html.DropDownList("SelectedWard", ViewBag.WardSelectList as IEnumerable<SelectListItem>, "Select Ward", new { @class = "form-control" }) *@
-
-                                    <select name="Erole" id="Erole" class="form-control">
-                                        @foreach (var item in Model.rolemodel)
-                                        {
-                                            <option value="@item.role_id"> @item.role_name</option>
-                                        }
-                                    </select>
-
-                                    <span class="focus"></span>
+                            <div class="row mb-3">
+                                <div class="form-group  col">
+                                    <label for="EEmail"><i class="fa-solid fa-envelope"></i>&nbsp; Email</label>
+                                    <input type="text" class="form-control" id="EEmail" placeholder="Enter email">
+                                </div>
+                                <div class="form-group  col">
+                                    <label for="Econtact"><i class="fa-solid fa-address-book"></i>&nbsp; Contact No</label>
+                                    <input type="number" class="form-control" id="Econtact" placeholder="Enter contact no">
                                 </div>
                             </div>
-                            <button type="submit" id="saveBtn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span>Save</button>
-                        </form>
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="Eward"> <i class="fa-solid fa-building"></i>&nbsp; Ward Number</label>
+                                    <div class="select">
+                                        @*@Html.DropDownList("SelectedWard", ViewBag.WardSelectList as IEnumerable<SelectListItem>, "Select Ward", new { @class = "form-control" }) *@
+
+                                        <select name="Eward" id="Eward" class="form-control">
+                                            @foreach (var item in Model.wardmoel)
+                                            {
+                                                <option value="@item.ward_id"> @item.ward_name</option>
+                                            }
+                                        </select>
+
+                                        <span class="focus"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="Erole"> <i class="fa-solid fa-building"></i>&nbsp; Role Type</label>
+                                    <div class="select">
+                                        @*@Html.DropDownList("SelectedWard", ViewBag.WardSelectList as IEnumerable<SelectListItem>, "Select Ward", new { @class = "form-control" }) *@
+
+                                        <select name="Erole" id="Erole" class="form-control">
+                                            @foreach (var item in Model.rolemodel)
+                                            {
+                                                <option value="@item.role_id"> @item.role_name</option>
+                                            }
+                                        </select>
+
+                                        <span class="focus"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer form-footer d-flex">
+
+                        <button type="submit" id="saveBtn"><span class="glyphicon glyphicon-off"></span>SAVE</button>
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     @*change role modal end*@
 
@@ -321,7 +358,7 @@
                                 @Html.DisplayFor(modelItem => item.is_active)
                             </td>
                             <td>
-      
+
                                 <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails(this);">
                                     Edit
                                 </button>
@@ -413,14 +450,12 @@
                     data: formData,
                     success: function (response) {
                         // Handle success response
-                        if (response.Success)
-                        {
+                        if (response.Success) {
                             alert('User details updated successfully!');
                             location.reload();
                             $('#EditModal').modal('hide');
                         }
-                        else
-                        {
+                        else {
                             alert('Failed to update user details.');
                         }
                     },
