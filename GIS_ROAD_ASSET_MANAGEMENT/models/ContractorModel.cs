@@ -1,12 +1,18 @@
+<<<<<<< HEAD
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+=======
+﻿using System;
+using System.Collections.Generic;
+>>>>>>> origin/branch-yashvi
 using System.Linq;
 using System.Web;
 
 namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 {
+<<<<<<< HEAD
     public class ContractorModel
     {
 
@@ -32,3 +38,16 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 
     }
 }
+=======
+    public class ContractorModel : RoleModel
+    {
+        public int contractor_id { get; set; }
+
+        public int user_id { get; set; }
+        public string company_name { get; set; }
+        public string proof_of_identity { get; set; }
+        public bool is_approved { get; set; }
+
+    }
+}
+>>>>>>> origin/branch-yashvi

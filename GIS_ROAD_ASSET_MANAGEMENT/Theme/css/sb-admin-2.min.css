@@ -10678,7 +10678,11 @@ a:focus {
             display: block;
             width: 100%;
             text-align: left;
+<<<<<<< HEAD
             padding: 1.2rem;
+=======
+            padding: 1rem;
+>>>>>>> origin/branch-yashvi
             width: 14rem
         }
 
@@ -10688,7 +10692,11 @@ a:focus {
             }
 
             .sidebar .nav-item .nav-link span {
+<<<<<<< HEAD
                 font-size: 1rem;
+=======
+                font-size: 1.05rem;
+>>>>>>> origin/branch-yashvi
                 display: inline
             }
 

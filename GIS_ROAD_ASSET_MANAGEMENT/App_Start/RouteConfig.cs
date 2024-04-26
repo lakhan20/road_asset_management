@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿using System;
+=======
+﻿    using System;
+>>>>>>> origin/branch-yashvi
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +16,11 @@ namespace GIS_ROAD_ASSET_MANAGEMENT
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+<<<<<<< HEAD
 
+=======
+            Console.WriteLine("asd");
+>>>>>>> origin/branch-yashvi
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

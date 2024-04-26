@@ -5,12 +5,20 @@ using System.Web;
 
 namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 {
+<<<<<<< HEAD
     public class Usermodel
     {
         public int id { get; set; }
 
         public string name { get; set; }
 
+=======
+    public class Usermodel { 
+        public int id { get; set; } 
+        
+        public string name { get; set; }
+        
+>>>>>>> origin/branch-yashvi
         public string email_id { get; set; }
 
         public string password { get; set; }
@@ -40,4 +48,8 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
         //RoleModel role { get; set; }
         //WardModel ward { get; set; }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/branch-yashvi

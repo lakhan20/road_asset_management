@@ -71,7 +71,11 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     font-family: "Playfair Display",serif;
     font-weight: 500;
     line-height: 1.2;
+<<<<<<< HEAD
     color: #fff;
+=======
+    color: #202135
+>>>>>>> origin/branch-yashvi
 }
 
 h1, .h1 {
@@ -7784,7 +7788,11 @@ textarea.form-control-lg {
 }
 
 .text-primary {
+<<<<<<< HEAD
     color: #202135 !important
+=======
+    color: #15b9d9 !important
+>>>>>>> origin/branch-yashvi
 }
 
 .text-secondary {

@@ -72,7 +72,11 @@
 }
 
 .btn.btn-primary {
+<<<<<<< HEAD
     background-color: #747172;
+=======
+    background-color: #747172 !important;
+>>>>>>> origin/branch-yashvi
     color:white;
     border:2px solid;
     border-color:dimgrey;

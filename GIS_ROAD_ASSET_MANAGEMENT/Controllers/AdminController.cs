@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -10,20 +11,44 @@ using Npgsql;
 
 namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
 {
+=======
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using GIS_ROAD_ASSET_MANAGEMENT.Filters;
+using GIS_ROAD_ASSET_MANAGEMENT.Models;
+
+namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
+{
+    [UserAuthentication]
+>>>>>>> origin/branch-yashvi
     public class AdminController : Controller
     {
         Temp temp = new Temp();
         public ActionResult HomeView()
         {
+<<<<<<< HEAD
             return View();
         }
         public ActionResult DashboardView()
         {
+=======
+                var userId = SessionHelper.Get<int>("user_id");
+                ViewBag.UserId = userId;
+                return View();
+           
+           
+        }
+        public ActionResult DashboardView()
+        {
+           
+>>>>>>> origin/branch-yashvi
             return View();
         }
 
         public ActionResult Project_MonitoringView()
         {
+<<<<<<< HEAD
             var viewModel = new MonitoringViewModel();
             viewModel.contractorList = new List<ContractorModel>();
             viewModel.wardList = new List<WardModel>();
@@ -154,6 +179,10 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             {
                 return Json(new { success = false, error = "Tender document or approval letter is missing." });
             }
+=======
+            ViewBag.role = "Admin";
+            return View();
+>>>>>>> origin/branch-yashvi
         }
 
         public ActionResult Project_MilestoneView()
@@ -219,6 +248,10 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             context.updateUserDetails(user);
             return Json(new { Success = true });
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/branch-yashvi
         [HttpPost]
         public JsonResult disableUser(int id)
         {
@@ -226,6 +259,7 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             context.disableUser(id);
             return Json(new { Success = true });
         }
+<<<<<<< HEAD
         [HttpPost]
         public JsonResult getUserById(int id)
         {
@@ -234,6 +268,8 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             return Json(new { Success = true });
         }
 
+=======
+>>>>>>> origin/branch-yashvi
 
 
     }

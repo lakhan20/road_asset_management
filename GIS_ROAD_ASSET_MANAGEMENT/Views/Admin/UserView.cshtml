@@ -235,7 +235,11 @@
 
                                     <select name="Eward" id="Eward" class="form-control">
                                         @foreach (var item in Model.wardmoel)
+<<<<<<< HEAD
                                         {
+=======
+                                        {   
+>>>>>>> origin/branch-yashvi
                                             <option value="@item.ward_id"> @item.ward_name</option>
                                         }
                                     </select>
@@ -321,8 +325,12 @@
                                 @Html.DisplayFor(modelItem => item.is_active)
                             </td>
                             <td>
+<<<<<<< HEAD
       
                                 <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails(this);">
+=======
+                                <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails('@item.id');">
+>>>>>>> origin/branch-yashvi
                                     Edit
                                 </button>
                                 <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary" id="disableBtn_@item.id" onclick="changeStatus('@item.id', 'disable');">
@@ -333,10 +341,16 @@
                                 </button>
                             </td>
                         </tr>
+<<<<<<< HEAD
                     }
 
 
 
+=======
+                 
+                    }
+
+>>>>>>> origin/branch-yashvi
                 </tbody>
             </table>
         </div>
@@ -355,6 +369,10 @@
         // Initialize DataTable
         $(document).ready(function () {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/branch-yashvi
             $('#WardOfficerModal').on('hidden.bs.modal', function () {
                 // Clear all input fields inside the form
                 $('#WardOfficerForm').find('input').val('');
@@ -371,7 +389,10 @@
                 // Optionally, clear other types of fields like select, textarea, etc.
             });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/branch-yashvi
             new DataTable('#example', {
                 searchPanes: true,
                 dom: 'Plfrtip',
@@ -413,14 +434,22 @@
                     data: formData,
                     success: function (response) {
                         // Handle success response
+<<<<<<< HEAD
                         if (response.Success)
                         {
+=======
+                        if (response.Success) {
+>>>>>>> origin/branch-yashvi
                             alert('User details updated successfully!');
                             location.reload();
                             $('#EditModal').modal('hide');
                         }
+<<<<<<< HEAD
                         else
                         {
+=======
+                        else {
+>>>>>>> origin/branch-yashvi
                             alert('Failed to update user details.');
                         }
                     },
@@ -446,12 +475,20 @@
         });
 
         function editDetails(btn) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/branch-yashvi
             let id = $(btn).closest('tr').find('td:eq(0)').text().trim();
             let roleName = $(btn).closest('tr').find('td:eq(1)').text().trim();
             let name = $(btn).closest('tr').find('td:eq(2)').text().trim();
             let emailId = $(btn).closest('tr').find('td:eq(3)').text().trim();
             let ContactNo = $(btn).closest('tr').find('td:eq(4)').text().trim();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/branch-yashvi
             $('#Eid').val(id);
             $('#Ename').val(name);
             $('#EEmail').val(emailId);
@@ -472,6 +509,14 @@
                     $(this).prop('selected', true);
                 }
             });
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> origin/branch-yashvi
         }
 
         function changeStatus(id, action) {
@@ -489,7 +534,11 @@
                         success: function (response) {
                             // Handle success response
                             if (response.Success) {
+<<<<<<< HEAD
 
+=======
+                                
+>>>>>>> origin/branch-yashvi
                                 location.reload();
 
                             } else {

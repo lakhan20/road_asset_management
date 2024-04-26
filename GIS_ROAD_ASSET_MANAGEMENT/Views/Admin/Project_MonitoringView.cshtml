@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿@model List<GIS_ROAD_ASSET_MANAGEMENT.Models.MonitoringViewModel>
 @{
+=======
+﻿@{
+>>>>>>> origin/branch-yashvi
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
@@ -103,7 +107,11 @@
                     }
 
                     #addProjectForm .form-header .stepIndicator.active::before {
+<<<<<<< HEAD
                         background-color: #28a745;
+=======
+                        background-color: ##28a745;
+>>>>>>> origin/branch-yashvi
                         border: 3px solid #858796;
                     }
 
@@ -195,6 +203,7 @@
             width: 100%;
             height: 400px; /* Set an initial height */
         }
+<<<<<<< HEAD
 
         .break {
             display: block;
@@ -203,12 +212,15 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+=======
+>>>>>>> origin/branch-yashvi
     </style>
 
 </head>
 <body>
     @if (ViewBag.role == "Admin")
     {
+<<<<<<< HEAD
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 100;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Project Monitoring</a>
@@ -218,6 +230,17 @@
                         <i class="fas fa-file-csv"></i> Export to CSV
                     </button>
                     <button class="btn btn-custom mx-2" id="getPDF">
+=======
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Project Monitoring</a>
+                <div class="d-flex">
+                    <button class="btn btn-custom" id="mg" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-folder-plus"></i>   Add Project</button>
+                    <button class="btn btn-custom mx-2">
+                        <i class="fas fa-file-csv"></i> Export to CSV
+                    </button>
+                    <button class="btn btn-custom mx-2">
+>>>>>>> origin/branch-yashvi
                         <i class="fas fa-file-pdf"></i> Export to PDF
                     </button>
                 </div>
@@ -363,6 +386,7 @@
                                         <label for="contractoremail" class="form-label">Contractor</label>
                                         <select class="form-select" id="allocated_contractor_id">
                                             <option selected>Choose Contractor...</option>
+<<<<<<< HEAD
                                             @foreach (var monitoringViewModel in Model)
                                             {
                                                 foreach (var contractorModel in monitoringViewModel.contractorList)
@@ -371,12 +395,19 @@
                                                 }
 
                                             }
+=======
+                                            <option value="1">First@gmail.com</option>
+                                            <option value="2">Second@gmail.com</option>
+                                            <option value="3">Third@gmail.com</option>
+                                            <option value="4">Forth@gmail.com</option>
+>>>>>>> origin/branch-yashvi
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="ward" class="form-label">Ward</label>
                                         <select class="form-select" id="ward_id">
                                             <option selected>Choose Ward...</option>
+<<<<<<< HEAD
                                             @foreach (var monitoringViewModel in Model)
                                             {
                                                 foreach (var wardModel in monitoringViewModel.wardList)
@@ -385,6 +416,12 @@
                                                 }
 
                                             }
+=======
+                                            <option value="1">Ward1</option>
+                                            <option value="2">Ward2</option>
+                                            <option value="3">Ward3</option>
+                                            <option value="4">Ward4</option>
+>>>>>>> origin/branch-yashvi
                                         </select>
                                     </div>
                                 </div>
@@ -417,6 +454,7 @@
             </div>
         </form>
 
+<<<<<<< HEAD
         <!--img Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -431,6 +469,12 @@
         <div class="container">
             <div class="table-responsive mt-4">
                 <table id="table_d" class="table table-striped nowrap" style="width:100%">
+=======
+        <!-- Button trigger modal -->
+        <div class="container">
+            <div class="table-responsive mt-4">
+                <table id="example" class="table table-striped nowrap" style="width:100%">
+>>>>>>> origin/branch-yashvi
                     <thead>
                         <tr>
                             <th>Sr.no</th>
@@ -441,6 +485,7 @@
                             <th>Status</th>
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
+<<<<<<< HEAD
                             <th class="col-2">Project Allotted to<span class="break">Name</span></th>
                             <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
                             <th>Action</th>
@@ -485,6 +530,74 @@
                             }
 
                         }
+=======
+                            <th class="col-2">Project Allotted to<br>to Name</th>
+                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Construction of Bridge</td>
+                            <td>WO1234</td>
+                            <td>2024-04-01</td>
+                            <td>2024-10-31</td>
+                            <td>Ongoing</td>
+                            <td><a href="#">View</a></td>
+                            <td><a href="#">Download</a></td>
+                            <td>John Doe</td>
+                            <td>123-456-7890</td>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Renovation of Park</td>
+                            <td>WO5678</td>
+                            <td>2024-03-15</td>
+                            <td>2024-09-30</td>
+                            <td>Completed</td>
+                            <td><a href="#">View</a></td>
+                            <td><a href="#">Download</a></td>
+                            <td>Jane Smith</td>
+                            <td>987-654-3210</td>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Road Expansion Project</td>
+                            <td>WO91011</td>
+                            <td>2024-02-20</td>
+                            <td>2024-11-30</td>
+                            <td>Delayed</td>
+                            <td><a href="#">View</a></td>
+                            <td><a href="#">Download</a></td>
+                            <td>Michael Johnson</td>
+                            <td>555-123-4567</td>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </button>
+                            </td>
+                        </tr>
+>>>>>>> origin/branch-yashvi
                     </tbody>
                     <tfoot>
                         <tr>
@@ -496,8 +609,13 @@
                             <th>Status</th>
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
+<<<<<<< HEAD
                             <th class="col-2">Project Allotted to<span class="break">Name</span></th>
                             <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
+=======
+                            <th class="col-2">Project Allotted to<br>to Name</th>
+                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+>>>>>>> origin/branch-yashvi
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -511,7 +629,11 @@
         @*for users*@
         <div class="container">
             <div class="table-responsive mt-4">
+<<<<<<< HEAD
                 <table id="table_d" class="table table-striped nowrap" style="width:100%">
+=======
+                <table id="example" class="table table-striped nowrap" style="width:100%">
+>>>>>>> origin/branch-yashvi
                     <!-- Table content -->
                     <thead>
                         <tr>
@@ -524,7 +646,11 @@
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
                             <th>Project Allotted to Name</th>
+<<<<<<< HEAD
                             <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
+=======
+                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+>>>>>>> origin/branch-yashvi
                             <th>Feedback</th>
                             <th>Complaints</th>
                         </tr>
@@ -1021,8 +1147,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+<<<<<<< HEAD
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+=======
+>>>>>>> origin/branch-yashvi
     <!-- Corrected -->
     <!-- OpenLayers JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
@@ -1030,7 +1159,11 @@
         // JavaScript code
         // Initialize DataTable
         $(document).ready(function () {
+<<<<<<< HEAD
             new DataTable('#table_d', {
+=======
+            new DataTable('#example', {
+>>>>>>> origin/branch-yashvi
                 searchPanes: true,
                 dom: 'Plfrtip',
                 language: {
@@ -1124,6 +1257,7 @@
                 $('#exampleModal').modal('show');
             });
         });
+<<<<<<< HEAD
         $("[id$=approvalid]").on("click", function (e) {
             var appid = $(this).attr('value');
             $("#appletter").attr("src", appid);
@@ -1241,6 +1375,20 @@
             // Save the PDF
             doc.save('table_data.pdf');
         });
+=======
+        $("[id$=submitBtn]").on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/Home/addProject",
+                data: "{'project_title' : '" + $("[id$=project_title]").val() + "','work_order_no': '" + $("[id$=work_order_no]").val() + "','description': '" + $("[id$=description]").val() + "','startDate': '" + $("[id$=startDate]").val() + "','endDate': '" + $("[id$=endDate]").val() + "','lattitude': '" + $("[id$=lattitude]").val() + "','longitude': '" + $("[id$=longitude]").val() + "','projectType': '" + $("[id$=projectType]").val() + "','budgetCost': '" + $("[id$=budgetCost]").val() + "','contractorId': '" + $("[id$=contractorId]").val() + "','wardId': '" + $("[id$=wardId]").val() + "' ,'approvalLetter': '" + $("[id$=approvalLetter]").val() + "','tenderDoc': '" + $("[id$=tenderDoc]").val() + "'}",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("project added successfully...!!");
+                }
+            });
+        });
+>>>>>>> origin/branch-yashvi
     </script>
 </body>
 </html>

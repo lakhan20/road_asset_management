@@ -173,16 +173,26 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Filters\UserAuthenticationAttribute.cs" />
+>>>>>>> origin/branch-yashvi
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContractorModel.cs" />
     <Compile Include="Models\DatabaseConnectionManager.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\MilestoneModel.cs" />
     <Compile Include="Models\MonitoringViewModel.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
+=======
+    <Compile Include="Models\MyDbContext.cs" />
+    <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SessionHelper.cs" />
+>>>>>>> origin/branch-yashvi
     <Compile Include="Models\Temp.cs" />
     <Compile Include="Models\Usermodel.cs" />
     <Compile Include="Models\WardModel.cs" />
@@ -269,7 +279,11 @@
     <Content Include="Content\img\video-img.jpg" />
     <Content Include="Content\js\loginValidate.js" />
     <Content Include="Content\js\main.js" />
+<<<<<<< HEAD
     <Content Include="Content\js\SignupValidation.js" />
+=======
+    <Content Include="Content\js\SignupValidation1.js" />
+>>>>>>> origin/branch-yashvi
     <Content Include="Content\js\site.js" />
     <Content Include="Content\lib\animate\animate.css" />
     <Content Include="Content\lib\animate\animate.min.css" />
@@ -502,9 +516,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+<<<<<<< HEAD
     <Content Include="Theme\css\sb-admin-2.css" />
     <Content Include="Theme\css\sb-admin-2.min.css" />
     <Content Include="Theme\img\tender.png" />
+=======
+>>>>>>> origin/branch-yashvi
     <Content Include="Theme\img\undraw_posting_photo.svg" />
     <Content Include="Theme\img\undraw_profile.svg" />
     <Content Include="Theme\img\undraw_profile_1.svg" />
@@ -2392,7 +2409,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\.vs\GIS\v17\" />
+<<<<<<< HEAD
     <Folder Include="main code\" />
+=======
+    <Folder Include="meeet\" />
+    <Folder Include="Theme\css\" />
+>>>>>>> origin/branch-yashvi
     <Folder Include="Views\SignUp\" />
   </ItemGroup>
   <ItemGroup>
