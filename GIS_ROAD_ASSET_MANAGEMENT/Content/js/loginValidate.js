@@ -1,44 +1,5 @@
 ﻿console.log("loginvalidate");
 
-
-//$(document).ready(function () {
-//    $("#Loginbtn").click(function (e) {
-//        e.preventDefault();
-//        console.log("inside fun");
-//        var Lemail = $('#Lusername').val();
-//        var Lpassword = $('#Lpassword').val();
-//        console.log(Lemail + "" + Lpassword);
-
-//        var formData = {
-//            username: $('#Lusername').val(),
-//            password: $('#Lpassword').val()
-//        };
-//        console.log(formData);
-
-
-//        // Send AJAX request to the controller
-//        $.ajax({
-//            url: '/Login/Login', // URL to your controller action
-//            type: 'POST',
-//            data: formData,
-//            success: function (response) {
-//                if (response.Success) {
-//                    console.log("success");              
-//                    window.location.href = "/Home/Dashboard?SuccessMessage=Login successful! Welcome to the dashboard.";
-//                } else {
-//                    console.log("Authentication failed");
-//                    $('#loginModal').modal('show'); // Assuming your login modal has id "loginModal"
-//                    $('#errorMessage').text("Username and password do not match. Please try again.");
-//                }
-//            },
-//            error: function (xhr, status, error) {
-//                console.log("error");
-//            }
-//        });
-//    });
-//});
-
-
 $(document).ready(function () {
     $('#LoginForm').submit(function (e) {
 
@@ -102,24 +63,26 @@ $(document).ready(function () {
 
     //for logout
 
-    $('#Logoutbtn').click(function () {
-        console.log("logout.............");
-        $.ajax({
-            url: '/Login/Logout', // URL to your controller action
-            type: 'POST',
-            success: function (response) {
-                if (response.Success) {
-                    console.log("logout");
-                    window.location.replace = "/home/index";
-                } else {
+});
 
-                    $('#errorMessage').text(response.message);
-                    console.log("not logout")
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log("error");
+
+$('#Logoutbtn11').click(function () {
+    console.log("logout.............");
+    $.ajax({
+        url: '/Login/Logout', // URL to your controller action
+        type: 'POST',
+        success: function (response) {
+            if (response.Success) {
+                console.log("logout");
+                window.location.href = "/home/index";
+            } else {
+
+                $('#errorMessage').text(response.message);
+                console.log("not logout")
             }
-        });
+        },
+        error: function (xhr, status, error) {
+            console.log("error");
+        }
     });
 });

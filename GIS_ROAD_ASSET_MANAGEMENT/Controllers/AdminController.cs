@@ -12,14 +12,40 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
     public class AdminController : Controller
     {
         Temp temp = new Temp();
-        public ActionResult HomeView()
+
+        public PartialViewResult NavbarAdmin()
         {
-                var userId = SessionHelper.Get<int>("user_id");
-                ViewBag.UserId = userId;
-                return View();
-           
-           
+            var userId = SessionHelper.Get<int>("user_id");
+            ViewBag.UserId = userId;
+            var roleId = SessionHelper.Get<int>("role_id");
+            ViewBag.RoleId = roleId;
+            var name = SessionHelper.Get<string>("name");
+            ViewBag.Name = name;
+
+            return PartialView("_NavbarAdmin", "Admin");
         }
+        public PartialViewResult SidebarAdmin()
+        {
+            var userId = SessionHelper.Get<int>("user_id");
+            ViewBag.UserId = userId;
+            var roleId = SessionHelper.Get<int>("role_id");
+            ViewBag.RoleId = roleId;
+            var name = SessionHelper.Get<string>("name");
+            ViewBag.Name = name;
+
+            return PartialView("_sidebarAdmin", "Admin");
+        }
+
+        public ActionResult HomeView()
+            {
+            //var userId = SessionHelper.Get<int>("user_id");
+            //ViewBag.UserId = userId;
+            //var roleId = SessionHelper.Get<int>("role_id");
+            //ViewBag.RoleId = roleId;
+            //var name = SessionHelper.Get<string>("name");
+            //ViewBag.Name = name;
+            return View();
+            }
         public ActionResult DashboardView()
         {
            
