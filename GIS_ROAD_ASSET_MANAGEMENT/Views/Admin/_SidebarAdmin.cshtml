@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "_SidebarAdmin";
+}
+<!--Sidebar start-->
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#282828">
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="~/Home/Index">
+        <div class="sidebar-brand-text mx-3"><h3><b>AMNEX</b></h3> <sup></sup></div>
+    </a>
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="~/Admin/HomeView">
+            <i class="fas fa-home" style="color: #575757; font-size: 18px;"></i>
+            <span>Home</span>
+            @ViewBag.RoleId
+        </a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Interface
+    </div>
+    <!-- Nav Item - Pages Collapse Menu -->
+    @if (ViewBag.RoleId == 1)
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dashboard"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-tachometer-alt" style="color: #575757; font-size: 18px;"></i>
+                <span>dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#UM1"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-user-cog" style="color: #575757; font-size: 18px;"></i>
+                <span>User management</span>
+            </a>
+            <div id="UM1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">user Records:</h6>
+                    <a class="collapse-item" href="/Admin/UserView">Users Manager </a>
+                    <a class="collapse-item" href="/Admin/ContractorView">Contractor Manager</a>
+
+                </div>
+            </div>
+        </li>
+    }
+    @if (ViewBag.RoleId == 1 || ViewBag.RoleId == 2 || ViewBag.RoleId == 3 || ViewBag.RoleId == 4)
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#PM1"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-chart-line" style="color: #575757; font-size: 18px;"></i>
+                <span>Project Monitoring</span>
+            </a>
+
+            <div id="PM1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Project records:</h6>
+                    <a class="collapse-item" href="~/Admin/Project_MonitoringView">Project Details</a>
+                    <a class="collapse-item" href="~/Admin/Project_MilestoneView">Project Milestone</a>
+                </div>
+            </div>
+        </li>
+    }
+
+    @if (ViewBag.RoleId == 1 || ViewBag.RoleId == 2 || ViewBag.RoleId == 4)
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#feedback"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-comment-alt" style="color: #575757; font-size: 18px;"></i>
+                <span>Suggestion</span>
+            </a>
+
+            <div id="feedback" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Suggestion records:</h6>
+                    @if (ViewBag.RoleId == 1|| ViewBag.RoleId == 2)
+                    {<a class="collapse-item" href="/Admin/suggestionView"> Show Suggestion</a>}
+                    @if (ViewBag.RoleId == 4)
+                    {<a class="collapse-item" href="#"> My Suggestion History</a>}
+
+
+                </div>
+
+        </li>
+
+    }
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+<!--sidebar end-->

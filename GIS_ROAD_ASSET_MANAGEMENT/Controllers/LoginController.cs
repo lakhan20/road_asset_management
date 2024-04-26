@@ -22,10 +22,11 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
         public ActionResult Login(string username, string password)
         {
             int userId = 0;
+            string name = "";
             string emailId = "";
             int roleId = 0;
-            bool isActive=false;
-          
+            bool isActive = false;
+
             using (NpgsqlConnection conn = DatabaseConnectionManager.OpenConnection())
             {
                 // authUse Function call and return data
@@ -33,7 +34,7 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                 using (NpgsqlCommand cmd = new NpgsqlCommand(AuthUser, conn))
 
                 {
-                 
+
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@Password", password);
                     using (NpgsqlDataReader reader = cmd.ExecuteReader())
@@ -42,7 +43,8 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                         {
                             // Authentication successful
                             userId = Convert.ToInt32(reader["_user_id"]);
-                            emailId = reader.GetString(reader.GetOrdinal("_email_id"));
+                            name = Convert.ToString(reader["_name"]);
+                            emailId = Convert.ToString(reader["_email_id"]);
                             roleId = Convert.ToInt32(reader["_role_id"]);
                             isActive = Convert.ToBoolean(reader["_is_active"]);
                         }
@@ -52,11 +54,11 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                         }
 
                     }
-                   
+
                 }
 
-                if(isActive==true) 
-                    {
+                if (isActive == true)
+                {
 
                     if (roleId == 3)
                     {
@@ -82,7 +84,9 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                                             EmailId = emailId,
                                             RoleId = roleId,
                                         };
-
+                                        SessionHelper.Set("user_id", userId);
+                                        SessionHelper.Set("role_id", roleId);
+                                        SessionHelper.Set("name", name);
                                         // Set success message in TempData
                                         TempData["SuccessMessage"] = "Login successful! Welcome to the dashboard.";
                                         return Json(new { Success = true, Data = responseData1 });
@@ -101,7 +105,9 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                         EmailId = emailId,
                         RoleId = roleId,
                     };
-
+                    SessionHelper.Set("user_id", userId);
+                    SessionHelper.Set("role_id", roleId);
+                    SessionHelper.Set("name", name);
                     // Set success message in TempData
                     TempData["SuccessMessage"] = "Login successful! Welcome to the dashboard.";
 
@@ -114,9 +120,18 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
                     return Json(new { Success = false, message = "You Account is Disable ..!" });
                 }
 
-                
+
             }
         }
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            Console.WriteLine("Session Clearing...");
+            Session.Clear();
+            Console.WriteLine("Session Clear...");
+            return Json(new { Success = true });
+        }
     }
-    
+
+
 }

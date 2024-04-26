@@ -3,13 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GIS_ROAD_ASSET_MANAGEMENT.Filters;
 using GIS_ROAD_ASSET_MANAGEMENT.Models;
 
 namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
 {
+    [UserAuthentication]
     public class AdminController : Controller
     {
         Temp temp = new Temp();
+
+        public PartialViewResult NavbarAdmin()
+        {
+            var userId = SessionHelper.Get<int>("user_id");
+            ViewBag.UserId = userId;
+            var roleId = SessionHelper.Get<int>("role_id");
+            ViewBag.RoleId = roleId;
+            var name = SessionHelper.Get<string>("name");
+            ViewBag.Name = name;
+
+            return PartialView("_NavbarAdmin", "Admin");
+        }
+        public PartialViewResult SidebarAdmin()
+        {
+            var userId = SessionHelper.Get<int>("user_id");
+            ViewBag.UserId = userId;
+            var roleId = SessionHelper.Get<int>("role_id");
+            ViewBag.RoleId = roleId;
+            var name = SessionHelper.Get<string>("name");
+            ViewBag.Name = name;
+
+            return PartialView("_sidebarAdmin", "Admin");
+        }
         public ActionResult HomeView()
         {
             return View();

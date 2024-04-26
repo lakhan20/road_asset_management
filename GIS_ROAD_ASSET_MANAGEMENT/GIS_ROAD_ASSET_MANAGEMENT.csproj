@@ -173,6 +173,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
+    <Compile Include="Filters\UserAuthenticationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -180,10 +181,12 @@
     <Compile Include="Models\DatabaseConnectionManager.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\Temp.cs" />
     <Compile Include="Models\Usermodel.cs" />
     <Compile Include="Models\WardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Views\Admin\_SidebarAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -2384,6 +2387,7 @@
     <Content Include="Views\Admin\ContractorView.cshtml" />
     <Content Include="Views\Admin\UserView.cshtml" />
     <Content Include="Views\Home\_Navbar.cshtml" />
+    <Content Include="Views\Admin\_NavbarAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
