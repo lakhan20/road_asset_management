@@ -10,9 +10,9 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
     public class HomeController : Controller
     { 
         MyDbContext context = new MyDbContext();
-        public ActionResult Index()
-        {
-            return View();
+        public ActionResult Index() { 
+           return View();
+
         }
         public PartialViewResult Navbar()
         {

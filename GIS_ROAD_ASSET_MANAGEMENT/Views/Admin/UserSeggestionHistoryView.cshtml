@@ -1,4 +1,10 @@
-﻿@{
+﻿
+@{
+    ViewBag.Title = "UserSeggestionHistory";
+}
+
+
+@{
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
@@ -41,9 +47,8 @@
 
 
 
-
     <div class="container-fluid">
-        <h2><a class="navbar-brand" href="#">Citizen Suggetion List</a></h2>
+        <h2><a class="navbar-brand" href="#">My Suggetion History</a></h2>
     </div>
 
 
@@ -132,7 +137,11 @@
                         <td>Ongoing</td>
                         <td>Abc.pvt.ltd</td>
                         <td>1234567410</td>
+                        <td>
+                            <button class="btn btn-custom" id="edit">Edit</button>
+                            <button class="btn btn-custom" id="edit">Remove</button>
 
+                        </td>
                     </tr>
                 </tbody>
             </table>

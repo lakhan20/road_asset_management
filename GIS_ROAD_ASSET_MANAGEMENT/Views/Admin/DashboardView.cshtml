@@ -2,7 +2,359 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
+<html>
+<head>
+    <style>
+       #map{
+            height: 50vh; /* Default height */
+       }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card  mb-2">
+                    <!-- Card content for Bookings -->
+                    <div class="card-header p-3 pt-2">
+                        <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
+                            <i class="fa-solid fa-road-bridge"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-m mb-0 text-capitalize">FootBridge</p>
+                            <h4 class="mb-0">281</h4>
+                        </div>
+                    </div>
+
+                    <hr class="dark horizontal my-0">
+                    <div class="card-footer p-3">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card  mb-2">
+                    <div class="card-header p-3 pt-2">
+                        <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+
+                            <i class="fa-solid fa-road"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-m mb-0 text-capitalize">Road cc</p>
+                            <h4 class="mb-0">2,300</h4>
+                        </div>
+                    </div>
+
+                    <hr class="dark horizontal my-0">
+                    <div class="card-footer p-3">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card  mb-2">
+                    <div class="card-header p-3 pt-2 bg-transparent">
+                        <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                            <i class="fa-solid fa-car-tunnel"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-m mb-0 text-capitalize ">Subway/Underpass</p>
+                            <h4 class="mb-0 ">34k</h4>
+                        </div>
+                    </div>
+
+                    <hr class="horizontal my-0 dark">
+                    <div class="card-footer p-3">
+                        <p class="mb-0 "><span class="text-success text-sm font-weight-bolder">+1% </span>than yesterday</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card  mb-2">
+                    <div class="card-header p-3 pt-2 bg-transparent">
+                        <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                            <i class="fa-solid fa-xmarks-lines"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-m mb-0 text-capitalize ">Track And Footpath</p>
+                            <h4 class="mb-0 ">+91</h4>
+                        </div>
+                    </div>
+
+                    <hr class="horizontal my-0 dark">
+                    <div class="card-footer p-3">
+                        <p class="mb-0 ">Just updated</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="card z-index-2">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                            <div class="chart">
+                                <canvas id="chart-line1" class="chart-canvas" height="340" style="display: block; box-sizing: border-box; height: 170px; width: 559.3px;" width="1118"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-0 ">On Going Projects</h6>
+                        <p class="text-sm ">Last Campaign Performance</p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="card z-index-2">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                            <div class="chart">
+                                <canvas id="chart-line2" class="chart-canvas" height="340" style="display: block; box-sizing: border-box; height: 170px; width: 559.3px;" width="1118"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-0 ">Completed Projects</h6>
+                        <p class="text-sm ">Last Campaign Performance</p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="card z-index-2">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class="bg-gradient-info shadow-info border-radius-lg py-3 pe-1">
+                            <div class="chart">
+                                <canvas id="chart-line3" class="chart-canvas" height="340" style="display: block; box-sizing: border-box; height: 170px; width: 559.3px;" width="1118"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-0 ">Total Projects</h6>
+                        <p class="text-sm ">Last Campaign Performance</p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        Project Location
+                    </div>
+                    <div class="card-body px-0 pb-2">
+                        <div id="map" ></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-header pb-0">
+                        Materials
+                    </div>
+                    <div class="card-body p-3">
+                        <canvas id="material-pie-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
+
+    <script>
+        // JavaScript code to initialize Chart.js and create a chart
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx1 = document.getElementById('chart-line1').getContext('2d');
+            var chart1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [{
+                        label: 'Website Views',
+                        borderColor: 'white',
+                        borderWidth: 1,
+                        data: [65, 59, 80, 81, 56, 55, 40]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Website Views',
+                            color: 'white' // Text color
+                        },
+                        legend: {
+                            labels: {
+                                color: 'white' // Legend text color
+                            }
+                        }
+                    }
+                }
+            });
+
+            var ctx2 = document.getElementById('chart-line2').getContext('2d');
+            var chart1 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [{
+                        label: 'Website Views',
+                        borderColor: 'white',
+                        borderWidth: 1,
+                        data: [65, 59, 80, 81, 56, 55, 40]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Website Views',
+                            color: 'white' // Text color
+                        },
+                        legend: {
+                            labels: {
+                                color: 'white' // Legend text color
+                            }
+                        }
+                    }
+                }
+            });
 
 
-<h2>DashboardView</h2>
+            var ctx3 = document.getElementById('chart-line3').getContext('2d');
+            var chart1 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [{
+                        label: 'Website Views',
+                        borderColor: 'white',
+                        borderWidth: 1,
+                        data: [65, 59, 80, 81, 56, 55, 40]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Website Views',
+                            color: 'White' // Text color
+                        },
+                        legend: {
+                            labels: {
+                                color: 'White' // Legend text color
+                            }
+                        }
+                    }
+                }
+            });
+
+            var ctx4 = document.getElementById('material-pie-chart').getContext('2d');
+            var materialPieChart = new Chart(ctx4, {
+                type: 'pie',
+                data: {
+                    labels: ['Natural Soils', 'Aggregates', 'Binders (e.g., lime)', 'Asphalt', 'Concrete'],
+                    datasets: [{
+                        label: 'Material Distribution',
+                        data: [20, 15, 10, 30, 25], // Example data percentages (sum should be 100)
+                        backgroundColor: [
+                            '#ff6384',
+                            '#36a2eb',
+                            '#cc65fe',
+                            '#ffce56',
+                            '#4bc0c0'
+                        ]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Material Distribution',
+                            color: 'white' // Title text color
+                        },
+                        legend: {
+                            labels: {
+                                color: 'white' // Legend text color
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                            bottom: 20
+                        }
+                    },
+                    plugins: {
+                        'chartjs-chart-3d-pie': {
+                            // set the options here
+                        }
+                    }
+                }
+            });
+
+            const layers = [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM(),
+                }),
+            ];
+            const map = new ol.Map({
+                layers: layers,
+                target: 'map',
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([72.5714, 23.0225]),
+                    zoom: 12, // Increased zoom level
+                }),
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
 

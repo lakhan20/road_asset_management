@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using System.Web.Mvc;
 using GIS_ROAD_ASSET_MANAGEMENT.Models;
 
@@ -41,13 +42,6 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             return View();
         }
         public ActionResult ContactView()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult suggestionView()
         {
             ViewBag.Message = "Your contact page.";
 
@@ -103,7 +97,42 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Controllers
             return Json(new { Success = true });
         }
 
+        public ActionResult suggestionView()
+        {
+            ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+        public ActionResult UserSeggestionHistoryView()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult sendEmailToWardOfficer(string Wemail, string Wpassword)
+        {
+            MyDbContext context = new MyDbContext();
+            context.sendEmailToWardOfficer(Wemail, Wpassword);
+            return Json(new { Success = true });
+        }
+
+        [HttpPost]
+        public JsonResult sendEmailToAdmin(string Aemail, string Apassword)
+        {
+            MyDbContext context = new MyDbContext();
+            context.sendEmailToWardOfficer(Aemail,Apassword);
+            return Json(new { Success = true });
+        }
+
+        [HttpPost]
+        public JsonResult sendEmailToContractor(string Wemail)
+        {
+            MyDbContext context = new MyDbContext();
+            context.sendEmailToContractor(Wemail);
+            return Json(new { Success = true });
+        }
 
     }
 }

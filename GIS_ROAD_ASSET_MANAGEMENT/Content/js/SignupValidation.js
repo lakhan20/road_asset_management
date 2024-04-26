@@ -262,6 +262,19 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.Success) {
                         console.log("signup success");
+                        console.log(formData);
+                        $.ajax({
+                            url: '/Admin/sendEmailToWardOfficer',
+                            type: 'POST',
+                            data: formData,
+                            success: function (response)
+                            {
+                                alert("Success");
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("error");
+                            }
+                        });
                         window.location.href = "/Admin/UserView";
                     } else {
                         console.log("Authentication failed");
@@ -343,6 +356,19 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.Success) {
                         console.log("signup success");
+
+                        $.ajax({
+                            url: '/Admin/sendEmailToAdmin',
+                            type: 'POST',
+                            data: formData,
+                            success: function (response) {
+                                alert("Success");
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("error");
+                            }
+                        });
+                       
                         window.location.href = "/Admin/UserView";
                     } else {
                         console.log("Authentication failed");

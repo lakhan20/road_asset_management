@@ -2,6 +2,12 @@
 <html>
 <head>
 
+    <link href="~/Content/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="~/Content/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/Content/css/material-dashboard.min.css" rel="stylesheet" />
+
+
+    <link href="~/Content/css/material-dashboard.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
 
@@ -112,11 +118,7 @@
                         <a class="collapse-item" href="~/Admin/Project_MilestoneView">Project Milestone</a>
                     </div>
 
-                    @*<li class="nav-item">
-                        <a class="nav-link collapsed" href="/Admin/FeedbackView">
-                            <i class="fas fa-fw fa-cog"></i>
-                            <span>feedback</span>
-                        </a>*@
+                </div>
 
 
             <li class="nav-item">
@@ -129,9 +131,11 @@
                 <div id="feedback" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Project records:</h6>
-                        <a class="collapse-item" href="/Admin/suggestionView">Register Suggestion</a>
+                        <a class="collapse-item" href="/Admin/suggestionView">Show Suggestion</a>
+                        <a class="collapse-item" href="/Admin/UserSeggestionHistoryView">Suggestion History</a>
 
                     </div>
+                </div>
 
             </li>
             <!-- Divider -->
@@ -418,5 +422,12 @@
     <!-- Page level custom scripts -->
     <script src="~/Theme/js/demo/chart-area-demo.js"></script>
     <script src="~/Theme/js/demo/chart-pie-demo.js"></script>
+
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js 3D Pie Chart plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-3d-pie"></script>
+
+
 </body>
 </html>

@@ -120,10 +120,18 @@
     }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({scrollTop: 0},'fast', 'easeInOutExpo');
         return false;
     });
 
+
+    $(document).ready(function () {
+        // Smooth scrolling to top
+        $('.scroll-to-top').click(function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'fast'); // Adjust the 'fast' value to control the speed of scrolling
+        });
+    });
 
 })(jQuery);
 

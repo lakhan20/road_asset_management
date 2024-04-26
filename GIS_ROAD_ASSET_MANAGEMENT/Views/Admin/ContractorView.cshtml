@@ -8,7 +8,6 @@
 
 
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -313,33 +312,46 @@
                     }
                 }
             });
-
-
-           
         });
 
-        function approvedContractor(btn) {
+        function approvedContractor(btn)
+        {
             let id = $(btn).closest('tr').find('td:eq(0)').text();
+            let Wemail = $(btn).closest('tr').find('td:eq(3)').text();
             alert(id);
+            var formdata = {id,Wemail}
+           
+                $.ajax({
+                    url: '/Admin/getUserById/' + id, // URL to your controller action
+                    type: 'POST',
 
-            $.ajax({
-                url: '/Admin/getUserById/' + id, // URL to your controller action
-                type: 'POST',
-                
+                    success: function (response) {
 
-                success: function (response) {
-                    if (response) {
-                        console.log("signup success");
-                        location.reload();
-                    } else
-                    {
-                        console.log("Authentication failed");
+                        if (response.Success) {
+                            console.log("signup success");
+
+                            $.ajax({
+                                url: '/Admin/sendEmailToContractor/',
+                                type: 'POST',
+                                data : formdata,
+                                success: function (response) {
+                                    console.log('hello');
+                                    alert("Success");
+                                },
+                                error: function (xhr, status, error) {
+                                    console.log("error");
+                                }
+                            });
+
+                            location.reload();
+                        } else {
+                            console.log("Authentication failed");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("error");
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.log("error");
-                }
-            });
+                });
         }
 
     </script>
