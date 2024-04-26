@@ -1,5 +1,5 @@
 ﻿
-console.log("Signupvalidate");
+console.log("Signupvalidateupdate");
 $(document).ready(function () {
     var citizenRadio = $('input[value="Citizen"]');
     var contractorRadio = $('input[value="Contractor"]');
