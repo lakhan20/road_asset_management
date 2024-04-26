@@ -10678,7 +10678,7 @@ a:focus {
             display: block;
             width: 100%;
             text-align: left;
-            padding: 1rem;
+            padding: 1.2rem;
             width: 14rem
         }
 
@@ -10688,7 +10688,7 @@ a:focus {
             }
 
             .sidebar .nav-item .nav-link span {
-                font-size: .85rem;
+                font-size: 1rem;
                 display: inline
             }
 

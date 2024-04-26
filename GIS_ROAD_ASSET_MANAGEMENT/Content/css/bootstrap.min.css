@@ -71,7 +71,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     font-family: "Playfair Display",serif;
     font-weight: 500;
     line-height: 1.2;
-    color: #202135
+    color: #fff;
 }
 
 h1, .h1 {
@@ -7784,7 +7784,7 @@ textarea.form-control-lg {
 }
 
 .text-primary {
-    color: #15b9d9 !important
+    color: #202135 !important
 }
 
 .text-secondary {
