@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<GIS_ROAD_ASSET_MANAGEMENT.Models.MonitoringViewModel>
+@{
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
@@ -194,6 +195,7 @@
             width: 100%;
             height: 400px; /* Set an initial height */
         }
+
         .break {
             display: block;
             width: 100%;
@@ -211,7 +213,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Project Monitoring</a>
                 <div class="d-flex">
-                    <button class="btn btn-custom" id="mg" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-folder-plus"></i>   Add Project</button>
+                    <button class="btn btn-custom" id="mg" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-folder-plus"></i>Add Project</button>
                     <button class="btn btn-custom mx-2" id="getCSV">
                         <i class="fas fa-file-csv"></i> Export to CSV
                     </button>
@@ -361,20 +363,28 @@
                                         <label for="contractoremail" class="form-label">Contractor</label>
                                         <select class="form-select" id="allocated_contractor_id">
                                             <option selected>Choose Contractor...</option>
-                                            <option value="1">First@gmail.com</option>
-                                            <option value="2">Second@gmail.com</option>
-                                            <option value="3">Third@gmail.com</option>
-                                            <option value="4">Forth@gmail.com</option>
+                                            @foreach (var monitoringViewModel in Model)
+                                            {
+                                                foreach (var contractorModel in monitoringViewModel.contractorList)
+                                                {
+                                                    <option value="@contractorModel.contractor_id">@contractorModel.email_id</option>
+                                                }
+
+                                            }
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="ward" class="form-label">Ward</label>
                                         <select class="form-select" id="ward_id">
                                             <option selected>Choose Ward...</option>
-                                            <option value="1">Ward1</option>
-                                            <option value="2">Ward2</option>
-                                            <option value="3">Ward3</option>
-                                            <option value="4">Ward4</option>
+                                            @foreach (var monitoringViewModel in Model)
+                                            {
+                                                foreach (var wardModel in monitoringViewModel.wardList)
+                                                {
+                                                    <option value="@wardModel.ward_id">@wardModel.ward_name</option>
+                                                }
+
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -407,6 +417,16 @@
             </div>
         </form>
 
+        <!--img Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal content goes here -->
+                    <img id="appletter"  />
+                </div>
+            </div>
+        </div>
+
         <!-- Button trigger modal -->
         <div class="container">
             <div class="table-responsive mt-4">
@@ -426,67 +446,45 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Construction of Bridge</td>
-                            <td>WO1234</td>
-                            <td>2024-04-01</td>
-                            <td>2024-10-31</td>
-                            <td>Ongoing</td>
-                            <td><a href="#">View</a></td>
-                            <td><a href="#">Download</a></td>
-                            <td>John Doe</td>
-                            <td>123-456-7890</td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Renovation of Park</td>
-                            <td>WO5678</td>
-                            <td>2024-03-15</td>
-                            <td>2024-09-30</td>
-                            <td>Completed</td>
-                            <td><a href="#">View</a></td>
-                            <td><a href="#">Download</a></td>
-                            <td>Jane Smith</td>
-                            <td>987-654-3210</td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Road Expansion Project</td>
-                            <td>WO91011</td>
-                            <td>2024-02-20</td>
-                            <td>2024-11-30</td>
-                            <td>Delayed</td>
-                            <td><a href="#">View</a></td>
-                            <td><a href="#">Download</a></td>
-                            <td>Michael Johnson</td>
-                            <td>555-123-4567</td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                                </button>
-                            </td>
-                        </tr>
+                        @{
+                            var counter = 1;
+                        }
+
+                        @foreach (var monitoringViewModel in Model)
+                        {
+
+                            foreach (var projectModel in monitoringViewModel.projectList)
+                            {
+
+                                <tr>
+                                    <td id="prjid">@projectModel.project_id</td>
+                                    <td>@projectModel.project_title</td>
+                                    <td>@projectModel.work_order_no</td>
+                                    <td>@projectModel.start_date</td>
+                                    <td>@projectModel.end_date</td>
+                                    <td>@projectModel.status</td>
+                                    @*<td><a href="#">View</a></td>*@
+                                    <td><button href="#" class="view-link" data-toggle="modal" data-target="#myModal"  id="approvalid" value="~/approvalLetters/@projectModel.approval_letter_s" >View</button></td>
+
+                                    <td><a download="~/tenderDocs/@projectModel.tender_doc_s" href="~/tenderDocs/@projectModel.tender_doc_s">Download</a></td>
+                                    <td>@projectModel.project_alloted_name</td>
+                                    <td>@projectModel.project_alloted_contact</td>
+                                    <td>
+                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" id="editBtn" value="@projectModel.project_id" @*onclick="editBtn(@projectModel.project_id)"*@ type="button" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                            @projectModel.project_id
+                                        </button>
+                                        <button type="button" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
@@ -1126,18 +1124,52 @@
                 $('#exampleModal').modal('show');
             });
         });
-        $("[id$=submitBtn]").on("click", function () {
+        $("[id$=approvalid]").on("click", function (e) {
+            var appid = $(this).attr('value');
+            $("#appletter").attr("src", appid);
+            console.log(appid);
+        });
+
+        $("[id$=submitBtn]").on("click", function (e) {
+            /*   e.preventDefault();*/
+
+            var form_data = new FormData(); // Create a FormData object
+
+            // Append form fields to FormData object
+            form_data.append("project_title", $("[id$=project_title]").val());
+            form_data.append("work_order_no", $("[id$=work_order_no]").val());
+            form_data.append("description", $("[id$=description]").val());
+            form_data.append("start_date", $("[id$=start_date]").val());
+            form_data.append("end_date", $("[id$=end_date]").val());
+            form_data.append("s_latitude", $("[id$=s_latitude]").val());
+            form_data.append("s_longitude", $("[id$=s_longitude]").val());
+            form_data.append("e_latitude", $("[id$=e_latitude]").val());
+            form_data.append("e_longitude", $("[id$=e_longitude]").val());
+            form_data.append("project_type", $("[id$=project_type]").val());
+            form_data.append("budget_cost", $("[id$=budget_cost]").val());
+            form_data.append("allocated_contractor_id", $("[id$=allocated_contractor_id]").val());
+            form_data.append("ward_id", $("[id$=ward_id]").val());
+
+            var tender_doc = document.getElementById("tender_doc").files[0]; //file
+            var approval_letter = document.getElementById("approval_letter").files[0]; //file
+            form_data.append("tender_doc", tender_doc);
+            form_data.append("approval_letter", approval_letter);
+            console.log("file : ", form_data);
+
             $.ajax({
                 type: "POST",
-                url: "/Home/addProject",
-                data: "{'project_title' : '" + $("[id$=project_title]").val() + "','work_order_no': '" + $("[id$=work_order_no]").val() + "','description': '" + $("[id$=description]").val() + "','startDate': '" + $("[id$=startDate]").val() + "','endDate': '" + $("[id$=endDate]").val() + "','lattitude': '" + $("[id$=lattitude]").val() + "','longitude': '" + $("[id$=longitude]").val() + "','projectType': '" + $("[id$=projectType]").val() + "','budgetCost': '" + $("[id$=budgetCost]").val() + "','contractorId': '" + $("[id$=contractorId]").val() + "','wardId': '" + $("[id$=wardId]").val() + "' ,'approvalLetter': '" + $("[id$=approvalLetter]").val() + "','tenderDoc': '" + $("[id$=tenderDoc]").val() + "'}",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
+                url: "/Admin/addProject",
+                data: form_data,
+                processData: false,  // Don't process the data
+                contentType: false,  // Don't set contentType
                 success: function (response) {
                     alert("project added successfully...!!");
+                    console.log(response);
+                    window.location.href = "/Admin/Project_MonitoringView";
                 }
             });
         });
+
 
         document.getElementById("getCSV").addEventListener("click", function () {
             // Get the table
