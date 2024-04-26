@@ -178,7 +178,10 @@
     </Compile>
     <Compile Include="Models\ContractorModel.cs" />
     <Compile Include="Models\DatabaseConnectionManager.cs" />
+    <Compile Include="Models\MilestoneModel.cs" />
+    <Compile Include="Models\MonitoringViewModel.cs" />
     <Compile Include="Models\MyDbContext.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\Temp.cs" />
     <Compile Include="Models\Usermodel.cs" />
@@ -501,6 +504,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Theme\css\sb-admin-2.css" />
     <Content Include="Theme\css\sb-admin-2.min.css" />
+    <Content Include="Theme\img\tender.png" />
     <Content Include="Theme\img\undraw_posting_photo.svg" />
     <Content Include="Theme\img\undraw_profile.svg" />
     <Content Include="Theme\img\undraw_profile_1.svg" />

@@ -5,11 +5,12 @@ using System.Web;
 
 namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 {
-    public class Usermodel { 
-        public int id { get; set; } 
-        
+    public class Usermodel
+    {
+        public int id { get; set; }
+
         public string name { get; set; }
-        
+
         public string email_id { get; set; }
 
         public string password { get; set; }
