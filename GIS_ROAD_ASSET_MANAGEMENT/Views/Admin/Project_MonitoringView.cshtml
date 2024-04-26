@@ -194,13 +194,20 @@
             width: 100%;
             height: 400px; /* Set an initial height */
         }
+        .break {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 
 </head>
 <body>
     @if (ViewBag.role == "Admin")
     {
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 100;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Project Monitoring</a>
                 <div class="d-flex">
@@ -400,7 +407,7 @@
             </div>
         </form>
 
-        <!-- Button trigger modal -->
+   <!-- Button trigger modal -->
         <div class="container">
             <div class="table-responsive mt-4">
                 <table id="table_d" class="table table-striped nowrap" style="width:100%">
@@ -414,8 +421,8 @@
                             <th>Status</th>
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
-                            <th class="col-2">Project Allotted to<br>to Name</th>
-                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+                            <th class="col-2">Project Allotted to<span class="break">Name</span></th>
+                            <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -491,8 +498,8 @@
                             <th>Status</th>
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
-                            <th class="col-2">Project Allotted to<br>to Name</th>
-                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+                            <th class="col-2">Project Allotted to<span class="break">Name</span></th>
+                            <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -519,7 +526,7 @@
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
                             <th>Project Allotted to Name</th>
-                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+                            <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
                             <th>Feedback</th>
                             <th>Complaints</th>
                         </tr>
