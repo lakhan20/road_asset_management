@@ -501,6 +501,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Theme\css\sb-admin-2.css" />
     <Content Include="Theme\css\sb-admin-2.min.css" />
+    <Content Include="Theme\img\14.jpg" />
     <Content Include="Theme\img\undraw_posting_photo.svg" />
     <Content Include="Theme\img\undraw_profile.svg" />
     <Content Include="Theme\img\undraw_profile_1.svg" />

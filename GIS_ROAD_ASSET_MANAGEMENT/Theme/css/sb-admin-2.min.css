@@ -7875,7 +7875,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .mb-4, .my-4 {
-    margin-bottom: 1.5rem !important
+    margin-bottom: 0rem !important
 }
 
 .ml-4, .mx-4 {
@@ -9955,8 +9955,8 @@ a:focus {
         }
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem
+    padding-left: 0rem;
+    padding-right: 1.7rem
 }
 
 .scroll-to-top {
