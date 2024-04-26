@@ -29,6 +29,36 @@
             background-color: #393939;
             color: #fff; /* Text color */
         }
+
+        .form-footer {
+            overflow: auto;
+            gap: 20px;
+        }
+
+            .form-footer button {
+                background-color: #000;
+                border: 1px solid #000 !important;
+                color: #ffffff;
+                border: none;
+                padding: 13px 30px;
+                font-size: 1em;
+                cursor: pointer;
+                border-radius: 5px;
+                flex: 1;
+                margin-top: 5px;
+            }
+
+                .form-footer button:hover {
+                    opacity: 0.8;
+                }
+
+        .modal-header {
+            background-color: #282828
+        }
+
+        .modal-title {
+            color: #fff
+        }
     </style>
 </head>
 <body>
@@ -55,7 +85,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Update Details</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row mb-3">
@@ -108,8 +138,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" style="background-color: #282828; border-color: black;" class="btn btn-primary">Submit</button>
+                    <div class="modal-footer form-footer d-flex">
+                        <button type="submit">Submit</button>
                     </div>
                 </div>
             </div>
