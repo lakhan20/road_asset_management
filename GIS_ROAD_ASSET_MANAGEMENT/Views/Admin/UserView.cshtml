@@ -275,7 +275,7 @@
                 <!-- Table content -->
                 <thead>
                     <tr>
-                        <th>User Id</th>
+                        <th>Sr No.</th>
                         <th>Role Name</th>
                         <th>Name</th>
                         <th>Email Id</th>
@@ -289,50 +289,55 @@
                 </thead>
                 <tbody>
 
+                    @{ 
+                        var SerialNo = 1;
+                    }
 
                     @foreach (var item in Model.usermodel)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RoleName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.email_id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.contact_no)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WardName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.created_at)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.updated_at)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.is_active)
-                            </td>
-                            <td>
-      
-                                <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails(this);">
-                                    Edit
-                                </button>
-                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary" id="disableBtn_@item.id" onclick="changeStatus('@item.id', 'disable');">
-                                    Disable
-                                </button>
-                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary d-none" id="activeBtn_@item.id" onclick="changeStatus('@item.id', 'enable');">
-                                    Enable
-                                </button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <input type="hidden" class="hidden-id" value="@item.id">
+                        <td>
+                           @SerialNo
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.contact_no)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WardName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.created_at)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.updated_at)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.is_active)
+                        </td>
+                        <td>
+
+                            <button data-bs-toggle="modal" data-bs-target="#EditModal" type="button" class="btn btn-primary" id="editBtn_@item.id" onclick="editDetails(this);">
+                                Edit
+                            </button>
+                            <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary" id="disableBtn_@item.id" onclick="changeStatus('@item.id', 'disable');">
+                                Disable
+                            </button>
+                            <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary d-none" id="activeBtn_@item.id" onclick="changeStatus('@item.id', 'enable');">
+                                Enable
+                            </button>
+                        </td>
+                    </tr>
+                        SerialNo++;
                     }
 
 
@@ -446,7 +451,7 @@
         });
 
         function editDetails(btn) {
-            let id = $(btn).closest('tr').find('td:eq(0)').text().trim();
+            let id = $(btn).closest('tr').find('.hidden-id').val();
             let roleName = $(btn).closest('tr').find('td:eq(1)').text().trim();
             let name = $(btn).closest('tr').find('td:eq(2)').text().trim();
             let emailId = $(btn).closest('tr').find('td:eq(3)').text().trim();
