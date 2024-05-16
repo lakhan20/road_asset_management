@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@model GIS_ROAD_ASSET_MANAGEMENT.Models.Temp
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header card-header-primary lifted">
+                    <h4 class="card-title text-white">Edit Profile</h4>
+                    <p class="card-category">Complete your profile</p>
+                </div>
+                <div class="card-body">
+                    <!-- Form content -->
+
+                    @foreach (var item in Model.usermodel)
+                    {
+                        <form>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="pid" class="bmd-label-floating">User Id</label>
+                                        <input type="text" class="form-control" readonly value="@item.id" id="pid">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="pname" class="bmd-label-floating">Username</label>
+                                        <input type="text" class="form-control" readonly value="@item.name" id="pname">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="pemailid" class="bmd-label-floating">Email address</label>
+                                        <input type="email" class="form-control" readonly value="@item.email_id" id="pemailid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"> 
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="pcontactno" class="bmd-label-floating">Conatct No</label>
+                                        <input type="number" class="form-control" readonly value="@item.contact_no" id="pcontactno">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="pward" class="bmd-label-floating"> Ward Number</label>
+                                        <div class="select">
+                                            <select name="Wward" id="pward" class="form-control" disabled>
+                                                @foreach (var data in Model.wardmoel)
+                                                {
+                                                    <option value="@data.ward_id"> @data.ward_name</option>
+                                                }
+                                            </select>
+                                            <span class="focus"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group bmd-form-group">
+                                        <!-- Add text before the button -->
+                                        <p class="text-start">Do You Want to Change Password?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Button to toggle password fields -->
+                                    <button type="button" class="btn btn-primary float-start" id="changePasswordButton" onclick="changePassword();">Change Password</button>
+                                </div>
+                            </div>
+
+                            <div class="row d-none" id="passwordFields">
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="ppassword" class="bmd-label-floating">New Password</label>
+                                        <input type="password" class="form-control" id="ppassword">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="confirmPassword" class="bmd-label-floating">Confirm Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary float-start mr-2" id="updateButton">Update Profile</button>
+                                    <button type="submit" class="btn btn-primary float-start">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function changePassword()
+    {
+        $('#passwordFields').toggleClass('d-none');
+        if ($('#changePasswordButton').text() == 'Change Password') {
+            $('#changePasswordButton').text('Cancel');
+        } else {
+            $('#changePasswordButton').text('Change Password');
+        }
+    }
+</script>

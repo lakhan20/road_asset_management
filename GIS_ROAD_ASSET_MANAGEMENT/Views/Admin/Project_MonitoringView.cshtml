@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<GIS_ROAD_ASSET_MANAGEMENT.Models.MonitoringViewModel>
+@{
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
@@ -18,6 +19,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.0/css/select.bootstrap5.css">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.1/css/searchPanes.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.1/css/select.dataTables.css">
 
     <title>Document</title>
     <!-- Bootstrap CSS -->
@@ -102,7 +106,7 @@
                     }
 
                     #addProjectForm .form-header .stepIndicator.active::before {
-                        background-color: ##28a745;
+                        background-color: #28a745;
                         border: 3px solid #858796;
                     }
 
@@ -146,10 +150,14 @@
                     outline: 0;
                 }
 
+                #addProjectForm textarea.invalid,
+                #addProjectForm select.invalid,
                 #addProjectForm input.invalid {
                     border: 1px solid #ffaba5;
                 }
-
+            /*   #addProjectForm textarea.invalid {
+                border: 5px solid #ffaba5;
+            }*/
             #addProjectForm .step {
                 display: none;
             }
@@ -194,27 +202,135 @@
             width: 100%;
             height: 400px; /* Set an initial height */
         }
+
+        .break {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .container {
+            width: 100%;
+            max-width: none;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        /* Style for the buttons */
+        .btn-custom {
+            background-color: #393939;
+            color: #fff; /* Text color */
+            /* Border color */
+        }
+
+        .form-footer {
+            overflow: auto;
+            gap: 20px;
+        }
+
+            .form-footer button {
+                background-color: #000;
+                border: 1px solid #000 !important;
+                color: #ffffff;
+                border: none;
+                padding: 13px 30px;
+                font-size: 1em;
+                cursor: pointer;
+                border-radius: 5px;
+                flex: 1;
+                margin-top: 5px;
+            }
+
+                .form-footer button:hover {
+                    opacity: 0.8;
+                }
+
+        .modal-header {
+            background-color: #282828
+        }
+
+        .modal-title {
+            color: #fff
+        }
+
+        .map-footer button {
+            background-color: #000;
+            border: 1px solid #000 !important;
+            color: #ffffff;
+            border: none;
+            padding: 13px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            flex: 1;
+            margin-top: 5px;
+        }
+
+            .map-footer button:hover {
+                opacity: 0.8;
+            }
+
+        .custom-btn {
+            padding: 10px 20px; /* Adjusted padding */
+            border: unset;
+            border-radius: 10px; /* Adjusted border-radius */
+            color: #212121;
+            z-index: 1;
+            background: #e8e8e8;
+            position: relative;
+            font-weight: 1000;
+            font-size: 14px; /* Adjusted font size */
+            -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+            box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+            transition: all 250ms;
+            overflow: hidden;
+        }
+
+            .custom-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0;
+                border-radius: 10px; /* Adjusted border-radius */
+                background-color: #212121;
+                z-index: -1;
+                -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+                box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+                transition: all 250ms;
+            }
+
+            .custom-btn:hover {
+                color: #e8e8e8;
+            }
+
+                .custom-btn:hover::before {
+                    width: 100%;
+                }
     </style>
 
 </head>
 <body>
-    @if (ViewBag.role == "Admin")
+    @if (ViewBag.RoleId == 1 || ViewBag.RoleId == 2)
     {
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:100;">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Project Monitoring</a>
-                <div class="d-flex">
-                    <button class="btn btn-custom" id="mg" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-folder-plus"></i>   Add Project</button>
-                    <button class="btn btn-custom mx-2">
-                        <i class="fas fa-file-csv"></i> Export to CSV
-                    </button>
-                    <button class="btn btn-custom mx-2">
-                        <i class="fas fa-file-pdf"></i> Export to PDF
-                    </button>
-                </div>
+        <div class="container-fluid">
+            <div class="d-flex">
+                <a class="navbar-brand mr-auto"><h2>Project Details</h2></a>
+                <button class="btn btn-custom" id="mg" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="addPrj()"><i class="fa-solid fa-diagram-project"></i> Add Project</button>
+                <button class="btn btn-custom mx-2" id="getCSV">
+                    <i class="fas fa-file-csv"></i> Export to CSV
+                </button>
+                <button class="btn btn-custom mx-2" id="getPDF">
+                    <i class="fas fa-file-pdf"></i> Export to PDF
+                </button>
             </div>
-
-        </nav>
+        </div>
         <!-- Map Modal -->
 
         <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
@@ -230,13 +346,10 @@
                     <div class="modal-body">
                         <!-- Map container -->
                         <div id="map"></div>
-                        <input type="text" id="1lat" />
-                        <input type="text" id="1long" />
+                        <input id="road_data_hidden" type="hidden" />
                     </div>
-                    <div class="modal-footer">
-                        <div class="ms-auto">
-                            <button id="map_submit" style="background-color: #282828; border-color: black;" class="btn btn-primary">Submit</button>
-                        </div>
+                    <div class="modal-footer map-footer d-flex">
+                        <button type="button" id="map_submit">Submit</button>
                     </div>
                 </div>
             </div>
@@ -259,36 +372,45 @@
                             <h1 class="text-center fs-4">Project Monitoring</h1>
                             <!-- start step indicators -->
                             <div class="form-header d-flex mb-4">
-                                <span class="stepIndicator">Account Setup</span>
-                                <span class="stepIndicator">Social Profiles</span>
-                                <span class="stepIndicator">Personal Details</span>
+                                <span class="stepIndicator">Basic Details</span>
+                                <span class="stepIndicator">Location</span>
+                                <span class="stepIndicator">Documents</span>
                             </div>
                             <!-- end step indicators -->
                             <!-- step one -->
                             <div class="step">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label for="projecttitle" class="form-label">Project Title</label>
+                                        <label for="projecttitle" class="form-label" id="project_title_label">Project Title</label>
                                         <input type="text" class="form-control" id="project_title">
+                                        <small id="project_title_error" class="error-message text-danger"></small>
                                     </div>
                                     <div class="col">
-                                        <label for="workorderno" class="form-label">Work Order Number</label>
+                                        <label for="workorderno" class="form-label" id="work_order_no_label">Work Order Number</label>
                                         <input type="text" class="form-control" id="work_order_no">
+                                        <small id="work_order_no_error" class="error-message text-danger"></small>
+
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label for="description" class="form-label">Description</label>
+                                        <label for="description" class="form-label" id="description_label">Description</label>
                                         <textarea class="form-control" id="description"></textarea>
+                                        <small id="description_error" class="error-message text-danger"></small>
+
                                     </div>
                                 </div> <div class="row mb-3">
                                     <div class="col">
-                                        <label for="startdate" class="form-label">Start Date</label>
+                                        <label for="startdate" class="form-label" id="start_date_label">Start Date</label>
                                         <input type="date" class="form-control" id="start_date">
+                                        <small id="start_date_error" class="error-message text-danger"></small>
+
                                     </div>
                                     <div class="col">
-                                        <label for="enddate" class="form-label">End Date</label>
+                                        <label for="enddate" class="form-label" id="end_date_label">End Date</label>
                                         <input type="date" class="form-control" id="end_date">
+                                        <small id="end_date_error" class="error-message text-danger"></small>
+
                                     </div>
                                 </div>
                             </div>
@@ -298,12 +420,16 @@
                                 <div class="row mb-3">
                                     <h4>Start Point</h4>
                                     <div class="col">
-                                        <label for="lat" class="form-label">Latitude</label>
+                                        <label for="lat" class="form-label" id="s_latitude_label">Latitude</label>
                                         <input type="text" class="form-control" id="s_latitude" readonly>
+                                        <small id="s_latitude_error" class="error-message text-danger"></small>
+
                                     </div>
                                     <div class="col">
-                                        <label for="long" class="form-label">Longitude</label>
+                                        <label for="long" class="form-label" id="s_longitude_label">Longitude</label>
                                         <input type="text" class="form-control" id="s_longitude" readonly>
+                                        <small id="s_longitude_error" class="error-message text-danger"></small>
+
                                     </div>
                                     <div class="col-2">
                                         <button id="start" type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mapModal" border-color: black;">
@@ -314,24 +440,32 @@
                                 <div class="row mb-3">
                                     <h4>End Point</h4>
                                     <div class="col">
-                                        <label for="lat" class="form-label">Latitude</label>
+                                        <label for="lat" class="form-label" id="e_latitude_label">Latitude</label>
                                         <input type="text" class="form-control" id="e_latitude" readonly>
+                                        <small id="e_latitude_error" class="error-message text-danger"></small>
+
                                     </div>
                                     <div class="col">
-                                        <label for="long" class="form-label">Longitude</label>
+                                        <label for="long" class="form-label" id="e_longitude_label">Longitude</label>
                                         <input type="text" class="form-control" id="e_longitude" readonly>
+                                        <small id="e_longitude_error" class="error-message text-danger"></small>
+
                                     </div>
-                                    <div class="col-2">
-                                        <button id="end" type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mapModal" border-color: black;">
-                                            <i style='font-size:24px' class='fas'>&#xf5a0;</i>
-                                        </button>
-                                    </div>
+                                    @*<div class="col-2">
+                                            <button id="end" type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mapModal" border-color: black;">
+                                                <i style='font-size:24px' class='fas'>&#xf5a0;</i>
+                                            </button>
+                                        </div>*@
+
+                                </div>
+                                <div class="row mb-3">
+                                    <small id="e_longitude_error" class="error-message text-danger"></small>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
                                         <label for="projecttype" class="form-label">Project Type</label>
                                         <select class="form-select" id="project_type">
-                                            <option selected>Choose Project Type...</option>
+                                            <option selected value="0">Choose Project Type...</option>
                                             <option value="1">foot bridge</option>
                                             <option value="2">road cc</option>
                                             <option value="3">subway/ underpass</option>
@@ -353,21 +487,29 @@
                                     <div class="col">
                                         <label for="contractoremail" class="form-label">Contractor</label>
                                         <select class="form-select" id="allocated_contractor_id">
-                                            <option selected>Choose Contractor...</option>
-                                            <option value="1">First@gmail.com</option>
-                                            <option value="2">Second@gmail.com</option>
-                                            <option value="3">Third@gmail.com</option>
-                                            <option value="4">Forth@gmail.com</option>
+                                            <option selected value="0">Choose Contractor...</option>
+                                            @foreach (var monitoringViewModel in Model)
+                                            {
+                                                foreach (var contractorModel in monitoringViewModel.contractorList)
+                                                {
+                                                    <option value="@contractorModel.contractor_id">@contractorModel.email_id</option>
+                                                }
+
+                                            }
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="ward" class="form-label">Ward</label>
                                         <select class="form-select" id="ward_id">
-                                            <option selected>Choose Ward...</option>
-                                            <option value="1">Ward1</option>
-                                            <option value="2">Ward2</option>
-                                            <option value="3">Ward3</option>
-                                            <option value="4">Ward4</option>
+                                            <option selected value="0">Choose Ward...</option>
+                                            @foreach (var monitoringViewModel in Model)
+                                            {
+                                                foreach (var wardModel in monitoringViewModel.wardList)
+                                                {
+                                                    <option value="@wardModel.ward_id">@wardModel.ward_name</option>
+                                                }
+
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -381,6 +523,17 @@
                                         <input type="file" class="form-control" id="tender_doc">
                                     </div>
                                 </div>
+                                <div class="row mb-3" id="status_div">
+                                    <div class="col">
+                                        <label for="ward" class="form-label">Status</label>
+                                        <select class="form-select" id="status">
+                                            <option selected>Status...</option>
+                                            <option value="1">Pending</option>
+                                            <option value="2">On Going</option>
+                                            <option value="3">Completed</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- start previous / next buttons -->
@@ -391,7 +544,7 @@
                         <div class="modal-footer form-footer d-flex">
                             <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
                             <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                            <button type="button" id="submitBtn">submit</button>
+                            <button type="button" id="submitBtn">Submit</button>
 
                         </div>
                     </div>
@@ -400,10 +553,20 @@
             </div>
         </form>
 
+        <!--img Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal content goes here -->
+                    <img id="appletter" />
+                </div>
+            </div>
+        </div>
+
         <!-- Button trigger modal -->
         <div class="container">
             <div class="table-responsive mt-4">
-                <table id="example" class="table table-striped nowrap" style="width:100%">
+                <table id="table_d" class="table table-striped nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Sr.no</th>
@@ -412,74 +575,60 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
+                            <th>Project Type</th>
+                            <th>Ward</th>
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
-                            <th class="col-2">Project Allotted to<br>to Name</th>
-                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+                            <th class="col-2">Project Allotted to<span class="break">Name</span></th>
+                            <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
                             <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Construction of Bridge</td>
-                            <td>WO1234</td>
-                            <td>2024-04-01</td>
-                            <td>2024-10-31</td>
-                            <td>Ongoing</td>
-                            <td><a href="#">View</a></td>
-                            <td><a href="#">Download</a></td>
-                            <td>John Doe</td>
-                            <td>123-456-7890</td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Renovation of Park</td>
-                            <td>WO5678</td>
-                            <td>2024-03-15</td>
-                            <td>2024-09-30</td>
-                            <td>Completed</td>
-                            <td><a href="#">View</a></td>
-                            <td><a href="#">Download</a></td>
-                            <td>Jane Smith</td>
-                            <td>987-654-3210</td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Road Expansion Project</td>
-                            <td>WO91011</td>
-                            <td>2024-02-20</td>
-                            <td>2024-11-30</td>
-                            <td>Delayed</td>
-                            <td><a href="#">View</a></td>
-                            <td><a href="#">Download</a></td>
-                            <td>Michael Johnson</td>
-                            <td>555-123-4567</td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                                </button>
-                            </td>
-                        </tr>
+                        @{
+                            var counter = 1;
+                        }
+
+                        @foreach (var monitoringViewModel in Model)
+                        {
+
+                            foreach (var projectModel in monitoringViewModel.projectList)
+                            {
+
+
+                                <tr>
+                                    <input type="hidden" class="projectid" value="@projectModel.project_id" />
+                                    <td id="prjid">@counter</td>
+                                    <td>@projectModel.project_title</td>
+                                    <td>@projectModel.work_order_no</td>
+                                    <td>@projectModel.start_date</td>
+                                    <td>@projectModel.end_date</td>
+                                    <td>@projectModel.status</td>
+                                    <td>@projectModel.project_type</td>
+                                    <td>@projectModel.ward_name</td>
+
+
+                                    @*<td><a href="#">View</a></td>*@
+                                    <td class="text-center">
+                                        <button href="#" class="view-link custom-btn" data-toggle="modal" data-target="#myModal" id="approvalid" value="~/approvalLetters/@projectModel.approval_letter_s">View</button>
+                                    </td>
+                                    <td><a download="~/tenderDocs/@projectModel.tender_doc_s" href="~/tenderDocs/@projectModel.tender_doc_s">Download</a></td>
+                                    <td>@projectModel.project_alloted_name</td>
+                                    <td>@projectModel.project_alloted_contact</td>
+                                    <td>
+                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="editBtn(this);" type="button" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" onclick="disableProject(this);">
+                                            <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
@@ -491,8 +640,8 @@
                             <th>Status</th>
                             <th>Approval Letter</th>
                             <th>Tender Document</th>
-                            <th class="col-2">Project Allotted to<br>to Name</th>
-                            <th class="col-2">Project Allotted to<br>Contact Number</th>
+                            <th class="col-2">Project Allotted to<span class="break">Name</span></th>
+                            <th class="col-2">Project Allotted to<span class="break">Contact Number</span></th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -501,400 +650,214 @@
         </div>
     }
 
-    @if (ViewBag.role == "user")
+    @if (ViewBag.RoleId == 3 || ViewBag.RoleId == 4)
     {
-        @*for users*@
-        <div class="container">
-            <div class="table-responsive mt-4">
-                <table id="example" class="table table-striped nowrap" style="width:100%">
-                    <!-- Table content -->
-                    <thead>
-                        <tr>
-                            <th>Serial Number</th>
-                            <th>Project Title</th>
-                            <th>Work Order No</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
-                            <th>Approval Letter</th>
-                            <th>Tender Document</th>
-                            <th>Project Allotted to Name</th>
-                            <th class="col-2">Project Allotted to<br>Contact Number</th>
-                            <th>Feedback</th>
-                            <th>Complaints</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Table rows with data -->
-                        <tr>
-                            <td>1</td>
-                            <td>Project 1</td>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>on going</td>
-                            <td>2011-04-25</td>
-                            <td>$320,800</td>
-                            <td>John Doe</td> <!-- Sample Data -->
-                            <td>1234567890</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
 
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Add more rows below -->
-                        <tr>
-                            <td>2</td>
-                            <td>Project 2</td>
-                            <td>John Doe</td>
-                            <td>Software Developer</td>
-                            <td>New York</td>
-                            <td>35</td>
-                            <td>2015-08-15</td>
-                            <td>$120,000</td>
-                            <td>Jane Smith</td> <!-- Sample Data -->
-                            <td>9876543210</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
+        <div class="container-fluid">
+            <div class="d-flex">
+                <a class="navbar-brand mr-auto" href="#"><h2>Project Details</h2></a>
 
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Project 3</td>
-                            <td>Jane Smith</td>
-                            <td>Project Manager</td>
-                            <td>London</td>
-                            <td>done</td>
-                            <td>2010-11-20</td>
-                            <td>$180,000</td>
-                            <td>Alice Johnson</td> <!-- Sample Data -->
-                            <td>4567890123</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
+                @if (ViewBag.RoleId == 3)
+                {
+                    <div class="d-flex">
 
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Project 4</td>
-                            <td>Alice Johnson</td>
-                            <td>UX Designer</td>
-                            <td>Sydney</td>
-                            <td>28</td>
-                            <td>2019-05-10</td>
-                            <td>$90,000</td>
-                            <td>Michael Brown</td> <!-- Sample Data -->
-                            <td>7890123456</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
+                        <button class="btn btn-custom mx-2" id="getCSV">
+                            <i class="fas fa-file-csv"></i> Export to CSV
+                        </button>
+                        <button class="btn btn-custom mx-2" id="getPDF">
+                            <i class="fas fa-file-pdf"></i> Export to PDF
+                        </button>
+                    </div>
 
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Project 5</td>
-                            <td>Michael Brown</td>
-                            <td>Marketing Manager</td>
-                            <td>Los Angeles</td>
-                            <td>50</td>
-                            <td>2007-09-03</td>
-                            <td>$200,000</td>
-                            <td>James Johnson</td> <!-- Sample Data -->
-                            <td>3456789012</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Project 1</td>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>on going</td>
-                            <td>2011-04-25</td>
-                            <td>$320,800</td>
-                            <td>John Doe</td> <!-- Sample Data -->
-                            <td>1234567890</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Add more rows below -->
-                        <tr>
-                            <td>2</td>
-                            <td>Project 2</td>
-                            <td>John Doe</td>
-                            <td>Software Developer</td>
-                            <td>New York</td>
-                            <td>35</td>
-                            <td>2015-08-15</td>
-                            <td>$120,000</td>
-                            <td>Jane Smith</td> <!-- Sample Data -->
-                            <td>9876543210</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Project 3</td>
-                            <td>Jane Smith</td>
-                            <td>Project Manager</td>
-                            <td>London</td>
-                            <td>done</td>
-                            <td>2010-11-20</td>
-                            <td>$180,000</td>
-                            <td>Alice Johnson</td> <!-- Sample Data -->
-                            <td>4567890123</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Project 4</td>
-                            <td>Alice Johnson</td>
-                            <td>UX Designer</td>
-                            <td>Sydney</td>
-                            <td>28</td>
-                            <td>2019-05-10</td>
-                            <td>$90,000</td>
-                            <td>Michael Brown</td> <!-- Sample Data -->
-                            <td>7890123456</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td> <!-- Sample Data -->
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Project 5</td>
-                            <td>Michael Brown</td>
-                            <td>Marketing Manager</td>
-                            <td>Los Angeles</td>
-                            <td>50</td>
-                            <td>2007-09-03</td>
-                            <td>$200,000</td>
-                            <td>James Johnson</td> <!-- Sample Data -->
-                            <td>3456789012</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td> <!-- Sample Data -->
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Project 1</td>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>on going</td>
-                            <td>2011-04-25</td>
-                            <td>$320,800</td>
-                            <td>John Doe</td> <!-- Sample Data -->
-                            <td>1234567890</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td> <!-- Sample Data -->
-                        </tr>
-                        <!-- Add more rows below -->
-                        <tr>
-                            <td>2</td>
-                            <td>Project 2</td>
-                            <td>John Doe</td>
-                            <td>Software Developer</td>
-                            <td>New York</td>
-                            <td>35</td>
-                            <td>2015-08-15</td>
-                            <td>$120,000</td>
-                            <td>Jane Smith</td> <!-- Sample Data -->
-                            <td>9876543210</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td> <!-- Sample Data -->
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Project 3</td>
-                            <td>Jane Smith</td>
-                            <td>Project Manager</td>
-                            <td>London</td>
-                            <td>done</td>
-                            <td>2010-11-20</td>
-                            <td>$180,000</td>
-                            <td>Alice Johnson</td> <!-- Sample Data -->
-                            <td>4567890123</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td> <!-- Sample Data -->
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Project 4</td>
-                            <td>Alice Johnson</td>
-                            <td>UX Designer</td>
-                            <td>Sydney</td>
-                            <td>28</td>
-                            <td>2019-05-10</td>
-                            <td>$90,000</td>
-                            <td>Michael Brown</td> <!-- Sample Data -->
-                            <td>7890123456</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td> <!-- Sample Data -->
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Project 5</td>
-                            <td>Michael Brown</td>
-                            <td>Marketing Manager</td>
-                            <td>Los Angeles</td>
-                            <td>50</td>
-                            <td>2007-09-03</td>
-                            <td>$200,000</td>
-                            <td>James Johnson</td> <!-- Sample Data -->
-                            <td>3456789012</td> <!-- Sample Data -->
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-
-                                </button>
-                            </td><!-- Sample Data -->
-                        </tr>
-
-                    </tbody>
-                    @*<tfoot>
-                            <tr>
-                                <th>Serial Number</th>
-                                <th>Project Title</th>
-                                <th>Work Order No</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th>Approval Letter</th>
-                                <th>Tender Document</th>
-                                <th>Project Allotted to Name</th>
-                                <th class="col-2">Project Allotted to<br>Contact Number</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>*@
-                </table>
+                }
             </div>
         </div>
 
+
+        if (TempData["addSuggestion"] != null)
+        {
+            <div class="alert alert-dismissible" role="alert" style="background-color:#d1e7dd;">
+                <strong style="color: #0f5132">@TempData["addSuggestion"]</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        }
+
+        <!--feedback mmodal -->
+        <form role="form" name="FeedbackForm" id="FeedbackForm" method="post">
+            <div class="modal fade FeedbackModal" id="FeedbackModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title fs-5"> Feedback/Suggestion </h3>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="Feedback">
+
+                                <div class="row mb-3">
+                                    <div class="form-group  col">
+                                        <label for="Fid"><i class="fa-solid fa-address-book"></i>&nbsp; Project Id</label>
+                                        <input type="number" class="form-control" id="Fid" disabled>
+                                    </div>
+                                    <div class="form-group  col">
+                                        <label for="Fname"><i class="fa-solid fa-address-book"></i>&nbsp; Project Name</label>
+                                        <input type="text" class="form-control" id="Fname" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control" id="description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer form-footer d-flex">
+
+                            <button type="submit" id="FeedbackBtn"><span class="glyphicon glyphicon-off"></span>Send</button>
+                            <button type="submit" id="FeedbackBtnclose"><span class="glyphicon glyphicon-off"></span>Cancel</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--img Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal content goes here -->
+                    <img id="appletter" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Button trigger modal -->
+        <div class="container">
+            <div class="table-responsive mt-4">
+                @if (ViewBag.RoleId == 3)
+                {
+                    <table id="table_d" class="table table-striped nowrap" style="width:100%">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="text-center">Sr.no</th>
+                                <th class="text-center">Project Title</th>
+                                <th class="text-center">Work Order No</th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">End Date</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Project Type</th>
+                                <th class="text-center">Ward</th>
+                                <th class="text-center">Approval Letter</th>
+                                <th class="text-center">Tender Document</th>
+                                <th class="text-center">Project Allotted to<span class="break">Name</span></th>
+                                <th class="text-center">Project Allotted to<span class="break">Contact Number</span></th>
+                                @*<th>Action</th>*@
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @{
+                                var counter = 1;
+                            }
+
+                            @foreach (var monitoringViewModel in Model)
+                            {
+
+                                foreach (var projectModel in monitoringViewModel.projectList)
+                                {
+
+                                    <tr class="text-center">
+                                        <input type="hidden" class="projectid" value="@projectModel.project_id" />
+
+                                        <td id="prjid" class="text-center">@counter</td>
+                                        <td class="text-center">@projectModel.project_title</td>
+                                        <td class="text-center">@projectModel.work_order_no</td>
+                                        <td class="text-center">@projectModel.start_date</td>
+                                        <td class="text-center">@projectModel.end_date</td>
+                                        <td class="text-center">@projectModel.status</td>
+                                        <td class="text-center">@projectModel.project_type</td>
+                                        <td class="text-center">@projectModel.ward_name</td>
+                                        @*<td><a href="#">View</a></td>*@
+                                        <td class="text-center"><button href="#" class="view-link" data-toggle="modal" data-target="#myModal" id="approvalid" value="~/approvalLetters/@projectModel.approval_letter_s">View</button></td>
+
+                                        <td class="text-center"><a download="~/tenderDocs/@projectModel.tender_doc_s" href="~/tenderDocs/@projectModel.tender_doc_s">Download</a></td>
+                                        <td class="text-center">@projectModel.project_alloted_name</td>
+                                        <td class="text-center">@projectModel.project_alloted_contact</td>
+                                        @*<td>
+                                                <button data-bs-toggle="modal" data-bs-target="#FeedbackModal" type="button" class="btn btn-primary" id="Feedbackid_@projectModel.project_id" onclick="FeedbackDetails(this);">
+                                                    Feedback
+                                                </button>
+                                            </td>*@
+                                    </tr>
+                                    counter++;
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                }
+                @if (ViewBag.RoleId == 4)
+                {
+                    <table id="table_d" class="table table-striped nowrap" style="width:100%">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="text-center">Sr.no</th>
+                                <th class="text-center">Project Title</th>
+                                <th class="text-center">Work Order No</th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">End Date</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Project Type</th>
+                                <th class="text-center">Ward</th>
+                                <th class="text-center">Contractor<span class="break">Name</span></th>
+                                <th class="text-center">Contractor<span class="break">Contact Number</span></th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @{
+                                var counter = 1;
+                            }
+
+                            @foreach (var monitoringViewModel in Model)
+                            {
+
+                                foreach (var projectModel in monitoringViewModel.projectList)
+                                {
+
+                                    <tr class="text-center">
+                                        <input type="hidden" class="projectid" value="@projectModel.project_id" />
+
+                                        <td id="prjid" class="text-center">@counter</td>
+                                        <td class="text-center">@projectModel.project_title</td>
+                                        <td class="text-center">@projectModel.work_order_no</td>
+                                        <td class="text-center">@projectModel.start_date</td>
+                                        <td class="text-center">@projectModel.end_date</td>
+                                        <td class="text-center">@projectModel.status</td>
+                                        <td class="text-center">@projectModel.project_type</td>
+                                        <td class="text-center">@projectModel.ward_name</td>
+                                        <td class="text-center">@projectModel.project_alloted_name</td>
+                                        <td class="text-center">@projectModel.project_alloted_contact</td>
+                                        <td>
+                                            <button data-bs-toggle="modal" data-bs-target="#FeedbackModal" type="button" class="btn btn-primary" id="Feedbackid_@projectModel.project_id" onclick="FeedbackDetails(this);">
+                                                Feedback
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    counter++;
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                }
+
+            </div>
+        </div>
     }
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -902,34 +865,41 @@
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
     <!-- OpenLayers JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
-
-
-
-
-    @*<script>
-            $(document).ready(function () {
-                $('#start').click(function () {
-                    // assuming you have latitude and longitude values for the start point
-                    var startlat = /* insert start latitude value here */;
-                    var startlong = /* insert start longitude value here */;
-                    $('#s_lat').val(startlat);
-                    $('#s_long').val(startlong);
-                });
-
-                $('#end').click(function () {
-                    // assuming you have latitude and longitude values for the end point
-                    var endlat = /* insert end latitude value here */;
-                    var endlong = /* insert end longitude value here */;
-                    $('#e_lat').val(endlat);
-                    $('#e_long').val(endlong);
-                });
-            });
-        </script>*@
-
-
-
-
     <script>
+
+        function addPrj() {
+            var divToHide = document.getElementById("status_div");
+
+            // Set its display property to 'none' to hide it
+            divToHide.style.display = "none";
+
+
+
+            $('#project_title').val("");
+            $('#work_order_no').val("");
+
+            $('#description').val("");
+
+            $('#start_date').val("");
+            document.getElementById('start_date').value = "";
+            document.getElementById('end_date').value = "";
+            $('#s_latitude').val("");
+
+            $('#s_longitude').val("");
+
+
+            $('#e_latitude').val("");
+
+            $('#e_longitude').val("");
+
+            $('#project_type').val(0);
+            $('#budget_cost').val("");
+
+            $('#allocated_contractor_id').val(0);
+
+            $('#ward_id').val(0);
+        }
+
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
 
@@ -942,16 +912,16 @@
             if (n == 0) {
                 document.getElementById("prevBtn").style.display = "none";
                 document.getElementById("submitBtn").style.display = "none";
-            } else {
+                document.getElementById("nextBtn").style.display = "inline";
+            } else if (n == (x.length - 1)) {
                 document.getElementById("prevBtn").style.display = "inline";
-            }
-            if (n == (x.length - 1)) {
-                //document.getElementById("nextBtn").innerHTML = "";
                 document.getElementById("nextBtn").style.display = "none";
                 document.getElementById("submitBtn").style.display = "inline";
-                //document.getElementById("nextBtn").setAttribute('id', 'submitBtn');
+
             } else {
-                document.getElementById("nextBtn").innerHTML = "Next";
+                document.getElementById("prevBtn").style.display = "inline";
+                document.getElementById("submitBtn").style.display = "none";
+                document.getElementById("nextBtn").style.display = "inline";
             }
             //... and run a function that will display the correct step indicator:
             fixStepIndicator(n)
@@ -980,26 +950,145 @@
         }
 
         function validateForm() {
-            // This function deals with validation of the form fields
-            var x, y, i, valid = true;
+            //console.log("inside validate form");
+            var x, y, valid = true;
             x = document.getElementsByClassName("step");
-            y = x[currentTab].getElementsByTagName("input");
-            // A loop that checks every input field in the current tab:
-            for (i = 0; i < y.length; i++) {
-                // If a field is empty...
-                if (y[i].value == "") {
-                    // add an "invalid" class to the field:
-                    y[i].className += " invalid";
-                    // and set the current valid status to false
+            y = x[currentTab].querySelectorAll("input, textarea, select");
+            for (let i = 0; i < y.length; i++) {
+
+                if (y[i].value.trim() === "") {
+                    //console.log("y[i]", y[i]);
+                    //lbl = document.getElementById(y[i].id + "_label");
+                    //console.log("lbl : ", lbl.innerHTML);
+                    //document.getElementById(y[i].id + "_error").innerHTML = "Please Enter " + lbl.innerHTML +".";
+                    //$("project_title_error").html("You can not keep it empty..!");
+                    //if (y[i].id === "project_title") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Enter Project Title!!";
+                    //}
+                    //else {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "";
+
+                    //}
+                    // if (y[i].id === "work_order_no") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Enter Work Order no!!";
+
+                    // }
+                    // else {
+                    //     document.getElementById(y[i].id + "_error").innerHTML = "";
+
+                    // }
+                    // if (y[i].id === "description") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Enter Description!!";
+
+                    // }
+                    // else {
+                    //     document.getElementById(y[i].id + "_error").innerHTML = "";
+
+                    // }
+                    // if (y[i].id === "start_date") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Enter Start Date!!";
+
+                    //}
+                    // else {
+                    //     document.getElementById(y[i].id + "_error").innerHTML = "";
+
+                    // }
+                    //if (y[i].id === "end_date") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Enter End Date!!";
+
+                    //}
+                    //else {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "";
+
+                    //}
+                    //else if (y[i].id === "s_latitude" || y[i].id === "s_longitude" || y[i].id === "e_latitude" || y[i].id === "e_longitude") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Select Path!!";
+                    //}
+
+                    //else if (y[i].id === "budget_cost") {
+                    //    document.getElementById(y[i].id + "_error").innerHTML = "Please Enter Budget Cost!!";
+
+                    //}
+
+                    y[i].classList.add("invalid");
+
+                    valid = false;
+                } else {
+                    y[i].classList.remove("invalid");
+                    //document.getElementById(y[i].id + "_error").innerHTML = "";
+                    //document.getElementById(y[i].id + "_error").innerHTML = " ";
+                }
+
+                if (y[i].id === "end_date" && y[i].value !== "" && y[i].value < y[i - 1].value) {
+                    y[i].classList.add("invalid");
                     valid = false;
                 }
+                if (y[i].id === "budget_cost") {
+                    if (y[i].value <= 0) {
+                        y[i].classList.add("invalid");
+                        valid = false;
+                    }
+                    else {
+                        y[i].classList.remove("invalid");
+
+                    }
+                }
+
+                // Specific validation for the select element
+                if (y[i].id === "project_type") {
+                    console.log("Project type ...!!");
+                    if (y[i].value == 0 || y[i].value > 4) {
+                        y[i].classList.add("invalid");
+                        valid = false;
+                    } else {
+                        y[i].classList.remove("invalid");
+                    }
+                }
+
+                //if (y[i].id === "allocated_contractor_id") {
+                //    console.log("inside allocated contractor id");
+                //    if (y[i].value == 0) {
+                //        y[i].classList.add("invalid");
+                //        valid = false;
+                //    } else {
+                //        y[i].classList.remove("invalid");
+                //    }
+
+                //}
+
+
             }
-            // If the valid status is true, mark the step as finished and valid:
+
             if (valid) {
-                document.getElementsByClassName("stepIndicator")[currentTab].className += " finish";
+                document.getElementsByClassName("stepIndicator")[currentTab].classList.add("finish");
             }
-            return valid; // return the valid status
+
+            return valid;
         }
+
+
+        //function validateForm() {
+        //    // This function deals with validation of the form fields
+        //    var x, y, i, valid = true;
+        //    x = document.getElementsByClassName("step");
+        //    y = x[currentTab].getElementsByTagName("input");
+
+
+        //    for (i = 0; i < y.length; i++) {
+        //        // If a field is empty...
+        //        if (y[i].value == "") {
+        //            // add an "invalid" class to the field:
+        //            y[i].className += " invalid";
+        //            // and set the current valid status to false
+        //            valid = false;
+        //        }
+        //    }
+        //    // If the valid status is true, mark the step as finished and valid:
+        //    if (valid) {
+        //        document.getElementsByClassName("stepIndicator")[currentTab].className += " finish";
+        //    }
+        //    return valid; // return the valid status
+        //}
 
         function fixStepIndicator(n) {
             // This function removes the "active" class of all steps...
@@ -1016,6 +1105,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
     <!-- Corrected -->
     <!-- OpenLayers JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
@@ -1023,7 +1114,7 @@
         // JavaScript code
         // Initialize DataTable
         $(document).ready(function () {
-            new DataTable('#example', {
+            new DataTable('#table_d', {
                 searchPanes: true,
                 dom: 'Plfrtip',
                 language: {
@@ -1049,27 +1140,36 @@
             });
 
             // Create a vector layer for drawing and selecting features
+            const vectorSource = new ol.source.Vector();
             const vectorLayer = new ol.layer.Vector({
-                source: new ol.source.Vector(),
+                source: vectorSource,
             });
             map.addLayer(vectorLayer);
 
-            // Create a draw interaction for drawing points
             const draw = new ol.interaction.Draw({
-                type: 'Point',
-                source: vectorLayer.getSource(),
+                type: 'LineString',
+                source: vectorSource,
             });
             map.addInteraction(draw);
 
             // Listen for drawend event to capture coordinates
             draw.on('drawend', function (event) {
                 const feature = event.feature;
-                const coordinates = feature.getGeometry().getCoordinates();
-                document.getElementById('1lat').value = coordinates[1].toString();
-                document.getElementById('1long').value = coordinates[0].toString();
-                //$('#mapModal').modal('hide');
-                //$('#exampleModal').modal('show');
-                console.log(coordinates[0]);
+                const geometry = feature.getGeometry();
+                const coordinates = geometry.getCoordinates();
+                // Get the first and last coordinates
+                const firstCoordinate = coordinates[0];
+                const lastCoordinate = coordinates[coordinates.length - 1];
+                document.getElementById('s_latitude').value = firstCoordinate[1].toString();
+                document.getElementById('s_longitude').value = firstCoordinate[0].toString();
+                document.getElementById('e_latitude').value = lastCoordinate[1].toString();
+                document.getElementById('e_longitude').value = lastCoordinate[0].toString();
+
+
+                const geoJsonObject = new ol.format.GeoJSON().writeFeaturesObject([feature]);
+                console.log(geoJsonObject);
+                document.getElementById('road_data_hidden').value = JSON.stringify(geoJsonObject);
+
             });
 
             // Create a select interaction for selecting features
@@ -1082,9 +1182,10 @@
                 if (selectedFeatures.length > 0) {
                     const selectedFeature = selectedFeatures[0];
                     const coordinates = selectedFeature.getGeometry().getCoordinates();
-                    console.log(coordinates);
                 }
             });
+
+
 
             $('#exampleModal').on('shown.bs.modal', function () {
                 map.updateSize(); // Update the map size
@@ -1093,42 +1194,428 @@
                 });
             });
 
-            var flag = true;
-
-            $('#start').click(() => {
-                flag = true;
-                $('#mapModal').modal('show'); // Show mapModal
-            });
-
-            $('#end').click(() => {
-                flag = false;
-                $('#mapModal').modal('show'); // Show mapModal
-            });
             $('#map_submit').click(() => {
-                if (flag) {
-                    document.getElementById('s_latitude').value = document.getElementById('1lat').value;
-                    document.getElementById('s_longitude').value = document.getElementById('1long').value;
-                } else {
-                    document.getElementById('e_latitude').value = document.getElementById('1lat').value;
-                    document.getElementById('e_longitude').value = document.getElementById('1long').value;
-                }
-
                 $('#mapModal').modal('hide');
                 $('#exampleModal').modal('show');
             });
         });
-        $("[id$=submitBtn]").on("click", function () {
+        $("[id$=approvalid]").on("click", function (e) {
+            var appid = $(this).attr('value');
+            $("#appletter").attr("src", appid);
+            console.log(appid);
+        });
+
+        var isEdit = false;
+        var projectId = 0;
+        var td;
+        var ap;
+        function editBtn(btn) {
+            //alert("btnnn : "+btn)
+            var divToHide = document.getElementById("status_div");
+
+            // Set its display property to 'none' to hide it
+            divToHide.style.display = "block";
+
+            var button = document.getElementById("submitBtn");
+            button.innerHTML = "Edit";
+            projectId = btn.closest('tr').querySelector(".projectid").value;
+            //console.log("btn", btn.value());
+
+            isEdit = true;
             $.ajax({
                 type: "POST",
-                url: "/Home/addProject",
-                data: "{'project_title' : '" + $("[id$=project_title]").val() + "','work_order_no': '" + $("[id$=work_order_no]").val() + "','description': '" + $("[id$=description]").val() + "','startDate': '" + $("[id$=startDate]").val() + "','endDate': '" + $("[id$=endDate]").val() + "','lattitude': '" + $("[id$=lattitude]").val() + "','longitude': '" + $("[id$=longitude]").val() + "','projectType': '" + $("[id$=projectType]").val() + "','budgetCost': '" + $("[id$=budgetCost]").val() + "','contractorId': '" + $("[id$=contractorId]").val() + "','wardId': '" + $("[id$=wardId]").val() + "' ,'approvalLetter': '" + $("[id$=approvalLetter]").val() + "','tenderDoc': '" + $("[id$=tenderDoc]").val() + "'}",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
+                url: "/Admin/getProjectById/" + projectId,
+
                 success: function (response) {
-                    alert("project added successfully...!!");
+                    // Handle the response data
+                    console.log("resp : :", response.project[0].start_date);
+                    $('#project_title').val(response.project[0].project_title);
+                    $('#work_order_no').val(response.project[0].work_order_no);
+
+                    $('#description').val(response.project[0].description);
+
+                    $('#start_date').val(response.project[0].start_date.toString());
+                    //var timestamp = response.project[0].start_date;
+                    ////var date = new Date(parseInt(timestamp.substr(6)));
+
+                    //console.log("timestamp", timestamp.toString());
+                    ////var day = date.getDate();
+                    //const today = new Date();
+
+                    //// Format date as YYYY-MM-DD (required format for input type="date")
+                    //const formattedDate = timestamp.toISOString().slice(0, 10);
+                    //console.log("formatted date  : ", formattedDate);
+                    var s = response.project[0].start_date;
+                    var ts = s.substring(s.indexOf('(') + 1, s.lastIndexOf(')'));
+                    var date = new Date(Number(ts));
+                    date.setUTCDate(date.getUTCDate() + 1); // Add one day
+                    var formattedDate = date.toISOString().slice(0, 10);
+                    document.getElementById('start_date').value = formattedDate;
+
+
+                    var s = response.project[0].end_date;
+                    var ts = s.substring(s.indexOf('(') + 1, s.lastIndexOf(')'));
+                    var date = new Date(Number(ts));
+                    date.setUTCDate(date.getUTCDate() + 1); // Add one day
+                    var formattedDate = date.toISOString().slice(0, 10);
+                    document.getElementById('end_date').value = formattedDate;
+
+
+                    $('#s_latitude').val(response.project[0].s_latitude.toString());
+
+                    $('#s_longitude').val(response.project[0].s_longitude.toString());
+
+
+                    $('#e_latitude').val(response.project[0].e_latitude.toString());
+
+                    $('#e_longitude').val(response.project[0].e_longitude.toString());
+                    //console.log("proj type : ", response.project[0].project_type.toString());
+                    $('#project_type').val(response.project[0].project_type.toString());
+                    $('#budget_cost').val(response.project[0].budget_cost);
+
+                    $('#allocated_contractor_id').val(response.project[0].allocated_contractor_id);
+
+                    $('#ward_id').val(response.project[0].ward_id);
+                    $('#status').val(response.project[0].status);
+
+                    td = response.project[0].tender_doc_s;
+                    ap = response.project[0].approval_letter_s;
+
+
+                    //var date = new Date(response.project[0].start_date);
+                    //var day = date.getDate();
+                    /*  debugger;*/
+                    //console.log("day : ", day);
+                    //console.log("date : ", date);
+
+                    //$('#end_date').val(end_date);
+
+                    //$('#work_order_no').val(work_order_no);
+
+                    // You can process the response data here
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                    console.error(xhr.responseText);
                 }
             });
+
+
+            //button.id = "editButton";
+            //alert("Btn" + isEdit);
+            //alert("id : "+ projectId);
+            /* alert("inside edit btn");*/
+
+        }
+
+        function disableProject(btn) {
+
+            var ok = confirm("Are you sure you want to disable this project?");
+            if (ok) {
+                projectId = $(btn).closest('tr').find('td:eq(0)').text().trim();
+                var form_data = new FormData();
+                form_data.append("projectId", projectId);
+                alert(projectId)
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/disableProject",
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert("project disabled successfully...!!");
+                        console.log(response);
+                        window.location.href = "/Admin/Project_MonitoringView";
+                    }
+
+                })
+
+            }
+            else {
+
+            }
+        }
+
+        $("[id$=submitBtn]").on("click", function (e) {
+            /*   e.preventDefault();*/
+
+            //alert("isBtn : "+ isEdit);
+
+
+            //validation for step 3 of modal
+            var valid = true;
+            var contractor_id = document.getElementById("allocated_contractor_id");
+            var wrdid = document.getElementById("ward_id");
+            var apid = document.getElementById("approval_letter");
+            var tndr = document.getElementById("tender_doc");
+            //console.log("apid: ", apid.value);
+
+            if (contractor_id.value == 0) {
+                contractor_id.classList.add("invalid");
+                valid = false;
+            }
+            else {
+                contractor_id.classList.remove("invalid");
+            }
+            if (wrdid.value == 0) {
+                wrdid.classList.add("invalid");
+                valid = false;
+            }
+            else {
+                wrdid.classList.remove("invalid");
+            }
+
+            if (apid.value == "" && !isEdit) {
+                apid.classList.add("invalid");
+                valid = false;
+            }
+            else {
+                apid.classList.remove("invalid");
+            }
+            if (tndr.value == "" && !isEdit) {
+                tndr.classList.add("invalid");
+                valid = false;
+            }
+            else {
+                tndr.classList.remove("invalid");
+            }
+
+
+            if (valid) {
+
+
+
+                if (!isEdit) {
+
+                    var form_data = new FormData(); // Create a FormData object
+
+                    // Append form fields to FormData object
+                    form_data.append("project_title", $("[id$=project_title]").val());
+                    form_data.append("work_order_no", $("[id$=work_order_no]").val());
+                    form_data.append("description", $("[id$=description]").val());
+                    form_data.append("start_date", $("[id$=start_date]").val());
+                    form_data.append("end_date", $("[id$=end_date]").val());
+                    form_data.append("s_latitude", $("[id$=s_latitude]").val());
+                    form_data.append("s_longitude", $("[id$=s_longitude]").val());
+                    form_data.append("e_latitude", $("[id$=e_latitude]").val());
+                    form_data.append("e_longitude", $("[id$=e_longitude]").val());
+                    form_data.append("project_type", $("[id$=project_type]").val());
+                    form_data.append("budget_cost", $("[id$=budget_cost]").val());
+                    form_data.append("allocated_contractor_id", $("[id$=allocated_contractor_id]").val());
+                    form_data.append("ward_id", $("[id$=ward_id]").val());
+                    var roddata = $("[id$=road_data_hidden]").val().toString();
+
+
+                    form_data.append("road_data", $("[id$=road_data_hidden]").val().toString());
+                    var tender_doc = document.getElementById("tender_doc").files[0]; //file
+                    var approval_letter = document.getElementById("approval_letter").files[0]; //file
+                    form_data.append("tender_doc", tender_doc);
+                    form_data.append("approval_letter", approval_letter);
+                    console.log("file : ", form_data);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/addProject",
+                        data: form_data,
+                        processData: false,  // Don't process the data
+                        contentType: false,  // Don't set contentType
+                        success: function (response) {
+                            alert("project added successfully...!!");
+                            console.log(response);
+                            window.location.href = "/Admin/Project_MonitoringView";
+                        }
+                    });
+                }
+                else {
+                    //let id = $(btn).closest('tr').find('td:eq(0)').text().trim();
+
+                    //alert("edit button event" + projectId);
+
+
+
+                    var form_data = new FormData(); // Create a FormData object
+
+                    form_data.append("project_id", projectId);
+
+                    form_data.append("project_title", $("[id$=project_title]").val());
+                    form_data.append("work_order_no", $("[id$=work_order_no]").val());
+                    form_data.append("description", $("[id$=description]").val());
+                    form_data.append("start_date", $("[id$=start_date]").val());
+                    form_data.append("end_date", $("[id$=end_date]").val());
+                    form_data.append("s_latitude", $("[id$=s_latitude]").val());
+                    form_data.append("s_longitude", $("[id$=s_longitude]").val());
+                    form_data.append("e_latitude", $("[id$=e_latitude]").val());
+                    form_data.append("e_longitude", $("[id$=e_longitude]").val());
+                    form_data.append("project_type", $("[id$=project_type]").val());
+                    form_data.append("budget_cost", $("[id$=budget_cost]").val());
+                    form_data.append("allocated_contractor_id", $("[id$=allocated_contractor_id]").val());
+                    form_data.append("ward_id", $("[id$=ward_id]").val());
+                    form_data.append("status", $("[id$=status]").val());
+                    form_data.append("road_data", $("[id$=road_data_hidden]").val().toString());
+
+                    var tender_doc = document.getElementById("tender_doc").files[0]; //file
+
+                    var approval_letter = document.getElementById("approval_letter").files[0]; //file
+
+                    //alert("before if : " + tender_doc)
+                    //debugger;
+                    if (tender_doc != undefined) {
+                        //alert("inside tender_doc")
+                        form_data.append("tender_doc", tender_doc);
+                    }
+                    else {
+                        //alert("td : " + td)
+                        form_data.append("tender_doc_s", td);
+
+                    }
+                    if (approval_letter) {
+                        form_data.append("approval_letter", approval_letter);
+                    }
+                    else {
+                        form_data.append("approval_letter_s", ap);
+                    }
+
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/updateProject",
+                        data: form_data,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            alert("project updated successfully...!!");
+                            console.log(response);
+                            window.location.href = "/Admin/Project_MonitoringView";
+                        }
+
+                    })
+
+
+
+                }
+
+
+            }
         });
+
+
+        document.getElementById("getCSV").addEventListener("click", function () {
+            // Get the table
+            var table = document.getElementById("table_d");
+            // Prepare the CSV data
+            var csv = "";
+            for (var i = 0; i < table.rows.length - 1; i++) {
+                var rowData = [];
+                var cells = table.rows[i].cells;
+                for (var j = 0; j < cells.length - 1; j++) { // Exclude the last cell
+                    if (j != 6 && j != 7) {
+                        rowData.push(cells[j].innerText);
+                    }
+                }
+                csv += rowData.join(",") + "\n";
+            }
+
+            // Create a Blob object from the CSV string
+            var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+            // Create a download link
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "table_data.csv";
+
+            // Append the link to the body and trigger the click event
+            document.body.appendChild(link);
+            link.click();
+
+            // Cleanup
+            document.body.removeChild(link);
+        });
+        document.getElementById("getPDF").addEventListener("click", function () {
+            // Get the table
+            var table = document.getElementById("table_d");
+
+            // Initialize jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Prepare the data
+            var data = [];
+            for (var i = 1; i < table.rows.length - 1; i++) {
+                var rowData = [];
+                var cells = table.rows[i].cells;
+                for (var j = 0; j < cells.length - 1; j++) { // Exclude the last cell
+                    if (j != 6 && j != 7) {
+                        rowData.push(cells[j].innerText);
+                    }
+                }
+                data.push(rowData);
+            }
+
+            //Set the table columns
+            var columns = [];
+            var headerCells = table.rows[0].cells;
+            for (var i = 0; i < headerCells.length - 1; i++) { // Exclude the last header
+                if (i != 6 && i != 7) {
+                    columns.push(headerCells[i].innerText);
+                }
+            }
+
+            // Add the table to the PDF
+            doc.autoTable({
+                head: [columns],
+                body: data
+            });
+
+            // Save the PDF
+            doc.save('table_data.pdf');
+        });
+
+
+
+
+        $('#Feedbackid').click(() => {
+            $('#FeedbackModal').modal('show');
+        });
+
+
+        function FeedbackDetails(btn) {
+            let project_id = $(btn).closest('tr').find('td:eq(0)').text().trim();
+            let project_title = $(btn).closest('tr').find('td:eq(1)').text().trim(); // Assuming project title is in the second column
+            let status = $(btn).closest('tr').find('td:eq(5)').text().trim();
+            let contractor_name = $(btn).closest('tr').find('td:eq(8)').text().trim();
+            let contractor_contact = $(btn).closest('tr').find('td:eq(9)').text().trim();
+
+            // Data object to be sent in AJAX request
+            let data = {
+                project_id: project_id,
+                project_title: project_title,
+                status: status,
+                project_alloted_name: contractor_name,
+                project_alloted_contact: contractor_contact
+            };
+
+            // Click event handler for FeedbackBtn button
+            $('#FeedbackBtn').click(function () {
+                // Get the value of the description input field
+                var comment = $('#description').val();
+                // Add comment to the data object
+                data.comment = comment;
+
+
+                // AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/SuggestionView",
+                    data: data,
+                    success: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+            $('#Fid').val(project_id);
+            $('#Fname').val(project_title);
+        }
     </script>
 </body>
 </html>

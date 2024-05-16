@@ -34,7 +34,16 @@ namespace GIS_ROAD_ASSET_MANAGEMENT.Models
 
         public bool is_user { get; set; }
 
+        public int suggestion_id { get; set; }
+        public string comment { get; set; }
 
+        public int project_id { get; set; }
+        public string project_title { get; set; }
+        public string project_location { get; set; }
+        public string project_alloted_name { get; set; }
+
+        public string project_alloted_contact { get; set; }
+        public string status { get; set; }   
         //ContractorModel contractor { get; set; }
         //RoleModel role { get; set; }
         //WardModel ward { get; set; }

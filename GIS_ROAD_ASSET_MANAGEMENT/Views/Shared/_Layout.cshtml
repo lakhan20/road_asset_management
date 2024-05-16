@@ -43,11 +43,11 @@
         body {
             padding: 0 !important;
         }
+
     </style>
 </head>
 
 <body>
-
     <div>
 
         @RenderBody()
@@ -60,7 +60,8 @@
             // Clear form fields when the modal is closed
             $('#loginModal').on('hidden.bs.modal', function () {
                 // Clear all input fields inside the form
-                $('#LoginForm').find('input').val('');
+                clearModalFields();
+
                 // Clear the error messages
                 $('.error-message').text('');
                 // Optionally, clear other types of fields like select, textarea, etc.
@@ -76,6 +77,10 @@
             });
 
         });
+        function clearModalFields() {
+            // Select all input fields inside the modal except for the CAPTCHA input
+            $('#loginModal').find('input').not('#captchashow').val('');
+        }
     </script>
 </body>
 </html>

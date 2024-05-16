@@ -1,0 +1,287 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@model IEnumerable<GIS_ROAD_ASSET_MANAGEMENT.Models.Usermodel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.0/css/searchPanes.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.0/css/select.bootstrap5.css">
+    <style>
+        .container {
+            width: 100%;
+            max-width: none;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        /* Style for the buttons */
+        .btn-custom {
+            background-color: #393939;
+            color: #fff; /* Text color */
+            /* Border color */
+        }
+     
+        .form-footer {
+            overflow: auto;
+            gap: 20px;
+        }
+
+            .form-footer button {
+                background-color: #000;
+                border: 1px solid #000 !important;
+                color: #ffffff;
+                border: none;
+                padding: 13px 30px;
+                font-size: 1em;
+                cursor: pointer;
+                border-radius: 5px;
+                flex: 1;
+                margin-top: 5px;
+            }
+
+                .form-footer button:hover {
+                    opacity: 0.8;
+                }
+
+        .modal-header {
+            background-color: #282828
+        }
+
+        .modal-title {
+            color: #fff
+        }
+    </style>
+</head>
+<body>
+
+    @*Edit FeedBack Modal*@
+
+    <form role="form" name="FeedbackEditForm" id="FeedbackEditForm" method="post">
+        <div class="modal fade FeedbackModal" id="FeedbackEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5">Edit Suggestion</h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Feedback">
+
+                            <div class="row mb-3">
+                                <div class="form-group  col d-none">
+                                    <label for="FEid"><i class="fa-solid fa-address-book"></i>&nbsp; Suggestion Id</label>
+                                    <input type="number" class="form-control" id="FEid" disabled>
+                                </div>
+                                <div class="form-group  col">
+                                    <label for="FEname"><i class="fa-solid fa-address-book"></i>&nbsp; Project Name</label>
+                                    <input type="text" class="form-control" id="FEname" disabled>
+
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="FEcomment" class="form-label">Comment/Suggestion</label>
+                                    <textarea class="form-control" id="FEcomment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer form-footer d-flex">
+
+                        <button type="submit" id="FeedbackEditBtn"><span class="glyphicon glyphicon-off"></span>Save</button>
+                        <button type="submit" id="FeedbackEditBtnclose"><span class="glyphicon glyphicon-off"></span>Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="container-fluid">
+        <h2><a class="navbar-brand" href="#">My Suggestion History</a></h2>
+    </div>
+
+    @if (TempData["EditSuggestion"] != null)
+    {
+        <div class="alert alert-dismissible" role="alert" style="background-color:#d1e7dd;">
+            <strong style="color: #0f5132">@TempData["EditSuggestion"]</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    }
+
+    @if (TempData["RemoveSuggestion"] != null)
+    {
+    <div class="alert alert-dismissible" role="alert" style="background-color:#d1e7dd;">
+        <strong style="color: #0f5132">@TempData["RemoveSuggestion"]</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    }
+
+    <div class="container">
+        <div class="table-responsive mt-4">
+            <table id="example" class="table table-striped nowrap" style="width:100%">
+                <!-- Table content -->
+                <thead>
+                    <tr class="text-center">
+                        <th class="text-center">Sr No.</th>
+                       
+                        <th class="text-center">Comment</th>
+                        <th class="text-center">project Name </th>
+                     
+                        <th class="text-center">status</th>
+                        <th class="text-center">Contractor Name</th>
+                        <th class="text-center">Contractor Contact</th>
+                        <th class="text-center">Created At</th>
+                        <th class="text-center">Update At</th>
+                        <th class="text-center">Action</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{ 
+                       var serialNumber = 1;
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-center">
+                            <input type="hidden" class="hidden_uid" value=@item.id>
+                            <input type="hidden" class="hidden_sid" value=@item.suggestion_id>
+                            <td class="text-center">
+                                @serialNumber
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.comment)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.project_title)
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.status)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.project_alloted_name)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.project_alloted_contact)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.created_at)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.updated_at)
+                            </td>
+                            <td>
+
+                                <button data-bs-toggle="modal" data-bs-target="#FeedbackEditModal" type="button" class="btn btn-primary" id="FeedbackeditBtn_@item.id" onclick="FeedbackeditDetails(this);">
+                                    Edit
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="" type="button" class="btn btn-primary" id="disableBtn_@item.id" onclick="RemoveSuggestion(this);">
+                                    Remove
+                                </button>
+
+                            </td>
+                        </tr>
+                        serialNumber++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @* user end*@
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script> <!-- Corrected -->
+    <script>
+        // JavaScript code
+        // Initialize DataTable
+        $(document).ready(function () {
+            new DataTable('#example', {
+                searchPanes: true,
+                dom: 'Plfrtip',
+                language: {
+                    searchPanes: {
+                        emptyPanes: ''
+                    }
+                }
+            });
+        });
+        $('#FeedbackeditBtn').click(() => {
+            $('#FeedbackEditModal').modal('show');
+        });
+
+        function FeedbackeditDetails(btn) {
+
+            let suggestion_id = $(btn).closest('tr').find('.hidden_sid').val().trim();
+            let project_title = $(btn).closest('tr').find('td:eq(2)').text().trim();
+            let comment = $(btn).closest('tr').find('td:eq(1)').text().trim();
+
+            let data = {
+                suggestion_id: suggestion_id,
+            };
+
+            // Click event handler for FeedbackBtn button
+            $('#FeedbackEditBtn').click(function () {
+                var comment = $('#FEcomment').val();
+                // Add comment to the data object
+                data.comment = comment;
+                // AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/SuggestionHistoryView",
+                    data: data,
+                    success: function (response) {
+                        console.log(response);
+                        location.reload();
+                    }
+                });
+            });
+
+            $('#FEid').val(suggestion_id);
+            $('#FEname').val(project_title);
+            $('#FEcomment').val(comment);
+
+        }
+
+        function RemoveSuggestion(btn) {
+            let suggestion_id = $(btn).closest('tr').find('.hidden_sid').val().trim();
+
+            let data = {
+                suggestion_id: suggestion_id,
+            };
+            var status = confirm('Are You sure want to Remove suggeston?');
+            if (status) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/removeSuggestion",
+                    data: data,
+                    success: function (response) {
+                        console.log(response);
+                        location.reload();
+                    }
+                });
+            }
+
+        }
+
+    </script>
+</body>
+</html>

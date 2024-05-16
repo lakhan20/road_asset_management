@@ -4514,7 +4514,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: #f8f9fc;
+    background-color:#282828 !important;
     border-bottom: 1px solid #e3e6f0
 }
 
@@ -7875,7 +7875,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .mb-4, .my-4 {
-    margin-bottom: 1.5rem !important
+    margin-bottom: 7.8px !important
 }
 
 .ml-4, .mx-4 {
@@ -9955,7 +9955,7 @@ a:focus {
         }
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-left: 1.5rem;
+    padding-left: 0rem;
     padding-right: 1.5rem
 }
 
@@ -10688,7 +10688,7 @@ a:focus {
             }
 
             .sidebar .nav-item .nav-link span {
-                font-size: .85rem;
+                font-size: 1rem;
                 display: inline
             }
 

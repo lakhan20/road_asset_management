@@ -1,5 +1,4 @@
-﻿
-console.log("Signupvalidate");
+﻿console.log("Signupvalidate");
 $(document).ready(function () {
     var citizenRadio = $('input[value="Citizen"]');
     var contractorRadio = $('input[value="Contractor"]');
@@ -76,29 +75,31 @@ $(document).ready(function () {
             var formData = {
                 Cname, Cemail, Ccontact, Cward, Cpassword, Crole_id
             };
-            console.log(formData);
-
-            //Ajax for signup citizen
-            $.ajax({
-                url: '/SignUp/Csignup', // URL to your controller action
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    if (response.Success) {
-                        console.log("signup success");
-                       window.location.href = "/Home/Index";
-                    } else {
-                        console.log("Authentication failed");
-                        //$('#loginModal').modal('show'); // Assuming your login modal has id "loginModal"
-                        //$('#errorMessage').text("hytfffdusdvvh");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.log("error");
-                }
-            });
-
         }
+        // AJAX call to check email existence
+        console.log(formData);
+
+        // AJAX request to sign up
+        $.ajax({
+            url: '/SignUp/Csignup', // URL to your controller action
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                if (response.Success) {
+                    console.log("signup success");
+                    window.location.href = "/Home/Index";
+                } else {
+                    console.log(response.Message);
+                    $('#CerrorMessage').text(response.Message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("error");
+            }
+        });
+
+
+
         // Additional actions on successful form submission can be added here
     });
 
@@ -160,7 +161,7 @@ $(document).ready(function () {
             return false;
         }
 
-        else if (Con_password == "" || Con_password.length  < 6) {
+        else if (Con_password == "" || Con_password.length < 6) {
             $('#Con_pswError').html('Please enter a valid password (minimum 6 characters).');
             return false;
         }
@@ -178,15 +179,16 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url: '/SignUp/Con_signup', // URL to your controller action
+            url: 'SignUp/Con_signup', // URL to your controller action
             type: 'POST',
             data: formData,
             success: function (response) {
-                if (response.Success) {
+                if (response) {
                     console.log("signup success");
                     window.location.href = "/Home/Index";
                 } else {
-                    console.log("Authentication failed");
+                    console.log(response.Message);
+                    $('#ConerrorMessage').text(response.Message);
                     //$('#loginModal').modal('show'); // Assuming your login modal has id "loginModal"
                     //$('#errorMessage').text("hytfffdusdvvh");
                 }
@@ -256,40 +258,44 @@ $(document).ready(function () {
 
             //Ajax for signup citizen
             $.ajax({
-                url: '/SignUp/Wsignup', // URL to your controller action
+                url: '/SignUp/Wsignup',
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    if (response.Success) {
+                    if (response) {
                         console.log("signup success");
-                        console.log(formData);
+
+                        // Send email to ward officer after successful signup
+                        var emailData = {
+                            Wemail: Wemail,
+                            Wpassword: Wpassword
+                        };
+
                         $.ajax({
-                            url: '/Admin/sendEmailToWardOfficer',
+                            url: '/Admin/sendEmailToWardOfficer/',
                             type: 'POST',
-                            data: formData,
-                            success: function (response)
-                            {
+                            data: emailData, // Corrected variable name
+                            success: function (response) {
+                                console.log('Email sent to ward officer');
                                 alert("Success");
                             },
                             error: function (xhr, status, error) {
-                                console.log("error");
+                                console.log("Error sending email to ward officer");
                             }
                         });
+
                         window.location.href = "/Admin/UserView";
                     } else {
                         console.log("Authentication failed");
-                        //$('#loginModal').modal('show'); // Assuming your login modal has id "loginModal"
-                        //$('#errorMessage').text("hytfffdusdvvh");
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.log("error");
+                    console.log("Error in signup process");
                 }
             });
-
         }
-        // Additional actions on successful form submission can be added here
     });
+
     //admin modal data
 
     $('#AdminForm').submit(function (e) {
@@ -368,7 +374,7 @@ $(document).ready(function () {
                                 console.log("error");
                             }
                         });
-                       
+
                         window.location.href = "/Admin/UserView";
                     } else {
                         console.log("Authentication failed");
@@ -384,4 +390,5 @@ $(document).ready(function () {
         }
         // Additional actions on successful form submission can be added here
     });
+
 });

@@ -58,6 +58,9 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="MSCaptcha, Version=2.0.1.36094, Culture=neutral, PublicKeyToken=b9ff12f28cdcf412, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSCaptcha.1.0.0\lib\MSCaptcha.dll</HintPath>
+    </Reference>
     <Reference Include="Npgsql, Version=8.0.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.8.0.2\lib\netstandard2.0\Npgsql.dll</HintPath>
     </Reference>
@@ -170,17 +173,25 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
+    <Compile Include="Filters\UserAuthenticationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContractorModel.cs" />
     <Compile Include="Models\DatabaseConnectionManager.cs" />
+    <Compile Include="Models\MilestoneModel.cs" />
+    <Compile Include="Models\MilestoneViewModel.cs" />
+    <Compile Include="Models\MonitoringViewModel.cs" />
     <Compile Include="Models\MyDbContext.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\SMTPConfiguration.cs" />
+    <Compile Include="Models\SuggestionModel.cs" />
     <Compile Include="Models\Temp.cs" />
     <Compile Include="Models\Usermodel.cs" />
     <Compile Include="Models\WardModel.cs" />
@@ -208,6 +219,8 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\material-dashboard.css" />
     <Content Include="Content\css\material-dashboard.min.css" />
+    <Content Include="Content\css\material-dashboard1.css" />
+    <Content Include="Content\css\material-dashboard1.min.css" />
     <Content Include="Content\css\nucleo-icons.css" />
     <Content Include="Content\css\nucleo-svg.css" />
     <Content Include="Content\css\site.css" />
@@ -247,6 +260,7 @@
     <Content Include="Content\img\img2.jpg" />
     <Content Include="Content\img\License free.txt" />
     <Content Include="Content\img\License premium.txt" />
+    <Content Include="Content\img\placeholder.jpg" />
     <Content Include="Content\img\round-image - Copy.jpg" />
     <Content Include="Content\img\round-image.jpg" />
     <Content Include="Content\img\service-1.jpg" />
@@ -269,8 +283,10 @@
     <Content Include="Content\img\team-4.jpg" />
     <Content Include="Content\img\testimonial-img.jpg" />
     <Content Include="Content\img\video-img.jpg" />
+    <Content Include="Content\js\chartData.js" />
     <Content Include="Content\js\loginValidate.js" />
     <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\profile.js" />
     <Content Include="Content\js\SignupValidation.js" />
     <Content Include="Content\js\site.js" />
     <Content Include="Content\lib\animate\animate.css" />
@@ -494,6 +510,7 @@
     <Content Include="lib\font-awesome\webfonts\fa-v4compatibility.ttf" />
     <Content Include="lib\font-awesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Content\css\material-dashboard.css.map" />
+    <Content Include="Content\css\material-dashboard1.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2207,9 +2224,7 @@
     <Content Include="Views\Admin\DashboardView.cshtml" />
     <Content Include="Views\Admin\Project_MonitoringView.cshtml" />
     <Content Include="Views\Admin\Project_MilestoneView.cshtml" />
-    <Content Include="Views\Admin\AboutView.cshtml" />
     <Content Include="Views\Admin\DemoView.cshtml" />
-    <Content Include="Views\Admin\ContactView.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Theme\scss\navs\_global.scss" />
     <Content Include="Theme\scss\navs\_sidebar.scss" />
@@ -2383,17 +2398,23 @@
     <Content Include="Theme\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Theme\vendor\jquery\jquery.min.map" />
     <Content Include="Theme\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Views\Admin\suggestionView.cshtml" />
+    <Content Include="Views\Admin\SuggestionView.cshtml" />
     <Content Include="Views\Admin\ContractorView.cshtml" />
     <Content Include="Views\Admin\UserView.cshtml" />
     <Content Include="Views\Home\_Navbar.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Admin\UserSeggestionHistoryView.cshtml" />
+    <Content Include="Views\Admin\_NavbarAdmin.cshtml" />
+    <Content Include="Views\Admin\_SidebarAdmin.cshtml" />
+    <Content Include="Views\Admin\SuggestionHistoryView.cshtml" />
+    <Content Include="Views\Admin\ProfileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="approvalLetters\" />
     <Folder Include="App_Data\" />
     <Folder Include="Content\.vs\GIS\v17\" />
     <Folder Include="main code\" />
+    <Folder Include="tenderDocs\" />
+    <Folder Include="Views\CustomBase\" />
     <Folder Include="Views\SignUp\" />
   </ItemGroup>
   <ItemGroup>

@@ -11,39 +11,241 @@
 
     <!-- OpenLayers CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.1.0/ol.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         /* Set height for map container */
         #map {
             width: 100vw;
             height: 100vh;
         }
+
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 200px;
+            text-align: left;
+            font-family: sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+            .ol-popup:after,
+            .ol-popup:before {
+                top: 100%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+            }
+
+            .ol-popup:after {
+                border-top-color: white;
+                border-width: 10px;
+                left: 48px;
+                margin-left: -10px;
+            }
+
+            .ol-popup:before {
+                border-top-color: #cccccc;
+                border-width: 11px;
+                left: 48px;
+                margin-left: -11px;
+            }
+
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+        }
+
+            .ol-popup-closer:after {
+                content: "✖";
+            }
     </style>
 </head>
 <body>
     <!-- Map container -->
     <div id="map"></div>
+    <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+    </div>
 
     <!-- OpenLayers JavaScript -->
+
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.1.0/dist/ol.js"></script>
 
     <!-- Your custom JavaScript -->
+
+
     <script>
-        // JavaScript code for creating the map
-        const layers = [
-            new ol.layer.Tile({
-                source: new ol.source.OSM(),
-            }),
-        ];
-        const map = new ol.Map({
-            layers: layers,
-            target: 'map',
-            view: new ol.View({
-                center: ol.proj.fromLonLat([72.5714, 23.0225]),
-                zoom: 12, // Increased zoom level
-            }),
+
+        $.ajax({
+            type: "GET",
+            url: "/Admin/getAllProject/",
+            processData: false,  // Don't process the data
+            contentType: false,  // Don't set contentType
+            success: function (response) {
+
+                var jsonString = response.project[0].road_data
+                var jsonObject = JSON.parse(jsonString);
+                console.log(response.project.length);
+
+                const layers = [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM(),
+                    }),
+                ];
+                const map = new ol.Map({
+                    layers: layers,
+                    target: 'map',
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([72.5714, 23.0225]),
+                        zoom: 15, // Increased zoom level
+                    }),
+                });
+
+                const vectorSource = new ol.source.Vector();
+
+                const vectorLayer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: 'green',
+                            width: 2,
+                        }),
+                    }),
+                });
+                map.addLayer(vectorLayer);
+
+                const colors = [
+                    '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+                    '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+                    '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+                    '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+                    '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+                    '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+                    '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+                    '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+                    '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+                    '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
+                ];
+
+                for (let i = 0; i < response.project.length; i++) {
+                    console.log("i : ", i);
+                    var jsonString = response.project[i].road_data;
+                    var jsonObject = JSON.parse(jsonString);
+                    console.log("jsonObject", jsonObject);
+
+                    // Check if the GeoJSON object has a "features" property
+                    if (jsonObject.hasOwnProperty("features")) {
+                        // Iterate over each feature and add it to the vector source with the assigned color
+                        jsonObject.features.forEach(function (feature) {
+                            // Convert the GeoJSON feature to an OpenLayers feature
+                            const olFeature = new ol.format.GeoJSON().readFeature(feature);
+
+                            // Assign a color from the colors array
+                            const color = colors[i];
+                            console.log('color : ', color);
+                            // Add the color to the feature style
+                            olFeature.setStyle(
+                                new ol.style.Style({
+                                    stroke: new ol.style.Stroke({
+                                        color: color,
+                                        width: 5,
+                                    }),
+                                })
+                            );
+
+                            // Add the feature to the vector source
+                            vectorSource.addFeature(olFeature);
+                        });
+                    } else {
+                        // Convert the GeoJSON object to an OpenLayers feature
+                        const olFeature = new ol.format.GeoJSON().readFeature(jsonObject);
+
+                        // Assign a color from the colors array
+                        const color = colors[0];
+
+                        // Add the color to the feature style
+                        olFeature.setStyle(
+                            new ol.style.Style({
+                                stroke: new ol.style.Stroke({
+                                    color: color,
+                                    width: 5,
+                                }),
+                            })
+                        );
+
+                        // Add the feature to the vector source
+                        vectorSource.addFeature(olFeature);
+                    }
+
+                    const popupContainer = document.getElementById('popup');
+                    const popupContent = document.getElementById('popup-content');
+                    const popupCloser = document.getElementById('popup-closer');
+
+                    const overlay = new ol.Overlay({
+                        element: popupContainer
+                    });
+                    map.addOverlay(overlay);
+
+                    // Add a click event to map
+                    map.on('click', function (evt) {
+                        const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+                            return feature;
+                        });
+                        if (feature && feature.getGeometry().getType() === 'LineString') {
+                            const coordinates = feature.getGeometry().getCoordinates();
+                            // Get the extent of the LineString feature
+                            const extent = feature.getGeometry().getExtent();
+                            // Zoom to the extent of the LineString feature
+                            map.getView().fit(extent, { duration: 1000 });
+                            // Update the popup content
+                            for (let j = 0; j < response.project.length; j++) {
+                                const startPointLat = coordinates[0][1];
+                                if (startPointLat == response.project[j].s_latitude) {
+                                    const html = `<p>Project Details :</p><code>Project Title : ${response.project[j].project_title}</br>Ward : ${response.project[j].ward_name}</br>Contractor Name : ${response.project[j].project_alloted_name}</code>`;
+                                    popupContent.innerHTML = html;
+                                }
+                            }
+                            // Set the popup position to the clicked coordinate
+                            overlay.setPosition(evt.coordinate);
+                        }
+                    });
+
+
+                    // Add a click event to the popup closer
+                    popupCloser.onclick = function () {
+                        overlay.setPosition(undefined);
+                        return false;
+                    };
+
+                }
+
+                /*console.log("ls : ", lineStrings);*/
+
+            },
+            error: (err) => {
+                console.log("err : ", err);
+                //alert("errer");
+            }
+
         });
+
+
     </script>
+
+
+
 </body>
+
 </html>
-    

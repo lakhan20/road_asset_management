@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-
+@model GIS_ROAD_ASSET_MANAGEMENT.Models.Temp
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +15,13 @@
     <link href="~/css/StyleSheet1.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.0/css/searchPanes.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.0/css/select.bootstrap5.css">
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.1/css/searchPanes.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.1/css/select.dataTables.css">
+
     <style>
         .container {
             width: 100%;
@@ -37,116 +42,85 @@
 </head>
 <body>
 
-
-
-
-
-
     <div class="container-fluid">
         <h2><a class="navbar-brand" href="#">Citizen Suggetion List</a></h2>
     </div>
-
-
-    <form>
-        <div class="modal fade" id="suggestionModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-            <!-- Modal 1 content -->
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <!-- Added modal-lg class for large size -->
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #282828 ">
-                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel" style="color: #fff">Project Details</h1>
-                        <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="projecttitle" class="form-label">Project Title</label>
-                                <input type="text" class="form-control" id="projecttitle">
-                            </div>
-                            <div class="col">
-                                <label for="workorderno" class="form-label">Work Order Number</label>
-                                <input type="text" class="form-control" id="workorderno">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="startdate" class="form-label">Start Date</label>
-                                <input type="date" class="form-control" id="startdate">
-                            </div>
-                            <div class="col">
-                                <label for="enddate" class="form-label">End Date</label>
-                                <input type="date" class="form-control" id="enddate">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-custom" id="right1" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="background-color: #282828; border-color: black;">
-                            Submit
-                            <i class="arrow right"></i>
-                        </button>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </form>
-
     <div class="container">
         <div class="table-responsive mt-4">
             <table id="example" class="table table-striped nowrap" style="width:100%">
                 <!-- Table content -->
                 <thead>
                     <tr>
-                        <th>User Id</th>
-                        <th>User nmae</th>
-                        <th>Contact No</th>
-                        <th>Suggetion Id</th>
-                        <th>Project Id Name</th>
-                        <th>project Name </th>
-                        <th>Location</th>
-                        <th>status</th>
-                        <th>Contractor</th>
-                        <th>Contractor Contact</th>
-                        <th>Action</th>
+                        <th class="text-center">Sr No.</th>
+                        @* <th class="text-center">Suggetion Id</th>*@
+                        <th class="text-center">User Name</th>
+                        <th class="text-center">Comment</th>
+                        <th class="text-center">project Name </th>
+                        <th class="text-center">status</th>
+                        <th class="text-center">Contractor Name</th>
+                        <th class="text-center">Contractor Contact</th>
+                        <th class="text-center">Created At</th>
+                        <th class="text-center">Update At</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Yashvi</td>
-                        <td>1234567890</td>
-                        <td>s1</td>
-                        <td>P1</td>
-                        <td>Highway Constarction</td>
-                        <td>Iskon </td>
-                        <td>Ongoing</td>
-                        <td>Abc.pvt.ltd</td>
-                        <td>1234567410</td>
+                    @{
+                        var serialNumber = 1;
 
-                    </tr>
+                    }
+                    @foreach (var item in Model.usermodel)
+                    {
+                        <tr class="text-center">
+                            <td class="text-center">
+                                @serialNumber
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.comment)
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.project_title)
+                            </td>
+
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.status)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.project_alloted_name)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.project_alloted_contact)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.created_at)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.updated_at)
+                            </td>
+
+                        </tr>
+                        serialNumber++;
+                    }
                 </tbody>
             </table>
         </div>
     </div>
 
-
-
-
     @* user end*@
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-XXXXXXXXXX" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script> <!-- Corrected -->
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.1/js/dataTables.searchPanes.js "></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.1/js/searchPanes.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/select/2.0.1/js/dataTables.select.js"></script>
+    <script src="https://cdn.datatables.net/select/2.0.1/js/select.dataTables.js"></script>
+
     <script>
         // JavaScript code
         // Initialize DataTable
@@ -161,34 +135,7 @@
                 }
             });
 
-            // Event handler for opening the first modal
-            $('#Addsuggestion').click(() => {
-                $('#suggestionModal').modal('show');
-            });
-
-            // Event handler for moving to the second modal
-            $('#right1').click(() => {
-                $('#exampleModal2').modal('show');
-                $('#exampleModal1').modal('hide');
-            });
-
-            // Event handler for moving back to the first modal
-            $('#left2').click(() => {
-                $('#exampleModal1').modal('show');
-                $('#exampleModal2').modal('hide');
-            });
-
-            // Event handler for moving to the third modal
-            $('#right2').click(() => {
-                $('#exampleModal3').modal('show');
-                $('#exampleModal2').modal('hide');
-            });
-
-            // Event handler for moving back to the second modal
-            $('#left3').click(() => {
-                $('#exampleModal2').modal('show');
-                $('#exampleModal3').modal('hide');
-            });
+           
         });
     </script>
 </body>
